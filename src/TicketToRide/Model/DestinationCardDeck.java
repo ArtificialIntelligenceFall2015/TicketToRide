@@ -3,24 +3,15 @@ package TicketToRide.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DestinationCardDeck extends Deck{
+public class DestinationCardDeck{
 
-	protected List<DestinationCard> cards;
-	protected List<DestinationCard> faceUpCards;
+	private List<DestinationCard> cards;
 	
 	public DestinationCardDeck(){
 		cards=new ArrayList<DestinationCard>();
 	}
-	
-	@Override
-	public void getNext() {
-		
-		
-	}
 
-	@Override
-	public List<DestinationCard> getFaceUpCards() {
-		return faceUpCards;
+	public List<DestinationCard> getCards() {
+		return cards;
 	}
-
 }

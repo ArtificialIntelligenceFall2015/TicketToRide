@@ -12,7 +12,7 @@ import TicketToRide.Model.TrainCardDeck;
 public class Game {
 	private List<Path> world;
 	private List<Player> players;
-	private Player turn;
+	private int turn=0;
 	private TrainCardDeck trainCardDeck;
 	private DestinationCardDeck desCardDeck;
 	
@@ -20,12 +20,11 @@ public class Game {
 		world=new ArrayList<Path>();
 		players=new ArrayList<Player>();
 		Collections.addAll(players, p);
-		turn=players.get(0);
 		trainCardDeck=new TrainCardDeck();
 		desCardDeck=new DestinationCardDeck();
 	}
 	
-	public List<Player> getWinner(){
+	public List<Player> getWinners(){
 		List<Player> winner=new ArrayList<Player>();
 		int maxScore=players.get(0).getScore();
 		
@@ -37,6 +36,13 @@ public class Game {
 				winner.add(player);
 		
 		return winner;
+	}
+	
+	public void nextPlayer(){
+		if(turn==players.size()-1)
+			turn=0;
+		else
+			turn++;
 	}
 	
 }

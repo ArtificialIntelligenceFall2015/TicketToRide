@@ -6,7 +6,7 @@ import java.util.List;
 
 import TicketToRide.Model.Constants.trainCard;
 
-public class TrainCardDeck extends Deck{
+public class TrainCardDeck{
 	private List<TrainCard> cards;
 	private List<TrainCard> faceUpCards;
 	
@@ -15,14 +15,12 @@ public class TrainCardDeck extends Deck{
 	public TrainCardDeck(){
 		cards=new ArrayList<TrainCard>();
 	}
-	
-	@Override
-	public void getNext() {
-		
-	}
 
-	@Override
 	public List<TrainCard> getFaceUpCards() {
 		return faceUpCards;
+	}
+
+	public List<TrainCard> getCards() {
+		return cards;
 	}
 }

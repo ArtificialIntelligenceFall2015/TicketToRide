@@ -5,10 +5,10 @@ import TicketToRide.Model.Constants.*;
 public class Path {
 	private city city1;
 	private city city2;
-	private trainColor color;
+	private TrainCard color;
 	private int cost;
 	
-	public Path(city city1, city city2, trainColor color, int cost) {
+	public Path(city city1, city city2, TrainCard color, int cost) {
 		super();
 		this.city1 = city1;
 		this.city2 = city2;
@@ -28,10 +28,10 @@ public class Path {
 	public void setCity2(city city2) {
 		this.city2 = city2;
 	}
-	public trainColor getColor() {
+	public TrainCard getColor() {
 		return color;
 	}
-	public void setColor(trainColor color) {
+	public void setColor(TrainCard color) {
 		this.color = color;
 	}
 	public int getCost() {
