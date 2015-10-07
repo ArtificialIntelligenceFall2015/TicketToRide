@@ -5,13 +5,9 @@ import java.util.List;
 
 public class DestinationCardDeck{
 
-	private List<DestinationCard> cards;
+	static{
+		
+	}
 	
-	public DestinationCardDeck(){
-		cards=new ArrayList<DestinationCard>();
-	}
-
-	public List<DestinationCard> getCards() {
-		return cards;
-	}
+	public static List<DestinationCard> cards;
 }

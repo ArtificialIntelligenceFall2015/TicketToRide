@@ -12,7 +12,7 @@ import TicketToRide.Model.TrainCardDeck;
 public class Game {
 	private List<Path> world;
 	private List<Player> players;
-	private int turn=0;
+	private Player turn;
 	private TrainCardDeck trainCardDeck;
 	private DestinationCardDeck desCardDeck;
 	
@@ -39,10 +39,15 @@ public class Game {
 	}
 	
 	public void nextPlayer(){
-		if(turn==players.size()-1)
-			turn=0;
+		int turnIndex=players.indexOf(turn);
+		if(turnIndex==players.size()-1)
+			turn=players.get(0);
 		else
-			turn++;
+			turn=players.get(turnIndex++);
+	}
+	
+	public boolean gameEnd(){
+		return turn.getPiece()<3;
 	}
 	
 }

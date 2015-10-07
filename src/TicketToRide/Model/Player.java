@@ -6,7 +6,7 @@ import TicketToRide.Model.Constants.trainColor;
 
 public class Player {
 	private int score=0;
-	private HashMap<TrainCard, Integer> trainCards;
+	private List<TrainCard> trainCards;
 	private List<DestinationCard> desCards;
 	private List<Path> ownPath;
 	
@@ -50,15 +50,15 @@ public class Player {
 		return piece;
 	}
 
-	public HashMap<TrainCard, Integer> getTrainCards() {
+	public void setPiece(int piece) {
+		this.piece = piece;
+	}
+
+	public List<TrainCard> getTrainCards() {
 		return trainCards;
 	}
 
-	public void setTrainCards(HashMap<TrainCard, Integer> trainCards) {
+	public void setTrainCards(List<TrainCard> trainCards) {
 		this.trainCards = trainCards;
-	}
-
-	public void setPiece(int piece) {
-		this.piece = piece;
 	}
 }
