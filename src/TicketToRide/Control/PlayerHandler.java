@@ -33,7 +33,7 @@ public class PlayerHandler {
 		Collections.sort(player.getTrainCards());
 	}
 
-	public static boolean claimARoute(List<Path> world, Player player, Path path, List<TrainCard> cards) {
+	public static boolean claimARoute(Player player, Path path, List<TrainCard> cards) {
 		int pathCost = path.getCost();
 		int playerPiece = player.getPiece();
 		pathColor pathColor = path.getColor();
@@ -51,7 +51,6 @@ public class PlayerHandler {
 		}
 		if ((pathColor==Constants.pathColor.GRAY&&path.getCost()==cards.size())
 				||(pathColor!=Constants.pathColor.GRAY&&path.getCost()==numColor+numLocomotives) 
-				&& world.contains(path) 
 				&& playerPiece >= pathCost) {
 			player.setPiece(playerPiece - pathCost);
 			for(TrainCard card:cards)

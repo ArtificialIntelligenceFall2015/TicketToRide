@@ -10,18 +10,12 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCardDeck;
 
 public class Game {
-	private List<Path> world;
 	private List<Player> players;
 	private Player turn;
-	private TrainCardDeck trainCardDeck;
-	private DestinationCardDeck desCardDeck;
 	
 	public Game(Player... p){
-		world=new ArrayList<Path>();
 		players=new ArrayList<Player>();
 		Collections.addAll(players, p);
-		trainCardDeck=new TrainCardDeck();
-		desCardDeck=new DestinationCardDeck();
 	}
 	
 	public List<Player> getWinners(){

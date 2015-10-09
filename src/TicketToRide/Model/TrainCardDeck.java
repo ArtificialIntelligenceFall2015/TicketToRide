@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import TicketToRide.Control.DeckHandler;
 import TicketToRide.Model.Constants.trainCard;
 
 public class TrainCardDeck{
 	public static List<TrainCard> cards;
 	public static List<TrainCard> faceUpCards;
+	public static HashMap<trainCard, Integer> countColor;
 	
 	static{
 		cards=new ArrayList<TrainCard>();
@@ -23,7 +25,18 @@ public class TrainCardDeck{
 		}
 		cards.add(new TrainCard(trainCard.RAINBOW));
 		cards.add(new TrainCard(trainCard.RAINBOW));
+		DeckHandler.shuffle(cards);
 	}
 	
-	private HashMap<trainCard, Integer> countColor;
+	public static void startHand(List<Player> players){
+		for(Player player:players){
+			for(int i=0; i<4; i++){
+				player.getTrainCards().add(cards.remove(0));
+			}
+		}
+		
+		for(int i=0; i<5; i++){
+			faceUpCards.add(cards.remove(0));
+		}
+	}
 }
