@@ -1,0 +1,101 @@
+Destination A,Destination B,Point Value,Color
+Vancouver,Calgary,3,GRAY
+Vancouver,Seattle,1,GRAY
+Vancouver,Seattle,1,GRAY
+Seattle,Calgary,4,GRAY
+Seattle,Portland,1,GRAY
+Seattle,Portland,1,GRAY
+Seattle,Helena,6,YELLOW
+Calgary,Winnipeg,6,WHITE
+Calgary,Helena,4,GRAY
+Portland,San Francisco,5,GREEN
+Portland,San Francisco,5,PINK
+Portland,Salt Lake City,6,BLUE
+San Francisco,Salt Lake City,5,ORANGE
+San Francisco,Salt Lake City,5,WHITE
+San Francisco,Los Angeles,3,PINK
+San Francisco,Los Angeles,3,YELLOW
+Los Angeles,Las Vegas,2,GRAY
+Los Angeles,Phoenix,3,GRAY
+Los Angeles,El Paso,6,BLACK
+Las Vegas,Salt Lake City,3,ORANGE
+Salt Lake City,Helena,3,PINK
+Salt Lake City,Denver,3,RED
+Salt Lake City,Denver,3,YELLOW
+Helena,Winnipeg,4,BLUE
+Helena,Duluth,6,ORANGE
+Helena,Omaha,5,RED
+Helena,Denver,4,GREEN
+Winnipeg,Sault St. Marie,6,GRAY
+Winnipeg,Duluth,4,BLACK
+Phoenix,Denver,5,WHITE
+Phoenix,Santa Fe,3,GRAY
+Phoenix,El Paso,3,GRAY
+Santa Fe,Denver,2,GRAY
+Santa Fe,El Paso,2,GRAY
+Santa Fe,Oklahoma City,3,BLUE
+Denver,Omaha,4,PINK
+Denver,Kansas City,4,BLACK
+Denver,Kansas City,4,ORANGE
+Denver,Oklahoma City,4,RED
+El Paso,Oklahoma City,5,YELLOW
+El Paso,Dallas,4,RED
+El Paso,Houston,6,GREEN
+Duluth,Omaha,2,GRAY
+Duluth,Omaha,2,GRAY
+Duluth,Sault St. Marie,3,GRAY
+Duluth,Toronto,6,PINK
+Duluth,Chicago,3,RED
+Omaha,Kansas City,1,GRAY
+Omaha,Kansas City,1,GRAY
+Omaha,Chicago,4,BLUE
+Kansas City,Saint Louis,2,BLUE
+Kansas City,Saint Louis,2,PINK
+Kansas City,Oklahoma City,2,GRAY
+Kansas City,Oklahoma City,2,GRAY
+Oklahoma City,Little Rock,2,GRAY
+Oklahoma City,Dallas,2,GRAY
+Oklahoma City,Dallas,2,GRAY
+Dallas,Houston,1,GRAY
+Dallas,Houston,1,GRAY
+Dallas,Little Rock,2,GRAY
+Houston,New Orleans,2,GRAY
+New Orleans,Little Rock,3,GREEN
+New Orleans,Atlanta,4,YELLOW
+New Orleans,Atlanta,4,ORANGE
+New Orleans,Miami,6,RED
+Little Rock,Nashville,3,WHITE
+Little Rock,Saint Louis,2,GRAY
+Saint Louis,Nashville,2,GRAY
+Saint Louis,Chicago,2,GREEN
+Saint Louis,Chicago,2,WHITE
+Saint Louis,Pittsburgh,5,GREEN
+Chicago,Pittsburgh,3,BLACK
+Chicago,Pittsburgh,3,ORANGE
+Chicago,Toronto,4,WHITE
+Sault St. Marie,Montreal,5,BLACK
+Sault St. Marie,Toronto,2,GRAY
+Toronto,Montreal,3,GRAY
+Toronto,Pittsburgh,2,GRAY
+Pittsburgh,Nashville,4,YELLOW
+Pittsburgh,New York,2,WHITE
+Pittsburgh,New York,2,GREEN
+Pittsburgh,Washington,2,GRAY
+Pittsburgh,Raleigh,2,GRAY
+Nashville,Raleigh,3,BLACK
+Nashville,Atlanta,1,GRAY
+Atlanta,Raleigh,2,GRAY
+Atlanta,Raleigh,2,GRAY
+Atlanta,Charleston,2,GRAY
+Atlanta,Miami,5,BLUE
+Miami,Charleston,4,PINK
+Charleston,Raleigh,2,GRAY
+Raleigh,Washington,2,GRAY
+Raleigh,Washington,2,GRAY
+Washington,New York,2,ORANGE
+Washington,New York,2,BLACK
+New York,Montreal,3,BLUE
+New York,Boston,2,YELLOW
+New York,Boston,2,RED
+Montreal,Boston,2,GRAY
+Montreal,Boston,2,GRAY
