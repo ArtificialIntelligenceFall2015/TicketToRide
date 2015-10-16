@@ -67,7 +67,8 @@ public class PlayerHandler {
 		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
 		if (faceUpCard.contains(card)) {
 			player.getTrainCards().add(faceUpCard.remove(faceUpCard.indexOf(card)));
-			faceUpCard.add(faceDownCard.remove(0));
+			if(faceDownCard.size()>0)
+				faceUpCard.add(faceDownCard.remove(0));
 			return true;
 		}
 		return false;

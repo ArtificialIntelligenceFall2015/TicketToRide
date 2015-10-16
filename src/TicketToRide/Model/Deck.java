@@ -18,16 +18,17 @@ public class Deck {
 	static{
 		trainCardsDeck=new ArrayList<TrainCard>();
 		trainFaceUpCards=new ArrayList<TrainCard>();
-		List<trainCard> array=Arrays.asList(trainCard.values()).subList(0, trainCard.values().length-1);
-		for(trainCard tc:array){
-			for(int i=0; i<12; i++){
+		for(trainCard tc:trainCard.values()){
+			int size=12;
+			if(tc==trainCard.RAINBOW)
+				size=14;
+			for(int i=0; i<size; i++){
 				TrainCard c=new TrainCard(tc);
 				trainCardsDeck.add(c);
 			}
 		}
-		trainCardsDeck.add(new TrainCard(trainCard.RAINBOW));
-		trainCardsDeck.add(new TrainCard(trainCard.RAINBOW));
 		shuffle(trainCardsDeck);
+		shuffle(desCardDeck);
 	}
 	
 	public static void startHand(List<Player> players){
