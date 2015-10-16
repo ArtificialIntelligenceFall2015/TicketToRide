@@ -40,7 +40,9 @@ public class PathHandler {
 			for(int i=0; i<size; i++){
 				if(matrix[index][i]&&!closer.contains(cityArray.get(i))){
 					List<city> closerCopy=new ArrayList<city>();
-					Collections.copy(closerCopy, closer);
+					for (city c: closer) {
+						closerCopy.add(c);
+					}
 					closerCopy.add(start);
 					close=close||pathClose(cityArray.get(i),end,closerCopy);
 				}

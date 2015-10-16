@@ -1,5 +1,6 @@
 package TicketToRide.Control;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,16 +39,9 @@ public class PlayerHandler {
 		pathColor pathColor = path.getColor();
 		
 		List<TrainCard> playerTrainCards = player.getTrainCards();
-		int numColor=0;
-		int numLocomotives=0;
-		for(TrainCard card:cards){
-			if(card.getColor().name().equals(pathColor.name()))
-				numColor++;
-			else if(card.getColor()==Constants.trainCard.RAINBOW)
-				numLocomotives++;
-			else
-				return false;
-		}
+		int numColor=Deck.count(cards, pathColor.name());
+		int numLocomotives=Deck.count(cards, Constants.trainCard.RAINBOW);
+		
 		if ((pathColor==Constants.pathColor.GRAY&&path.getCost()==cards.size())
 				||(pathColor!=Constants.pathColor.GRAY&&path.getCost()==numColor+numLocomotives) 
 				&& playerPiece >= pathCost) {
@@ -62,31 +56,23 @@ public class PlayerHandler {
 		return false;
 	}
 
-	public static boolean drawTrainCard(Player player, TrainCard card) {
+	public static TrainCard drawTrainCard(Player player, int index) {
 		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
-		if (faceUpCard.contains(card)) {
-			player.getTrainCards().add(faceUpCard.remove(faceUpCard.indexOf(card)));
-			if(faceDownCard.size()>0)
-				faceUpCard.add(faceDownCard.remove(0));
-			return true;
-		}
-		return false;
+		TrainCard card=faceUpCard.remove(index);
+		if(faceDownCard.size()>0)
+			faceUpCard.add(faceDownCard.remove(0));
+		return card;
 	}
 	
-	public static boolean drawTrainCard(Player player) {
-		player.getTrainCards().add(Deck.trainCardsDeck.remove(0));
-		return true;
+	public static TrainCard drawTrainCard(Player player) {
+		return Deck.trainCardsDeck.remove(0);
 	}
 
-	public static boolean drawDesTickets(Player player, DestinationCard...cards) {
-		List<DestinationCard> removeCards=Deck.desCardDeck.subList(0, 3);
-		for(DestinationCard card: cards)
-			if(!removeCards.contains(card))
-				return false;
-		Collections.addAll(player.getDesCards(), cards);
+	public static List<DestinationCard> drawDesTickets(Player player) {
+		List<DestinationCard> cards=new ArrayList<DestinationCard>();
 		for(int i=0; i<3&&i<Deck.desCardDeck.size();i++)
-			Deck.desCardDeck.remove(0);
-		return true;
+			cards.add(Deck.desCardDeck.remove(0));
+		return cards;
 	}
 }

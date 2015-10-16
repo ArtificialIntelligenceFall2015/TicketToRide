@@ -50,4 +50,18 @@ public class Deck {
 			Collections.swap(card, r.nextInt(s), r.nextInt(s));
 		}
 	}
+	
+	public static int count(List<TrainCard> cards, trainCard color){
+		int n=0;
+		for(TrainCard card:cards){
+			if(card.getColor()==color)
+				n++;
+		}
+		return n;
+	}
+	
+	public static int count(List<TrainCard> cards, String name){
+		trainCard color=trainCard.valueOf(name);
+		return count(cards, color);
+	}
 }
