@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import TicketToRide.Model.DestinationCardDeck;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
-import TicketToRide.Model.TrainCardDeck;
 
 public class Game {
 	private List<Player> players;

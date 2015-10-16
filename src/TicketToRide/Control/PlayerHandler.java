@@ -6,12 +6,11 @@ import java.util.List;
 
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.pathColor;
+import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
-import TicketToRide.Model.DestinationCardDeck;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
-import TicketToRide.Model.TrainCardDeck;
 
 public class PlayerHandler {
 
@@ -64,8 +63,8 @@ public class PlayerHandler {
 	}
 
 	public static boolean drawTrainCard(Player player, TrainCard card) {
-		List<TrainCard> faceUpCard = TrainCardDeck.faceUpCards;
-		List<TrainCard> faceDownCard = TrainCardDeck.cards;
+		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
+		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
 		if (faceUpCard.contains(card)) {
 			player.getTrainCards().add(faceUpCard.remove(faceUpCard.indexOf(card)));
 			faceUpCard.add(faceDownCard.remove(0));
@@ -75,18 +74,18 @@ public class PlayerHandler {
 	}
 	
 	public static boolean drawTrainCard(Player player) {
-		player.getTrainCards().add(TrainCardDeck.cards.remove(0));
+		player.getTrainCards().add(Deck.trainCardsDeck.remove(0));
 		return true;
 	}
 
 	public static boolean drawDesTickets(Player player, DestinationCard...cards) {
-		List<DestinationCard> removeCards=DestinationCardDeck.cards.subList(0, 3);
+		List<DestinationCard> removeCards=Deck.desCardDeck.subList(0, 3);
 		for(DestinationCard card: cards)
 			if(!removeCards.contains(card))
 				return false;
 		Collections.addAll(player.getDesCards(), cards);
-		for(int i=0; i<3&&i<DestinationCardDeck.cards.size();i++)
-			DestinationCardDeck.cards.remove(0);
+		for(int i=0; i<3&&i<Deck.desCardDeck.size();i++)
+			Deck.desCardDeck.remove(0);
 		return true;
 	}
 }
