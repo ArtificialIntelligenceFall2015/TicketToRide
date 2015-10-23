@@ -1,3 +1,6 @@
+/**
+ * PlayerHandler.java
+ */
 package TicketToRide.Control;
 
 import java.util.ArrayList;
@@ -13,6 +16,10 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
 
+/**
+ * @author Jun He
+ *
+ */
 public class PlayerHandler {
 
 	private static final int[] POINT = { 0, 1, 2, 4, 7, 10, 15 };
@@ -28,8 +35,8 @@ public class PlayerHandler {
 		}
 		player.setScore(player.getScore() + score);
 	}
-	
-	public static void organizeCard(Player player){
+
+	public static void organizeCard(Player player) {
 		Collections.sort(player.getTrainCards());
 	}
 
@@ -37,16 +44,17 @@ public class PlayerHandler {
 		int pathCost = path.getCost();
 		int playerPiece = player.getPiece();
 		pathColor pathColor = path.getColor();
-		
+
 		List<TrainCard> playerTrainCards = player.getTrainCards();
 		int numColor=Deck.count(cards, pathColor.name());
 		int numLocomotives=Deck.count(cards, Constants.trainCard.RAINBOW);
 		
-		if ((pathColor==Constants.pathColor.GRAY&&path.getCost()==cards.size())
-				||(pathColor!=Constants.pathColor.GRAY&&path.getCost()==numColor+numLocomotives) 
-				&& playerPiece >= pathCost) {
+		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cards
+				.size())
+				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor
+						+ numLocomotives) && playerPiece >= pathCost) {
 			player.setPiece(playerPiece - pathCost);
-			for(TrainCard card:cards)
+			for (TrainCard card : cards)
 				playerTrainCards.remove(card);
 			path.setPlayer(player);
 			player.getOwnPath().add(path);
@@ -64,7 +72,7 @@ public class PlayerHandler {
 			faceUpCard.add(faceDownCard.remove(0));
 		return card;
 	}
-	
+
 	public static TrainCard drawTrainCard(Player player) {
 		return Deck.trainCardsDeck.remove(0);
 	}
