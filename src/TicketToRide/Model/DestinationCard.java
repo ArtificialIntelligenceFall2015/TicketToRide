@@ -1,5 +1,8 @@
 /**
  * DestinationCard.java
+ * This class represents the Destination Card objects in the game.
+ * It is read in from a csv file.
+ * 
  */
 package TicketToRide.Model;
 
@@ -13,24 +16,27 @@ import TicketToRide.Model.Constants.city;
 public class DestinationCard {
 	private city city1;
 	private city city2;
-
 	private int point = 0;
 	private boolean completed = false;
 
+	/**
+	 * Basic constructor
+	 * @param city1
+	 * @param city2
+	 * @param point
+	 */
 	public DestinationCard(city city1, city city2, int point) {
 		this.city1 = city1;
 		this.city2 = city2;
 		this.point = point;
 	}
 
-	/*
-	 * Function: DestinationCard(String[])
-	 * Inputs: String[] destinationCardArray
-	 *         array of strings that holds all the values of the current 
-	 *         destination card being read in from the CSV file
-	 * Description: Constructor for the DestinationCard class that creates a
-	 *              DestinationCard object based on the values stored in the 
-	 *              destinationCardArray array.
+	/**
+	 * String arg constructor
+	 * Takes a string arg read in from a line in the csv file
+	 * and populates a destination card object with it
+	 * @param destinationCardArray a single destination
+	 * card object read in from csv file line
 	 */
 	public DestinationCard(String[] destinationCardArray) {
 		int i = 0;

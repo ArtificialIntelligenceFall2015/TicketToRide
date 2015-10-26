@@ -1,5 +1,8 @@
 /**
  * Path.java
+ * This class represents the Path object in the game.
+ * It is used to for the edges of the graph, and is 
+ * read in from a csv file.
  */
 package TicketToRide.Model;
 
@@ -17,6 +20,13 @@ public class Path {
 	private int cost = 0;
 	private Player player = null; // recommend renaming this to owningPlayer -SF
 
+	/**
+	 * Basic constructor
+	 * @param city1
+	 * @param city2
+	 * @param color
+	 * @param cost
+	 */
 	public Path(city city1, city city2, pathColor color, int cost) {
 		this.city1 = city1;
 		this.city2 = city2;
@@ -24,14 +34,11 @@ public class Path {
 		this.cost = cost;
 	}
 
-	/*
-	 * Function: Path(String[])
-	 * Inputs: String[] pathArray
-	 *         array of strings that holds all the values of the current 
-	 *         Path object being read in from the CSV file
-	 * Description: Constructor for the Path class that creates a
-	 *              Path object based on the values stored in the 
-	 *              pathArray array.
+	/**
+	 * String arg constructor
+	 * Takes a string arg read in from a line in the csv file
+	 * and populates a path object with it
+	 * @param pathArray a single edge read in from csv file line
 	 */
 	public Path(String[] pathArray) {
 		int i = 0;

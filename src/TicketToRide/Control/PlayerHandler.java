@@ -5,7 +5,6 @@ package TicketToRide.Control;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import TicketToRide.Model.Constants;
@@ -24,6 +23,10 @@ public class PlayerHandler {
 
 	private static final int[] POINT = { 0, 1, 2, 4, 7, 10, 15 };
 
+	/**
+	 * 
+	 * @param player
+	 */
 	public static void calcDisCardPoint(Player player) {
 		int score = 0;
 		for (DestinationCard card : player.getDesCards()) {
@@ -36,10 +39,21 @@ public class PlayerHandler {
 		player.setScore(player.getScore() + score);
 	}
 
+	/**
+	 * 
+	 * @param player
+	 */
 	public static void organizeCard(Player player) {
 		Collections.sort(player.getTrainCards());
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @param path
+	 * @param cards
+	 * @return
+	 */
 	public static boolean claimARoute(Player player, Path path, List<TrainCard> cards) {
 		int pathCost = path.getCost();
 		int playerPiece = player.getPiece();
@@ -64,6 +78,12 @@ public class PlayerHandler {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @param index
+	 * @return
+	 */
 	public static TrainCard drawTrainCard(Player player, int index) {
 		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
@@ -73,10 +93,20 @@ public class PlayerHandler {
 		return card;
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
 	public static TrainCard drawTrainCard(Player player) {
 		return Deck.trainCardsDeck.remove(0);
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
 	public static List<DestinationCard> drawDesTickets(Player player) {
 		List<DestinationCard> cards=new ArrayList<DestinationCard>();
 		for(int i=0; i<3&&i<Deck.desCardDeck.size();i++)

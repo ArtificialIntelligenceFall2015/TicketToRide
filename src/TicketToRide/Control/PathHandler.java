@@ -22,12 +22,20 @@ public class PathHandler {
 	private static int size;
 	private static boolean[][] matrix;
 
+	/**
+	 * 
+	 */
 	static {
 		cityArray = Arrays.asList(Constants.city.values());
 		size = cityArray.size();
 		matrix = new boolean[size][size];
 	}
 	
+	/**
+	 * 
+	 * @param cards
+	 * @param paths
+	 */
 	public static void determinePathClose(DestinationCard cards, List<Path> paths){
 		int size=Constants.city.values().length;
 		matrix= new boolean[size][size];
@@ -38,6 +46,13 @@ public class PathHandler {
 		cards.setCompleted(pathClose(cards.getCity1(),cards.getCity2(),new ArrayList<city>()));
 	}
 
+	/**
+	 * 
+	 * @param start
+	 * @param end
+	 * @param closer
+	 * @return
+	 */
 	private static boolean pathClose(city start, city end, List<city> closer) {
 		boolean close = false;
 		if (start == end)

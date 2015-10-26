@@ -16,11 +16,19 @@ public class Game {
 	private List<Player> players;
 	private Player turn;
 
+	/**
+	 * 
+	 * @param p
+	 */
 	public Game(Player... p) {
 		players = new ArrayList<Player>();
 		Collections.addAll(players, p);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Player> getWinners() {
 		List<Player> winner = new ArrayList<Player>();
 		int maxScore = players.get(0).getScore();
@@ -35,6 +43,9 @@ public class Game {
 		return winner;
 	}
 
+	/**
+	 * 
+	 */
 	public void nextPlayer() {
 		int turnIndex = players.indexOf(turn);
 		if (turnIndex == players.size() - 1)
@@ -43,6 +54,10 @@ public class Game {
 			turn = players.get(turnIndex++);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean gameEnd() {
 		return turn.getPiece() < 3;
 	}

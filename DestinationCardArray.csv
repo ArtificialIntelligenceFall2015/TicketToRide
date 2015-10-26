@@ -1,31 +1,31 @@
-Destination A,Destination B,Point Value
-Los Angeles,New York,21
-Duluth,Houston,8
-New York,Atlanta,6
-Dallas,New York,11
-Toronto,Miami,10
-Seattle,Los Angeles,9
-Sault Ste. Marie,Nashville,8
-Denver,Pittsburgh,11
-Vancouver,Santa Fe,13
-Duluth,El Paso,10
-Winnipeg,Houston,12
-Winnipeg,Little Rock,11
-Calgary,Phoenix,13
-Montreal,New Orleans,13
-Boston,Miami,12
-Calgary,Salt Lake City,7
-Kansas City,Houston,5
-Chicago,Santa Fe,9
-Portland,Phoenix,11
-Chicago,New Orleans,7
-Montreal,Atlanta,9
-Sault Ste. Marie,Oklahoma City,9
-Seattle,New York,22
-Helena,Los Angeles,8
-San Francisco,Atlanta,17
-Vancouver,Montreal,20
-Portland,Nashville,17
-Los Angeles,Miami,20
-Los Angeles,Chicago,16
-Denver,El Paso,4
+DESTINATION A,DESTINATION B,POINT VALUE
+LOS_ANGELES,NEW_YORK,21
+DULUTH,HOUSTON,8
+NEW_YORK,ATLANTA,6
+DALLAS,NEW_YORK,11
+TORONTO,MIAMI,10
+SEATTLE,LOS_ANGELES,9
+SAULT_STE_MARIE,NASHVILLE,8
+DENVER,PITTSBURGH,11
+VANCOUVER,SANTA_FE,13
+DULUTH,EL_PASO,10
+WINNIPEG,HOUSTON,12
+WINNIPEG,LITTLE_ROCK,11
+CALGARY,PHOENIX,13
+MONTREAL,NEW_ORLEANS,13
+BOSTON,MIAMI,12
+CALGARY,SALT_LAKE_CITY,7
+KANSAS_CITY,HOUSTON,5
+CHICAGO,SANTA_FE,9
+PORTLAND,PHOENIX,11
+CHICAGO,NEW_ORLEANS,7
+MONTREAL,ATLANTA,9
+SAULT_STE_MARIE,OKLAHOMA_CITY,9
+SEATTLE,NEW_YORK,22
+HELENA,LOS_ANGELES,8
+SAN_FRANCISCO,ATLANTA,17
+VANCOUVER,MONTREAL,20
+PORTLAND,NASHVILLE,17
+LOS_ANGELES,MIAMI,20
+LOS_ANGELES,CHICAGO,16
+DENVER,EL_PASO,4

@@ -15,9 +15,7 @@ public class Player {
 	private List<TrainCard> trainCards;
 	private List<DestinationCard> desCards;
 	private List<Path> ownPath;
-
 	private trainColor color;
-
 	private int piece = 45;
 
 	/**

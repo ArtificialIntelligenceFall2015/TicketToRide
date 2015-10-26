@@ -12,10 +12,17 @@ import TicketToRide.Model.Constants.trainCard;
 public class TrainCard implements Comparable<TrainCard> {
 	private trainCard color;
 
+	/**
+	 * Constructor
+	 * @param color
+	 */
 	public TrainCard(trainCard color) {
 		this.color = color;
 	}
 
+	/**
+	 * override compareTo class
+	 */
 	public int compareTo(TrainCard arg0) {
 		return this.color.name().compareTo(arg0.color.name());
 	}

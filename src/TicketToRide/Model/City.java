@@ -1,5 +1,7 @@
 /**
  * City.java
+ * This class defines the City object, used to represent the nodes of the graph
+ * and populated from a csv file
  */
 package TicketToRide.Model;
 
@@ -14,17 +16,22 @@ public class City {
 	private int x_val = 0;
 	private int y_val = 0;
 
+	/**
+	 * Basic Constructor
+	 * @param cityName
+	 * @param x_val
+	 * @param y_val
+	 */
 	public City(city cityName, int x_val, int y_val) {
 		this.cityName = cityName;
 		this.x_val = x_val;
 		this.y_val = y_val;
 	}
 
-	/*
-	 * Function: Path(String[]) Inputs: String[] pathArray array of strings that
-	 * holds all the values of the current Path object being read in from the
-	 * CSV file Description: Constructor for the Path class that creates a Path
-	 * object based on the values stored in the pathArray array.
+	/**
+	 * String arg contructor: creates City object based on 
+	 * values stored in cityArray read in from csv file
+	 * @param cityArray city data from csv file
 	 */
 	public City(String[] cityArray) {
 		int i = 0;
