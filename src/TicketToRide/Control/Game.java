@@ -1,5 +1,6 @@
 /**
  * Game.java
+ * This class behave as view of game.
  */
 package TicketToRide.Control;
 
@@ -26,8 +27,8 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * get winners list
+	 * @return winner
 	 */
 	public List<Player> getWinners() {
 		List<Player> winner = new ArrayList<Player>();
@@ -44,7 +45,7 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * switch turn to next player
 	 */
 	public void nextPlayer() {
 		int turnIndex = players.indexOf(turn);
@@ -55,7 +56,7 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * determine game end
 	 * @return
 	 */
 	public boolean gameEnd() {

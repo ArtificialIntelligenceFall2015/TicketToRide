@@ -15,7 +15,7 @@ import TicketToRide.Model.Path;
 
 /**
  * @author Jun He
- *
+ * This class handler path functionality
  */
 public class PathHandler {
 	private static List<city> cityArray;
@@ -23,7 +23,7 @@ public class PathHandler {
 	private static boolean[][] matrix;
 
 	/**
-	 * 
+	 * Generate global 2d array as path close assistance
 	 */
 	static {
 		cityArray = Arrays.asList(Constants.city.values());
@@ -32,7 +32,7 @@ public class PathHandler {
 	}
 	
 	/**
-	 * 
+	 * determine path close
 	 * @param cards
 	 * @param paths
 	 */

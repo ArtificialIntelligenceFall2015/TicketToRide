@@ -1,5 +1,6 @@
 /**
  * World.java
+ * This class represent as an world map, which contain a list of paths
  */
 package TicketToRide.Model;
 

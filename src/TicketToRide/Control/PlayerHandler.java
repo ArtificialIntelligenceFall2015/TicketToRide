@@ -17,14 +17,14 @@ import TicketToRide.Model.TrainCard;
 
 /**
  * @author Jun He
- *
+ * This class's methods work as player's behave
  */
 public class PlayerHandler {
 
 	private static final int[] POINT = { 0, 1, 2, 4, 7, 10, 15 };
 
 	/**
-	 * 
+	 * calculate destination ticket point
 	 * @param player
 	 */
 	public static void calcDisCardPoint(Player player) {
@@ -40,7 +40,7 @@ public class PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * Sort cards
 	 * @param player
 	 */
 	public static void organizeCard(Player player) {
@@ -48,7 +48,7 @@ public class PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * perform claim a route behave
 	 * @param player
 	 * @param path
 	 * @param cards
@@ -79,7 +79,7 @@ public class PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * perform draw train card behave
 	 * @param player
 	 * @param index
 	 * @return
@@ -94,7 +94,7 @@ public class PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * perform draw train card behave
 	 * @param player
 	 * @return
 	 */
@@ -103,7 +103,7 @@ public class PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * perform draw destination ticket behave
 	 * @param player
 	 * @return
 	 */
