@@ -6,16 +6,14 @@
  */
 package TicketToRide.Model;
 
-import TicketToRide.Model.Constants.city;
-
 /**
  * @author Jun He
  * @author Sean Fast
  *
  */
 public class DestinationCard {
-	private city city1;
-	private city city2;
+	private String city1;
+	private String city2;
 	private int point = 0;
 	private boolean completed = false;
 
@@ -25,7 +23,7 @@ public class DestinationCard {
 	 * @param city2
 	 * @param point
 	 */
-	public DestinationCard(city city1, city city2, int point) {
+	public DestinationCard(String city1, String city2, int point) {
 		this.city1 = city1;
 		this.city2 = city2;
 		this.point = point;
@@ -38,11 +36,11 @@ public class DestinationCard {
 	 * @param destinationCardArray a single destination
 	 * card object read in from csv file line
 	 */
-	public DestinationCard(String[] destinationCardArray) {
+	public DestinationCard(String[] destinationCardArray) {	//TODO This constructor need to be fixed
 		int i = 0;
 
-		this.city1 = city.valueOf(destinationCardArray[i++]);
-		this.city2 = city.valueOf(destinationCardArray[i++]);
+		//this.city1 = city.valueOf(destinationCardArray[i++]);
+		//this.city2 = city.valueOf(destinationCardArray[i++]);
 		this.point = Integer.parseInt(destinationCardArray[i++]);
 
 	}
@@ -50,7 +48,7 @@ public class DestinationCard {
 	/**
 	 * @return the city1
 	 */
-	public city getCity1() {
+	public String getCity1() {
 		return city1;
 	}
 
@@ -58,14 +56,14 @@ public class DestinationCard {
 	 * @param city1
 	 *            the city1 to set
 	 */
-	public void setCity1(city city1) {
+	public void setCity1(String city1) {
 		this.city1 = city1;
 	}
 
 	/**
 	 * @return the city2
 	 */
-	public city getCity2() {
+	public String getCity2() {
 		return city2;
 	}
 
@@ -73,7 +71,7 @@ public class DestinationCard {
 	 * @param city2
 	 *            the city2 to set
 	 */
-	public void setCity2(city city2) {
+	public void setCity2(String city2) {
 		this.city2 = city2;
 	}
 

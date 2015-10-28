@@ -31,6 +31,7 @@ public class Deck {
 	static {
 		trainCardsDeck = new ArrayList<TrainCard>();
 		trainFaceUpCards = new ArrayList<TrainCard>();
+		desCardDeck = ParseCSVData.parseDestinationCards();
 		for (trainCard tc : trainCard.values()) {
 			int size = 12;
 			if (tc == trainCard.RAINBOW)

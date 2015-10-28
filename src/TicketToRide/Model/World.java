@@ -13,8 +13,10 @@ import java.util.List;
  */
 public class World {
 	static {
-		paths = new ArrayList<Path>();
+		map = new ArrayList<Path>();
+		city = new ArrayList<String>();
 	}
 
-	public static List<Path> paths;
+	public static List<Path> map;
+	public static List<String> city;
 }

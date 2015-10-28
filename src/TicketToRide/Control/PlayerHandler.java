@@ -113,4 +113,12 @@ public class PlayerHandler {
 			cards.add(Deck.desCardDeck.remove(0));
 		return cards;
 	}
+	
+	/**
+	 * 
+	 * @param cards
+	 */
+	public static void returnDesCardToDeck(List<DestinationCard> cards){
+		Deck.desCardDeck.addAll(cards);
+	}
 }

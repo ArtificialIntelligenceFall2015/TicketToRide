@@ -5,14 +5,12 @@
  */
 package TicketToRide.Model;
 
-import TicketToRide.Model.Constants.city;
-
 /**
  * @author Sean Fast
  *
  */
 public class City {
-	private city cityName;
+	private String cityName;
 	private int x_val = 0;
 	private int y_val = 0;
 
@@ -22,7 +20,7 @@ public class City {
 	 * @param x_val
 	 * @param y_val
 	 */
-	public City(city cityName, int x_val, int y_val) {
+	public City(String cityName, int x_val, int y_val) {
 		this.cityName = cityName;
 		this.x_val = x_val;
 		this.y_val = y_val;
@@ -36,7 +34,7 @@ public class City {
 	public City(String[] cityArray) {
 		int i = 0;
 
-		this.cityName = city.valueOf(cityArray[i++]);
+		//TODO this.cityName = city.valueOf(cityArray[i++]);
 		this.x_val = Integer.parseInt(cityArray[i++]);
 		this.y_val = Integer.parseInt(cityArray[i++]);
 
@@ -45,7 +43,7 @@ public class City {
 	/**
 	 * @return the cityName
 	 */
-	public city getCityName() {
+	public String getCityName() {
 		return cityName;
 	}
 
@@ -53,7 +51,7 @@ public class City {
 	 * @param cityName
 	 *            the cityName to set
 	 */
-	public void setCityName(city cityName) {
+	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
 

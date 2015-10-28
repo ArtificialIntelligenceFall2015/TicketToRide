@@ -4,21 +4,17 @@
 package TicketToRide.Control;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import TicketToRide.Model.Constants;
-import TicketToRide.Model.Constants.city;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
+import TicketToRide.Model.World;
 
 /**
  * @author Jun He
  * This class handler path functionality
  */
 public class PathHandler {
-	private static List<city> cityArray;
 	private static int size;
 	private static boolean[][] matrix;
 
@@ -26,8 +22,7 @@ public class PathHandler {
 	 * Generate global 2d array as path close assistance
 	 */
 	static {
-		cityArray = Arrays.asList(Constants.city.values());
-		size = cityArray.size();
+		size = World.city.size();
 		matrix = new boolean[size][size];
 	}
 	
@@ -37,13 +32,11 @@ public class PathHandler {
 	 * @param paths
 	 */
 	public static void determinePathClose(DestinationCard cards, List<Path> paths){
-		int size=Constants.city.values().length;
-		matrix= new boolean[size][size];
 		for(Path path:paths){
-			matrix[cityArray.indexOf(path.getCity1())][cityArray.indexOf(path.getCity2())]=true;
-			matrix[cityArray.indexOf(path.getCity2())][cityArray.indexOf(path.getCity1())]=true;
+			matrix[World.city.indexOf(path.getCity1())][World.city.indexOf(path.getCity2())]=true;
+			matrix[World.city.indexOf(path.getCity2())][World.city.indexOf(path.getCity1())]=true;
 		}
-		cards.setCompleted(pathClose(cards.getCity1(),cards.getCity2(),new ArrayList<city>()));
+		cards.setCompleted(pathClose(cards.getCity1(),cards.getCity2(),new ArrayList<String>()));
 	}
 
 	/**
@@ -53,20 +46,20 @@ public class PathHandler {
 	 * @param closer
 	 * @return
 	 */
-	private static boolean pathClose(city start, city end, List<city> closer) {
+	private static boolean pathClose(String start, String end, List<String> closer) {
 		boolean close = false;
-		if (start == end)
+		if (start.equals(end))
 			return true;
 		else {
-			int index = cityArray.indexOf(start);
+			int index = World.city.indexOf(start);
 			for (int i = 0; i < size; i++) {
-				if (matrix[index][i] && !closer.contains(cityArray.get(i))) {
-					List<city> closerCopy = new ArrayList<city>();
-					for (city c: closer) {
+				if (matrix[index][i] && !closer.contains(World.city.get(i))) {
+					List<String> closerCopy = new ArrayList<String>();
+					for (String c: closer) {
 						closerCopy.add(c);
 					}
 					closerCopy.add(start);
-					close=close||pathClose(cityArray.get(i),end,closerCopy);
+					close=close||pathClose(World.city.get(i),end,closerCopy);
 				}
 			}
 		}
