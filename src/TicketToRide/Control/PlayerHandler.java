@@ -54,23 +54,21 @@ public class PlayerHandler {
 	 * @param cards
 	 * @return
 	 */
-	public static boolean claimARoute(Player player, Path path, List<TrainCard> cards) {
+	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
 		int pathCost = path.getCost();
 		int playerPiece = player.getPiece();
 		pathColor pathColor = path.getColor();
 
 		List<TrainCard> playerTrainCards = player.getTrainCards();
-		int numColor=Deck.count(cards, pathColor.name());
-		int numLocomotives=Deck.count(cards, Constants.trainCard.RAINBOW);
+		int numColor=Deck.count(cardsToSpend, pathColor.name());
+		int numLocomotives=Deck.count(cardsToSpend, Constants.trainCard.RAINBOW);
 		
-		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cards
-				.size())
-				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor
-						+ numLocomotives) && playerPiece >= pathCost) {
+		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cardsToSpend.size())
+				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor+ numLocomotives) && playerPiece >= pathCost) {
 			player.setPiece(playerPiece - pathCost);
-			for (TrainCard card : cards)
+			for (TrainCard card : cardsToSpend)
 				playerTrainCards.remove(card);
-			path.setPlayer(player);
+			path.setOwningPlayer(player);
 			player.getOwnPath().add(path);
 			player.setScore(player.getScore() + POINT[pathCost]);
 			return true;
@@ -90,6 +88,7 @@ public class PlayerHandler {
 		TrainCard card=faceUpCard.remove(index);
 		if(faceDownCard.size()>0)
 			faceUpCard.add(faceDownCard.remove(0));
+		player.getTrainCards().add(card);
 		return card;
 	}
 
@@ -99,7 +98,9 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
-		return Deck.trainCardsDeck.remove(0);
+		TrainCard card=Deck.trainCardsDeck.remove(0);
+		player.getTrainCards().add(card);
+		return card;
 	}
 
 	/**
@@ -118,7 +119,7 @@ public class PlayerHandler {
 	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(List<DestinationCard> cards){
-		Deck.desCardDeck.addAll(cards);
+	public static void returnDesCardToDeck(DestinationCard cards){
+		Deck.desCardDeck.add(cards);
 	}
 }

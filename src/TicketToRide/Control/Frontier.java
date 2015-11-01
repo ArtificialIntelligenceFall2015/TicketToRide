@@ -7,23 +7,20 @@ package TicketToRide.Control;
 
 import java.util.List;
 
-import TicketToRide.Model.Path;
-import TicketToRide.Model.Player;
+import TicketToRide.Model.PlayerAI;
 
 /**
  * This class defines the Frontier object which represents the frontier of the
  * A* search
  */
 public class Frontier implements Comparable<Frontier> {
-	Frontier preFrontier; // previous frontier in path
-	List<Path> list; // collection of characters in iteration
+	List<String> list; // collection of characters in iteration
 	int cost; // current cost to get to the path
 
 	/**
 	 * Constructor for Frontier object
 	 */
-	public Frontier(Frontier preFrontier, List<Path> list, int cost) {
-		this.preFrontier = preFrontier;
+	public Frontier(List<String> list, int cost) {
 		this.list = list;
 		this.cost = cost;
 	}
@@ -31,7 +28,7 @@ public class Frontier implements Comparable<Frontier> {
 	/**
 	 * @return the list
 	 */
-	public List<Path> getList() {
+	public List<String> getList() {
 		return list;
 	}
 
@@ -44,8 +41,7 @@ public class Frontier implements Comparable<Frontier> {
 
 	/**
 	 * @return weight 
-	 * 			the current cost + the heuristic value heuristic value is
-	 *         the number of B's in first four spaces
+	 * 	the current cost + the heuristic value heuristic value is
 	 */
 	public int getWeight() {
 		return getHeuristicCost() + cost;
@@ -68,26 +64,15 @@ public class Frontier implements Comparable<Frontier> {
 	 * existing frontier list
 	 */
 	public boolean equals(Frontier arg0) {
-		//TODO
-		return false;
-	}
-
-	/**
-	 * @return preFrontier object
-	 */
-	public Frontier getPreFrontier() {
-		return preFrontier;
-	}
-
-	/**
-	 * @param preFrontier
-	 */
-	public void setPreFrontier(Frontier preFrontier) {
-		this.preFrontier = preFrontier;
+		return this.getLastCity().equals(arg0.getLastCity());
 	}
 	
-	public static int calPathCost(Player player, Path path){
+	public static int calPathCost(PlayerAI player, String city1, String city2){
 		//TODO
 		return 0;
+	}
+	
+	public String getLastCity(){
+		return list.get(list.size()-1);
 	}
 }

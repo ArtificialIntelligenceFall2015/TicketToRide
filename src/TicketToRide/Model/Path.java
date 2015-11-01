@@ -18,7 +18,7 @@ public class Path {
 	private String city2;
 	private pathColor color;
 	private int cost = 0;
-	private Player player = null; // recommend renaming this to owningPlayer -SF
+	private Player owningPlayer = null;
 
 	/**
 	 * Basic constructor
@@ -113,16 +113,23 @@ public class Path {
 	/**
 	 * @return the player
 	 */
-	public Player getPlayer() {
-		return player;
+	public Player getOwningPlayer() {
+		return owningPlayer;
 	}
 
 	/**
 	 * @param player
 	 *            the player to set
 	 */
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setOwningPlayer(Player player) {
+		this.owningPlayer = player;
+	}
+	
+	public boolean equals(Path p){
+		boolean c1=this.getCity1().equals(p.getCity1());
+		boolean c2=this.getCity2().equals(p.getCity2());
+		boolean col=(this.getColor()==p.getColor());
+		return c1&&c2&&col;
 	}
 
 }

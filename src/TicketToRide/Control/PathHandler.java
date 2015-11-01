@@ -4,11 +4,17 @@
 package TicketToRide.Control;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
+import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
+import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.World;
+import TicketToRide.Model.Constants.pathColor;
+import TicketToRide.Model.Constants.trainCard;
 
 /**
  * @author Jun He
@@ -16,14 +22,14 @@ import TicketToRide.Model.World;
  */
 public class PathHandler {
 	private static int size;
-	private static boolean[][] matrix;
+	public static boolean[][] pathMatrix;
 
 	/**
 	 * Generate global 2d array as path close assistance
 	 */
 	static {
 		size = World.city.size();
-		matrix = new boolean[size][size];
+		pathMatrix = new boolean[size][size];
 	}
 	
 	/**
@@ -33,8 +39,10 @@ public class PathHandler {
 	 */
 	public static void determinePathClose(DestinationCard cards, List<Path> paths){
 		for(Path path:paths){
-			matrix[World.city.indexOf(path.getCity1())][World.city.indexOf(path.getCity2())]=true;
-			matrix[World.city.indexOf(path.getCity2())][World.city.indexOf(path.getCity1())]=true;
+			int c1=World.city.indexOf(path.getCity1());
+			int c2=World.city.indexOf(path.getCity2());
+			pathMatrix[c1][c2]=true;
+			pathMatrix[c2][c1]=true;
 		}
 		cards.setCompleted(pathClose(cards.getCity1(),cards.getCity2(),new ArrayList<String>()));
 	}
@@ -53,7 +61,7 @@ public class PathHandler {
 		else {
 			int index = World.city.indexOf(start);
 			for (int i = 0; i < size; i++) {
-				if (matrix[index][i] && !closer.contains(World.city.get(i))) {
+				if (pathMatrix[index][i] && !closer.contains(World.city.get(i))) {
 					List<String> closerCopy = new ArrayList<String>();
 					for (String c: closer) {
 						closerCopy.add(c);
@@ -64,6 +72,44 @@ public class PathHandler {
 			}
 		}
 		return close;
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static HashMap<pathColor, Integer> minPathCost(PlayerAI player){
+		HashMap<pathColor, Integer> pathCollection=new HashMap<pathColor, Integer>();
+		for(List<Path> list:player.getFavorPath()){
+			for(Path path: list){
+				if(path.getOwningPlayer()==null){
+					int cost=path.getCost();
+					pathColor color=path.getColor();
+					if((pathCollection.containsKey(color)&&pathCollection.get(color)>cost)||!pathCollection.containsKey(color)){
+						pathCollection.put(color, cost);
+					}
+				}
+			}
+		}
+		
+		return pathCollection;
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static Path findPath(PlayerAI player){
+		Entry<pathColor, Integer> claimColor =player.getClaimColor();
+		for(List<Path> list:player.getFavorPath()){
+			for(Path path: list){
+				if(path.getColor()==claimColor.getKey()&&path.getCost()==claimColor.getValue())
+					return path;
+			}
+		}
+		return null;
 	}
 
 }
