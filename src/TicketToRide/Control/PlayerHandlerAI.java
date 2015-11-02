@@ -126,7 +126,7 @@ public class PlayerHandlerAI extends PlayerHandler{
 	 * @param player
 	 */
 	public static void claimARouteAI(PlayerAI player){
-		Path claimPath=PathHandler.findPath(player);
+		Path claimPath=PathHandler.findPathByColorAndCost(player);
 		List<TrainCard> cardsToSpend=new ArrayList<TrainCard>();
 		int cost=claimPath.getCost();
 		pathColor color=claimPath.getColor();
