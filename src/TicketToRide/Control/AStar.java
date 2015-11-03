@@ -15,9 +15,7 @@ import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.World;
 
 /**
- * This class receives user input from console in the form of a string
- * and converts it to uppercase, then a character array. Then it uses the A*
- * algorithm to compute the solution path
+ * uses the A* algorithm to compute the solution path
  */
 public class AStar {
 	private List<Frontier> frontiers; //list of frontier paths

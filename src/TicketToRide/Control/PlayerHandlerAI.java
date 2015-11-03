@@ -13,7 +13,6 @@ import TicketToRide.Model.Constants.trainCard;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
-import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 
