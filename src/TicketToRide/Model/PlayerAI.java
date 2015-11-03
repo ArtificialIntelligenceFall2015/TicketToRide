@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import TicketToRide.Control.AStar;
 import TicketToRide.Model.Constants.pathColor;
+import TicketToRide.Model.Constants.trainColor;
 
 /**
  * 
@@ -15,10 +17,15 @@ import TicketToRide.Model.Constants.pathColor;
 
 public class PlayerAI extends Player{
 
-	private List<List<Path>> favorPath=new ArrayList<List<Path>>();
-	private Entry<pathColor, Integer> claimColor = null;
-	private pathColor wantClaimColor =null;
+	private List<List<Path>> favorPath;
+	private Entry<pathColor, Integer> claimColor;
+	private pathColor wantClaimColor;
 
+	public PlayerAI(trainColor color) {
+		super(color);
+		favorPath=new ArrayList<List<Path>>();
+	}
+	
 	/**
 	 * @return the favorPath
 	 */

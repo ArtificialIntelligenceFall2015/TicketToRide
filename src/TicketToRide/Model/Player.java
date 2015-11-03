@@ -3,6 +3,7 @@
  */
 package TicketToRide.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import TicketToRide.Model.Constants.trainColor;
 
@@ -18,6 +19,12 @@ public class Player {
 	private trainColor color;
 	private int piece = 45;
 
+	public Player(trainColor color){
+		trainCards=new ArrayList<TrainCard>();
+		desCards=new ArrayList<DestinationCard>();
+		ownPath=new ArrayList<Path>();
+		this.color=color;
+	}
 	/**
 	 * @return the score
 	 */
@@ -41,26 +48,10 @@ public class Player {
 	}
 
 	/**
-	 * @param trainCards
-	 *            the trainCards to set
-	 */
-	public void setTrainCards(List<TrainCard> trainCards) {
-		this.trainCards = trainCards;
-	}
-
-	/**
 	 * @return the desCards
 	 */
 	public List<DestinationCard> getDesCards() {
 		return desCards;
-	}
-
-	/**
-	 * @param desCards
-	 *            the desCards to set
-	 */
-	public void setDesCards(List<DestinationCard> desCards) {
-		this.desCards = desCards;
 	}
 
 	/**
@@ -70,13 +61,6 @@ public class Player {
 		return ownPath;
 	}
 
-	/**
-	 * @param ownPath
-	 *            the ownPath to set
-	 */
-	public void setOwnPath(List<Path> ownPath) {
-		this.ownPath = ownPath;
-	}
 
 	/**
 	 * @return the color

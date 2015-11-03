@@ -57,14 +57,19 @@ public class PlayerHandler {
 	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
 		int pathCost = path.getCost();
 		int playerPiece = player.getPiece();
+		
+		int numColor=0;
+		int numRainbow=0;
 		pathColor pathColor = path.getColor();
 
 		List<TrainCard> playerTrainCards = player.getTrainCards();
-		int numColor=Deck.count(cardsToSpend, pathColor.name());
-		int numLocomotives=Deck.count(cardsToSpend, Constants.trainCard.RAINBOW);
+		if(pathColor != Constants.pathColor.GRAY){
+			numColor=Deck.count(cardsToSpend, pathColor.name());
+			numRainbow=Deck.count(cardsToSpend, Constants.trainCard.RAINBOW);
+		}
 		
 		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cardsToSpend.size())
-				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor+ numLocomotives) && playerPiece >= pathCost) {
+				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor+ numRainbow) && playerPiece >= pathCost) {
 			player.setPiece(playerPiece - pathCost);
 			for (TrainCard card : cardsToSpend)
 				playerTrainCards.remove(card);

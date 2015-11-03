@@ -16,7 +16,7 @@ import TicketToRide.Control.PathHandler;
  */
 public class World {
 	public static List<Path> map;
-	public static List<String> city;
+	public static List<City> cities;
 
 	/**
 	 * This field use for get path by using cities string 
@@ -26,9 +26,17 @@ public class World {
 	 **/
 	public static HashMap<String, List<Path>> citiesPath;
 	
+	public static HashMap<String, City> stringToCities;
+	
 	static {
-		map = new ArrayList<Path>();
-		city = new ArrayList<String>();
+		cities=ParseCSVData.parseCities();
+		stringToCities=new HashMap<String, City>();
+		
+		for(City city: cities){
+			stringToCities.put(city.getCityName(), city);
+		}
+		
+		map = ParseCSVData.parseRoutes();
 		citiesPath=new HashMap<String, List<Path>>();
 		
 		for(Path path: map){

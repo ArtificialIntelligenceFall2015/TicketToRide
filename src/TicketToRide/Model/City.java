@@ -34,7 +34,7 @@ public class City {
 	public City(String[] cityArray) {
 		int i = 0;
 
-		//TODO this.cityName = city.valueOf(cityArray[i++]);
+		this.cityName = cityArray[i++];
 		this.x_val = Integer.parseInt(cityArray[i++]);
 		this.y_val = Integer.parseInt(cityArray[i++]);
 
@@ -84,5 +84,8 @@ public class City {
 	public void setY_val(int y_val) {
 		this.y_val = y_val;
 	}
-
+	
+	public boolean equals(City c){
+		return cityName.equals(c.getCityName());
+	}
 }

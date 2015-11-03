@@ -7,6 +7,7 @@ package TicketToRide.Control;
 
 import java.util.List;
 
+import TicketToRide.Model.City;
 import TicketToRide.Model.PlayerAI;
 
 /**
@@ -14,13 +15,13 @@ import TicketToRide.Model.PlayerAI;
  * A* search
  */
 public class Frontier implements Comparable<Frontier> {
-	List<String> list; // collection of characters in iteration
+	List<City> list; // collection of characters in iteration
 	int cost; // current cost to get to the path
 
 	/**
 	 * Constructor for Frontier object
 	 */
-	public Frontier(List<String> list, int cost) {
+	public Frontier(List<City> list, int cost) {
 		this.list = list;
 		this.cost = cost;
 	}
@@ -28,7 +29,7 @@ public class Frontier implements Comparable<Frontier> {
 	/**
 	 * @return the list
 	 */
-	public List<String> getList() {
+	public List<City> getList() {
 		return list;
 	}
 
@@ -67,12 +68,12 @@ public class Frontier implements Comparable<Frontier> {
 		return this.getLastCity().equals(arg0.getLastCity());
 	}
 	
-	public static int calPathCost(PlayerAI player, String city1, String city2){
+	public static int calPathCost(PlayerAI player, City city1, City city2){
 		//TODO
 		return 0;
 	}
 	
-	public String getLastCity(){
+	public City getLastCity(){
 		return list.get(list.size()-1);
 	}
 }

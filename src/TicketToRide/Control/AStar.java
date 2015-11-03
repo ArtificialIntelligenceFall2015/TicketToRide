@@ -22,8 +22,8 @@ public class AStar {
 	private List<Frontier> closed; //list of closed paths
 	private Frontier goal; //final state of character array (all W's to left of leftmost B)
 
-	private String startCity;
-	private String endCity;
+	private City startCity;
+	private City endCity;
 	
 	private PlayerAI player;
 
@@ -36,7 +36,7 @@ public class AStar {
 		closed = new ArrayList<Frontier>();
 		startCity=card.getCity1();
 		endCity=card.getCity2();
-		List<String> list=new ArrayList<String>();
+		List<City> list=new ArrayList<City>();
 		list.add(startCity);
 		
 		frontiers.add(new Frontier(list, 0));
@@ -60,14 +60,14 @@ public class AStar {
 	 * This method expands the target's children state
 	 */
 	private void expandFronter(Frontier frontier) {
-		String lastCity=frontier.getLastCity();
-		int lastCityIndex=World.city.indexOf(lastCity);
+		City lastCity=frontier.getLastCity();
+		int lastCityIndex=World.cities.indexOf(lastCity);
 		for(int i=0; i<PathHandler.pathMatrix[lastCityIndex].length; i++){
 			if(PathHandler.pathMatrix[lastCityIndex][i]){
-				List<String> newList = new ArrayList<String>();
+				List<City> newList = new ArrayList<City>();
 				newList.addAll(frontier.getList());
-				newList.add(World.city.get(i));
-				int cost=frontier.getCost()+Frontier.calPathCost(player, lastCity,World.city.get(i));
+				newList.add(World.cities.get(i));
+				int cost=frontier.getCost()+Frontier.calPathCost(player, lastCity,World.cities.get(i));
 				Frontier newFrontier=new Frontier(newList, cost);
 				if(!isContains(frontiers,newFrontier)&&!isContains(frontiers,newFrontier)){
 					frontiers.add(newFrontier);
@@ -80,7 +80,7 @@ public class AStar {
 	 * This method checks if given frontier is goal state
 	 */
 	private boolean goal(Frontier frontier) {
-		String lastCity=frontier.getLastCity();
+		City lastCity=frontier.getLastCity();
 		return lastCity.equals(endCity);
 	}
 	
