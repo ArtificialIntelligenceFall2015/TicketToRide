@@ -101,7 +101,7 @@ public class PathHandler {
 	 * @param player
 	 * @return
 	 */
-	public static Path findPath(PlayerAI player){
+	public static Path findPathByColorAndCost(PlayerAI player){
 		Entry<pathColor, Integer> claimColor =player.getClaimColor();
 		for(List<Path> list:player.getFavorPath()){
 			for(Path path: list){
@@ -110,6 +110,45 @@ public class PathHandler {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
+	public static List<Path> getPath(String c1, String c2) {
+		String key = getKey(c1,c2);
+		return World.citiesPath.get(key);
+	}
+	
+	/**
+	 * 
+	 * @param c1
+	 * @param c2
+	 * @param path
+	 */
+	public static void addCitysPath(String c1, String c2, Path path){
+		String key = getKey(c1,c2);
+		
+		if(World.citiesPath.containsKey(key)){
+			World.citiesPath.get(key).add(path);
+		}else{
+			List<Path> list=new ArrayList<Path>();
+			list.add(path);
+			World.citiesPath.put(key, list);
+		}
+	}
+	
+	private static String getKey(String c1, String c2){
+		String key = "";
+		if (c1.compareTo(c2) < 0) {
+			key = c1 + c2;
+		} else {
+			key = c2 + c1;
+		}
+		return key;
 	}
 
 }
