@@ -10,7 +10,7 @@ package TicketToRide.Model;
  *
  */
 public class Constants {
-	public static enum trainColor {
+	public static enum playerColor {
 		BLUE, RED, GREEN, YELLOW, BLACK
 	};
 

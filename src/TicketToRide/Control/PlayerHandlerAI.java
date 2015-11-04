@@ -45,7 +45,7 @@ public class PlayerHandlerAI extends PlayerHandler{
 	 */
 	private static boolean completedAllDesTickets(PlayerAI player) {
 		for(DestinationCard ticket:player.getDesCards()){
-			if(!ticket.isCompleted()){
+			if(!ticket.isCompleted()&&!player.getUncompleteableDesCard().contains(ticket)){
 				return false;
 			}
 		}
@@ -58,43 +58,29 @@ public class PlayerHandlerAI extends PlayerHandler{
 	 * @return
 	 */
 	private static boolean routeClaimable(PlayerAI player) {
-		HashMap<pathColor, Integer> minPathCost=PathHandler.minPathCost(player);
-		int holdRainbow=Deck.count(player.getTrainCards(), trainCard.RAINBOW);
-		boolean claimable=false;
-		Entry<pathColor, Integer> claimColor = null;
-		pathColor wantClaimColor =null;
-		int offNum=0;
 		
-		Iterator<Entry<pathColor, Integer>> iterator=minPathCost.entrySet().iterator();
-		while(iterator.hasNext()){
-			Entry<pathColor, Integer> pair=iterator.next();
-			pathColor color=pair.getKey();
-			int cost=pair.getValue();
-			if(color==pathColor.GRAY){
-				if(cost<=player.getOwnPath().size()){
-					claimable= true;
-					if(claimColor==null||cost>claimColor.getValue()){
-						claimColor=pair;
-					}
-				}
-			}else{
-				int playerHold=Deck.count(player.getTrainCards(), color.toString())+holdRainbow;
-				if(cost<=playerHold){
-					claimable= true;
-					if(claimColor==null||cost>claimColor.getValue()){
-						claimColor=pair;
-					}
-				}else if(!claimable){
-					if(wantClaimColor==null||offNum>cost-playerHold){
-						wantClaimColor=color;
-						offNum=cost-playerHold;
+		HashMap<trainCard, Integer> cardCollection=CardHandler.trainCardCollection(player.getTrainCards());
+		Path wantClaimPath=null;
+		boolean claimable=false;
+		int offset=0;
+		
+		for(List<Path> list:player.getFavorPath()){
+			for(Path path: list){
+				if(path.getOwningPlayer()==null){
+					int tempOffSet=numClaimAbleCards(path.getColor(),cardCollection);
+					if(offset<tempOffSet){
+						wantClaimPath=path;
+						offset=tempOffSet;
 					}
 				}
 			}
 		}
 		
-		player.setClaimColor(claimColor);
-		player.setWantClaimColor(wantClaimColor);
+		if(offset>=0){
+			claimable=true;
+		}
+		
+		player.setWantClaimPath(wantClaimPath);
 		
 		return claimable;
 	}
@@ -104,11 +90,11 @@ public class PlayerHandlerAI extends PlayerHandler{
 	 * @param player
 	 */
 	public static void drawTrainCardAI(PlayerAI player) {
-		pathColor wantClaimColor=player.getWantClaimColor();
+		pathColor wantClaimColor=player.getWantClaimPath().getColor();
 		for(int i=0; i<2; i++){
 			int index=-1;
 			for(TrainCard card:Deck.trainFaceUpCards){
-				if(card.getColor().toString().equals(wantClaimColor.toString())){
+				if(PathHandler.canClaimBy(wantClaimColor, card)){
 					index=Deck.trainFaceUpCards.indexOf(card);
 				}
 			}
@@ -125,31 +111,21 @@ public class PlayerHandlerAI extends PlayerHandler{
 	 * @param player
 	 */
 	public static void claimARouteAI(PlayerAI player){
-		Path claimPath=PathHandler.findPathByColorAndCost(player);
+		Path claimPath=player.getWantClaimPath();
 		List<TrainCard> cardsToSpend=new ArrayList<TrainCard>();
 		int cost=claimPath.getCost();
 		pathColor color=claimPath.getColor();
 		List<TrainCard> playerHoldCards=player.getTrainCards();
 
-		if(color==pathColor.GRAY){
-			cardsToSpend=playerHoldCards.subList(0, cost);
-		}else{
-			List<TrainCard> matchColorCards=new ArrayList<TrainCard>();
-			List<TrainCard> rainbowCards=new ArrayList<TrainCard>();
-			for(TrainCard card:playerHoldCards){
-				if(card.getColor().toString().equals(color.toString())){
-					matchColorCards.add(card);
-				}else if(card.getColor()==trainCard.RAINBOW){
-					rainbowCards.add(card);
-				}
-				if(matchColorCards.size()>=cost){
-					cardsToSpend=matchColorCards.subList(0, cost);
-				}else{
-					cardsToSpend=matchColorCards;
-					cardsToSpend.addAll(rainbowCards.subList(0, cost-matchColorCards.size()));
-				}
+		for(TrainCard card:playerHoldCards){
+			if(PathHandler.canClaimBy(claimPath, card)){
+				cardsToSpend.add(card);
+				cost--;
 			}
+			if(cost==0)
+				break;
 		}
+		
 		claimARoute(player,claimPath,cardsToSpend);
 	}
 	
@@ -165,7 +141,12 @@ public class PlayerHandlerAI extends PlayerHandler{
 		for(DestinationCard ticket: tickets){
 			AStar aStar=new AStar(player,ticket);
 			aStar.run();
-			int cost=aStar.getGoal().getCost();
+			int cost=0;
+			if(aStar.getGoal()==null){
+				cost=Integer.MAX_VALUE;
+			}else{
+				cost=aStar.getGoal().getCost();
+			}
 			costs.add(cost);
 			if(minCost!=0||minCost>cost){
 				minCost=cost;
@@ -179,5 +160,18 @@ public class PlayerHandlerAI extends PlayerHandler{
 				returnDesCardToDeck(tickets.get(i));
 			}
 		}
+	}
+	
+	private static int numClaimAbleCards(pathColor color, HashMap<trainCard, Integer> cardCollection){
+		int num=0;
+		Iterator<Entry<trainCard, Integer>> iterator=cardCollection.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<trainCard, Integer> pair=iterator.next();
+			if(PathHandler.canClaimBy(color, pair.getKey())){
+				num+=pair.getValue();
+			}
+		}
+		return num;
+		
 	}
 }

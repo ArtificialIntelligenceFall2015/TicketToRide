@@ -39,7 +39,7 @@ public class AStar {
 		List<City> list=new ArrayList<City>();
 		list.add(startCity);
 		
-		frontiers.add(new Frontier(list, 0));
+		frontiers.add(new Frontier(list, 0, getHeuristicCost(startCity)));
 	}
 
 	/**
@@ -47,13 +47,14 @@ public class AStar {
 	 */
 	public void run() {
 		Frontier target = frontiers.remove(0); //pop off initial state
-		while (!goal(target)) { //check if open state is goal state
+		while (!goal(target)||!frontiers.isEmpty()) { //check if open state is goal state
 			expandFronter(target); //if not, expand target's children states
 			Collections.sort(frontiers); //sort frontier list in ascending cost order
 			closed.add(target); //add popped off state to closed list
 			target = frontiers.remove(0); //repeat process with new target
 		}
-		goal=target; //invariant: target is your goal state
+		if(goal(target))
+			goal=target; //invariant: target is your goal state
 	}
 
 	/**
@@ -63,14 +64,24 @@ public class AStar {
 		City lastCity=frontier.getLastCity();
 		int lastCityIndex=World.cities.indexOf(lastCity);
 		for(int i=0; i<PathHandler.pathMatrix[lastCityIndex].length; i++){
-			if(PathHandler.pathMatrix[lastCityIndex][i]){
-				List<City> newList = new ArrayList<City>();
-				newList.addAll(frontier.getList());
-				newList.add(World.cities.get(i));
-				int cost=frontier.getCost()+Frontier.calPathCost(player, lastCity,World.cities.get(i));
-				Frontier newFrontier=new Frontier(newList, cost);
-				if(!isContains(frontiers,newFrontier)&&!isContains(frontiers,newFrontier)){
-					frontiers.add(newFrontier);
+			boolean pathExist=PathHandler.pathMatrix[lastCityIndex][i];
+			if(pathExist){
+				List<Path> pathList=PathHandler.getPath(lastCity, World.cities.get(i));
+				boolean pathOwnAble=false;
+				for(Path p:pathList){
+					pathOwnAble=pathOwnAble||p.getOwningPlayer()==null||p.getOwningPlayer()==player;
+				}
+				if(pathOwnAble){
+					City expandCity=World.cities.get(i);
+					List<City> newList = new ArrayList<City>();
+					newList.addAll(frontier.getList());
+					newList.add(expandCity);
+					int cost=frontier.getCost()+calPathCost(lastCity, expandCity);
+					int heuristicCost=getHeuristicCost(expandCity);
+					Frontier newFrontier=new Frontier(newList, cost, heuristicCost);
+					if(!isContains(frontiers,newFrontier)&&!isContains(frontiers,newFrontier)){
+						frontiers.add(newFrontier);
+					}
 				}
 			}
 		}
@@ -103,6 +114,17 @@ public class AStar {
 	 */
 	public Frontier getGoal() {
 		return goal;
+	}
+	
+	private int getHeuristicCost(City c) {
+		int x=Math.abs(endCity.getX_val()-c.getX_val());
+		int y=Math.abs(endCity.getY_val()-c.getY_val());
+		return (int) Math.sqrt(x*x+y*y);
+	}
+	
+	public int calPathCost(City city1, City city2){
+		//TODO
+		return 0;
 	}
 
 }

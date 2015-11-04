@@ -5,7 +5,8 @@ package TicketToRide.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import TicketToRide.Model.Constants.trainColor;
+
+import TicketToRide.Model.Constants.playerColor;
 
 /**
  * @author Jun He
@@ -16,10 +17,10 @@ public class Player {
 	private List<TrainCard> trainCards;
 	private List<DestinationCard> desCards;
 	private List<Path> ownPath;
-	private trainColor color;
+	private playerColor color;
 	private int piece = 45;
 
-	public Player(trainColor color){
+	public Player(playerColor color){
 		trainCards=new ArrayList<TrainCard>();
 		desCards=new ArrayList<DestinationCard>();
 		ownPath=new ArrayList<Path>();
@@ -65,7 +66,7 @@ public class Player {
 	/**
 	 * @return the color
 	 */
-	public trainColor getColor() {
+	public playerColor getColor() {
 		return color;
 	}
 
@@ -73,7 +74,7 @@ public class Player {
 	 * @param color
 	 *            the color to set
 	 */
-	public void setColor(trainColor color) {
+	public void setColor(playerColor color) {
 		this.color = color;
 	}
 

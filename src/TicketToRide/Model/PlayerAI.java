@@ -1,13 +1,11 @@
 package TicketToRide.Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import TicketToRide.Control.AStar;
 import TicketToRide.Model.Constants.pathColor;
-import TicketToRide.Model.Constants.trainColor;
+import TicketToRide.Model.Constants.playerColor;
 
 /**
  * 
@@ -18,12 +16,14 @@ import TicketToRide.Model.Constants.trainColor;
 public class PlayerAI extends Player{
 
 	private List<List<Path>> favorPath;
-	private Entry<pathColor, Integer> claimColor;
-	private pathColor wantClaimColor;
+	private Path wantClaimPath;
+	
+	private List<DestinationCard> uncompleteableDesCard;
 
-	public PlayerAI(trainColor color) {
+	public PlayerAI(playerColor color) {
 		super(color);
 		favorPath=new ArrayList<List<Path>>();
+		uncompleteableDesCard=new ArrayList<DestinationCard>();
 	}
 	
 	/**
@@ -34,31 +34,31 @@ public class PlayerAI extends Player{
 	}
 
 	/**
-	 * @return the claimColor
+	 * @return the uncompleteableDesCard
 	 */
-	public Entry<pathColor, Integer> getClaimColor() {
-		return claimColor;
+	public List<DestinationCard> getUncompleteableDesCard() {
+		return uncompleteableDesCard;
 	}
 
 	/**
-	 * @param claimColor the claimColor to set
+	 * @param uncompleteableDesCard the uncompleteableDesCard to set
 	 */
-	public void setClaimColor(Entry<pathColor, Integer> claimColor) {
-		this.claimColor = claimColor;
+	public void setUncompleteableDesCard(List<DestinationCard> uncompleteableDesCard) {
+		this.uncompleteableDesCard = uncompleteableDesCard;
 	}
 
 	/**
-	 * @return the wantClaimColor
+	 * @return the wantClaimPath
 	 */
-	public pathColor getWantClaimColor() {
-		return wantClaimColor;
+	public Path getWantClaimPath() {
+		return wantClaimPath;
 	}
 
 	/**
-	 * @param wantClaimColor the wantClaimColor to set
+	 * @param wantClaimPath the wantClaimPath to set
 	 */
-	public void setWantClaimColor(pathColor wantClaimColor) {
-		this.wantClaimColor = wantClaimColor;
+	public void setWantClaimPath(Path wantClaimPath) {
+		this.wantClaimPath = wantClaimPath;
 	}
 
 }

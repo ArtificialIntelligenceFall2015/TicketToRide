@@ -55,30 +55,23 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
-		int pathCost = path.getCost();
-		int playerPiece = player.getPiece();
 		
-		int numColor=0;
-		int numRainbow=0;
-		pathColor pathColor = path.getColor();
-
-		List<TrainCard> playerTrainCards = player.getTrainCards();
-		if(pathColor != Constants.pathColor.GRAY){
-			numColor=Deck.count(cardsToSpend, pathColor.name());
-			numRainbow=Deck.count(cardsToSpend, Constants.trainCard.RAINBOW);
+		if(cardsToSpend.size()!=path.getCost()||player.getPiece()<path.getCost()){
+			return false;
 		}
 		
-		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cardsToSpend.size())
-				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor+ numRainbow) && playerPiece >= pathCost) {
-			player.setPiece(playerPiece - pathCost);
-			for (TrainCard card : cardsToSpend)
-				playerTrainCards.remove(card);
-			path.setOwningPlayer(player);
-			player.getOwnPath().add(path);
-			player.setScore(player.getScore() + POINT[pathCost]);
-			return true;
+		for(TrainCard card: cardsToSpend){
+			if(!PathHandler.canClaimBy(path, card)){
+				return false;
+			}
 		}
-		return false;
+		
+		player.setPiece(player.getPiece()-path.getCost());
+		player.getTrainCards().removeAll(cardsToSpend);
+		player.getOwnPath().add(path);
+		player.setScore(player.getScore() + POINT[path.getCost()]);
+		path.setOwningPlayer(player);
+		return true;
 	}
 
 	/**

@@ -17,13 +17,15 @@ import TicketToRide.Model.PlayerAI;
 public class Frontier implements Comparable<Frontier> {
 	List<City> list; // collection of characters in iteration
 	int cost; // current cost to get to the path
+	int heuristicCost;
 
 	/**
 	 * Constructor for Frontier object
 	 */
-	public Frontier(List<City> list, int cost) {
+	public Frontier(List<City> list, int cost, int heuristicCost) {
 		this.list = list;
 		this.cost = cost;
+		this.heuristicCost=heuristicCost;
 	}
 
 	/**
@@ -45,12 +47,7 @@ public class Frontier implements Comparable<Frontier> {
 	 * 	the current cost + the heuristic value heuristic value is
 	 */
 	public int getWeight() {
-		return getHeuristicCost() + cost;
-	}
-
-	private int getHeuristicCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return heuristicCost + cost;
 	}
 
 	/**
@@ -66,11 +63,6 @@ public class Frontier implements Comparable<Frontier> {
 	 */
 	public boolean equals(Frontier arg0) {
 		return this.getLastCity().equals(arg0.getLastCity());
-	}
-	
-	public static int calPathCost(PlayerAI player, City city1, City city2){
-		//TODO
-		return 0;
 	}
 	
 	public City getLastCity(){

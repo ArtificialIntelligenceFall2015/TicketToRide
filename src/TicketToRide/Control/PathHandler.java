@@ -12,6 +12,7 @@ import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.PlayerAI;
+import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants.pathColor;
@@ -77,44 +78,6 @@ public class PathHandler {
 	
 	/**
 	 * 
-	 * @param player
-	 * @return
-	 */
-	public static HashMap<pathColor, Integer> minPathCost(PlayerAI player){
-		HashMap<pathColor, Integer> pathCollection=new HashMap<pathColor, Integer>();
-		for(List<Path> list:player.getFavorPath()){
-			for(Path path: list){
-				if(path.getOwningPlayer()==null){
-					int cost=path.getCost();
-					pathColor color=path.getColor();
-					if((pathCollection.containsKey(color)&&pathCollection.get(color)>cost)||!pathCollection.containsKey(color)){
-						pathCollection.put(color, cost);
-					}
-				}
-			}
-		}
-		
-		return pathCollection;
-	}
-	
-	/**
-	 * 
-	 * @param player
-	 * @return
-	 */
-	public static Path findPathByColorAndCost(PlayerAI player){
-		Entry<pathColor, Integer> claimColor =player.getClaimColor();
-		for(List<Path> list:player.getFavorPath()){
-			for(Path path: list){
-				if(path.getColor()==claimColor.getKey()&&path.getCost()==claimColor.getValue())
-					return path;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * 
 	 * @param c1
 	 * @param c2
 	 * @return
@@ -154,4 +117,22 @@ public class PathHandler {
 		return key;
 	}
 
+	public static boolean canClaimBy(Path path, TrainCard card){
+		return canClaimBy(path.getColor(),card.getColor());
+	}
+	
+	public static boolean canClaimBy(pathColor path, TrainCard card){
+		return canClaimBy(path,card.getColor());
+	}
+	
+	public static boolean canClaimBy(Path path, trainCard card){
+		return canClaimBy(path.getColor(),card);
+	}
+	
+	public static boolean canClaimBy(pathColor path, trainCard card){
+		if(path==pathColor.GRAY||card==trainCard.RAINBOW){
+			return true;
+		}
+		return path.toString().equals(card.toString());
+	}
 }
