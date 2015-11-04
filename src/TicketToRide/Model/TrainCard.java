@@ -14,6 +14,7 @@ public class TrainCard implements Comparable<TrainCard> {
 
 	/**
 	 * Constructor
+	 * 
 	 * @param color
 	 */
 	public TrainCard(trainCard color) {

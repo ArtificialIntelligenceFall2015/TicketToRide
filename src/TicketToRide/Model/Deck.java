@@ -23,10 +23,8 @@ public class Deck {
 	public static HashMap<TrainCard, Integer> countColor;
 
 	/**
-	 * init global variable for
-	 * Deck of face down train card
-	 * Deck of face up train card
-	 * shuffle cards
+	 * init global variable for Deck of face down train card Deck of face up
+	 * train card shuffle cards
 	 */
 	static {
 		trainCardsDeck = new ArrayList<TrainCard>();
@@ -47,6 +45,7 @@ public class Deck {
 
 	/**
 	 * perform start hand behave in the game
+	 * 
 	 * @param players
 	 */
 	public static void startHand(List<Player> players) {
@@ -63,6 +62,7 @@ public class Deck {
 
 	/**
 	 * shuffle cards
+	 * 
 	 * @param card
 	 */
 	public static <T> void shuffle(List<T> card) {
@@ -75,6 +75,7 @@ public class Deck {
 
 	/**
 	 * count the amount of named color in the traincard list by using color enum
+	 * 
 	 * @param cards
 	 * @param color
 	 * @return
@@ -89,7 +90,9 @@ public class Deck {
 	}
 
 	/**
-	 * count the amount of named color in the traincard list by using color string
+	 * count the amount of named color in the traincard list by using color
+	 * string
+	 * 
 	 * @param cards
 	 * @param name
 	 * @return

@@ -7,6 +7,7 @@ package TicketToRide.Control;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import TicketToRide.Model.Player;
 
 /**
@@ -28,6 +29,7 @@ public class Game {
 
 	/**
 	 * get winners list
+	 * 
 	 * @return winner
 	 */
 	public List<Player> getWinners() {
@@ -57,6 +59,7 @@ public class Game {
 
 	/**
 	 * determine game end
+	 * 
 	 * @return
 	 */
 	public boolean gameEnd() {

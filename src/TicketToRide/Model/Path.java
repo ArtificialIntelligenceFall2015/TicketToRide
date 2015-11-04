@@ -6,7 +6,7 @@
  */
 package TicketToRide.Model;
 
-import TicketToRide.Model.Constants.*;
+import TicketToRide.Model.Constants.pathColor;
 
 /**
  * @author Jun He
@@ -22,6 +22,7 @@ public class Path {
 
 	/**
 	 * Basic constructor
+	 * 
 	 * @param city1
 	 * @param city2
 	 * @param color
@@ -35,12 +36,13 @@ public class Path {
 	}
 
 	/**
-	 * String arg constructor
-	 * Takes a string arg read in from a line in the csv file
-	 * and populates a path object with it
-	 * @param pathArray a single edge read in from csv file line
+	 * String arg constructor Takes a string arg read in from a line in the csv
+	 * file and populates a path object with it
+	 * 
+	 * @param pathArray
+	 *            a single edge read in from csv file line
 	 */
-	public Path(String[] pathArray) { //TODO This constructor need to be fixed
+	public Path(String[] pathArray) { // TODO This constructor need to be fixed
 		int i = 0;
 
 		this.city1 = World.stringToCities.get(pathArray[i++]);
@@ -124,12 +126,12 @@ public class Path {
 	public void setOwningPlayer(Player player) {
 		this.owningPlayer = player;
 	}
-	
-	public boolean equals(Path p){
-		boolean c1=this.getCity1().equals(p.getCity1());
-		boolean c2=this.getCity2().equals(p.getCity2());
-		boolean col=(this.getColor()==p.getColor());
-		return c1&&c2&&col;
+
+	public boolean equals(Path p) {
+		boolean c1 = this.getCity1().equals(p.getCity1());
+		boolean c2 = this.getCity2().equals(p.getCity2());
+		boolean col = (this.getColor() == p.getColor());
+		return c1 && c2 && col;
 	}
 
 }

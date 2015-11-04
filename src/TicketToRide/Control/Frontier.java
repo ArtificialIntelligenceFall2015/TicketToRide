@@ -8,7 +8,6 @@ package TicketToRide.Control;
 import java.util.List;
 
 import TicketToRide.Model.City;
-import TicketToRide.Model.PlayerAI;
 
 /**
  * This class defines the Frontier object which represents the frontier of the
@@ -25,7 +24,7 @@ public class Frontier implements Comparable<Frontier> {
 	public Frontier(List<City> list, int cost, int heuristicCost) {
 		this.list = list;
 		this.cost = cost;
-		this.heuristicCost=heuristicCost;
+		this.heuristicCost = heuristicCost;
 	}
 
 	/**
@@ -43,8 +42,7 @@ public class Frontier implements Comparable<Frontier> {
 	}
 
 	/**
-	 * @return weight 
-	 * 	the current cost + the heuristic value heuristic value is
+	 * @return weight the current cost + the heuristic value heuristic value is
 	 */
 	public int getWeight() {
 		return heuristicCost + cost;
@@ -64,8 +62,8 @@ public class Frontier implements Comparable<Frontier> {
 	public boolean equals(Frontier arg0) {
 		return this.getLastCity().equals(arg0.getLastCity());
 	}
-	
-	public City getLastCity(){
-		return list.get(list.size()-1);
+
+	public City getLastCity() {
+		return list.get(list.size() - 1);
 	}
 }

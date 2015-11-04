@@ -19,6 +19,7 @@ public class DestinationCard {
 
 	/**
 	 * Basic constructor
+	 * 
 	 * @param city1
 	 * @param city2
 	 * @param point
@@ -30,13 +31,15 @@ public class DestinationCard {
 	}
 
 	/**
-	 * String arg constructor
-	 * Takes a string arg read in from a line in the csv file
-	 * and populates a destination card object with it
-	 * @param destinationCardArray a single destination
-	 * card object read in from csv file line
+	 * String arg constructor Takes a string arg read in from a line in the csv
+	 * file and populates a destination card object with it
+	 * 
+	 * @param destinationCardArray
+	 *            a single destination card object read in from csv file line
 	 */
-	public DestinationCard(String[] destinationCardArray) {	//TODO This constructor need to be fixed
+	public DestinationCard(String[] destinationCardArray) { // TODO This
+															// constructor need
+															// to be fixed
 		int i = 0;
 
 		this.city1 = World.stringToCities.get(destinationCardArray[i++]);

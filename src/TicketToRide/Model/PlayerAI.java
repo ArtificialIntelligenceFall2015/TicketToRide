@@ -2,9 +2,7 @@ package TicketToRide.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
-import TicketToRide.Model.Constants.pathColor;
 import TicketToRide.Model.Constants.playerColor;
 
 /**
@@ -13,19 +11,19 @@ import TicketToRide.Model.Constants.playerColor;
  *
  */
 
-public class PlayerAI extends Player{
+public class PlayerAI extends Player {
 
 	private List<List<Path>> favorPath;
 	private Path wantClaimPath;
-	
+
 	private List<DestinationCard> uncompleteableDesCard;
 
 	public PlayerAI(playerColor color) {
 		super(color);
-		favorPath=new ArrayList<List<Path>>();
-		uncompleteableDesCard=new ArrayList<DestinationCard>();
+		favorPath = new ArrayList<List<Path>>();
+		uncompleteableDesCard = new ArrayList<DestinationCard>();
 	}
-	
+
 	/**
 	 * @return the favorPath
 	 */
@@ -41,7 +39,8 @@ public class PlayerAI extends Player{
 	}
 
 	/**
-	 * @param uncompleteableDesCard the uncompleteableDesCard to set
+	 * @param uncompleteableDesCard
+	 *            the uncompleteableDesCard to set
 	 */
 	public void setUncompleteableDesCard(List<DestinationCard> uncompleteableDesCard) {
 		this.uncompleteableDesCard = uncompleteableDesCard;
@@ -55,7 +54,8 @@ public class PlayerAI extends Player{
 	}
 
 	/**
-	 * @param wantClaimPath the wantClaimPath to set
+	 * @param wantClaimPath
+	 *            the wantClaimPath to set
 	 */
 	public void setWantClaimPath(Path wantClaimPath) {
 		this.wantClaimPath = wantClaimPath;

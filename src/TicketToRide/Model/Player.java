@@ -20,12 +20,13 @@ public class Player {
 	private playerColor color;
 	private int piece = 45;
 
-	public Player(playerColor color){
-		trainCards=new ArrayList<TrainCard>();
-		desCards=new ArrayList<DestinationCard>();
-		ownPath=new ArrayList<Path>();
-		this.color=color;
+	public Player(playerColor color) {
+		trainCards = new ArrayList<TrainCard>();
+		desCards = new ArrayList<DestinationCard>();
+		ownPath = new ArrayList<Path>();
+		this.color = color;
 	}
+
 	/**
 	 * @return the score
 	 */
@@ -61,7 +62,6 @@ public class Player {
 	public List<Path> getOwnPath() {
 		return ownPath;
 	}
-
 
 	/**
 	 * @return the color
