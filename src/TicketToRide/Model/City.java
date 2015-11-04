@@ -16,6 +16,7 @@ public class City {
 
 	/**
 	 * Basic Constructor
+	 * 
 	 * @param cityName
 	 * @param x_val
 	 * @param y_val
@@ -27,14 +28,16 @@ public class City {
 	}
 
 	/**
-	 * String arg contructor: creates City object based on 
-	 * values stored in cityArray read in from csv file
-	 * @param cityArray city data from csv file
+	 * String arg contructor: creates City object based on values stored in
+	 * cityArray read in from csv file
+	 * 
+	 * @param cityArray
+	 *            city data from csv file
 	 */
 	public City(String[] cityArray) {
 		int i = 0;
 
-		//TODO this.cityName = city.valueOf(cityArray[i++]);
+		// TODO this.cityName = city.valueOf(cityArray[i++]);
 		this.x_val = Integer.parseInt(cityArray[i++]);
 		this.y_val = Integer.parseInt(cityArray[i++]);
 

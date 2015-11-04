@@ -11,8 +11,7 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.World;
 
 /**
- * @author Jun He
- * This class handler path functionality
+ * @author Jun He This class handler path functionality
  */
 public class PathHandler {
 	private static int size;
@@ -25,18 +24,19 @@ public class PathHandler {
 		size = World.city.size();
 		matrix = new boolean[size][size];
 	}
-	
+
 	/**
 	 * determine path close
+	 * 
 	 * @param cards
 	 * @param paths
 	 */
-	public static void determinePathClose(DestinationCard cards, List<Path> paths){
-		for(Path path:paths){
-			matrix[World.city.indexOf(path.getCity1())][World.city.indexOf(path.getCity2())]=true;
-			matrix[World.city.indexOf(path.getCity2())][World.city.indexOf(path.getCity1())]=true;
+	public static void determinePathClose(DestinationCard cards, List<Path> paths) {
+		for (Path path : paths) {
+			matrix[World.city.indexOf(path.getCity1())][World.city.indexOf(path.getCity2())] = true;
+			matrix[World.city.indexOf(path.getCity2())][World.city.indexOf(path.getCity1())] = true;
 		}
-		cards.setCompleted(pathClose(cards.getCity1(),cards.getCity2(),new ArrayList<String>()));
+		cards.setCompleted(pathClose(cards.getCity1(), cards.getCity2(), new ArrayList<String>()));
 	}
 
 	/**
@@ -55,11 +55,11 @@ public class PathHandler {
 			for (int i = 0; i < size; i++) {
 				if (matrix[index][i] && !closer.contains(World.city.get(i))) {
 					List<String> closerCopy = new ArrayList<String>();
-					for (String c: closer) {
+					for (String c : closer) {
 						closerCopy.add(c);
 					}
 					closerCopy.add(start);
-					close=close||pathClose(World.city.get(i),end,closerCopy);
+					close = close || pathClose(World.city.get(i), end, closerCopy);
 				}
 			}
 		}

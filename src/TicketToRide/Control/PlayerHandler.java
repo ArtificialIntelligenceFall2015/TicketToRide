@@ -16,8 +16,7 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
 
 /**
- * @author Jun He
- * This class's methods work as player's behave
+ * @author Jun He This class's methods work as player's behave
  */
 public class PlayerHandler {
 
@@ -25,6 +24,7 @@ public class PlayerHandler {
 
 	/**
 	 * calculate destination ticket point
+	 * 
 	 * @param player
 	 */
 	public static void calcDisCardPoint(Player player) {
@@ -41,6 +41,7 @@ public class PlayerHandler {
 
 	/**
 	 * Sort cards
+	 * 
 	 * @param player
 	 */
 	public static void organizeCard(Player player) {
@@ -49,6 +50,7 @@ public class PlayerHandler {
 
 	/**
 	 * perform claim a route behave
+	 * 
 	 * @param player
 	 * @param path
 	 * @param cards
@@ -60,13 +62,12 @@ public class PlayerHandler {
 		pathColor pathColor = path.getColor();
 
 		List<TrainCard> playerTrainCards = player.getTrainCards();
-		int numColor=Deck.count(cards, pathColor.name());
-		int numLocomotives=Deck.count(cards, Constants.trainCard.RAINBOW);
-		
-		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cards
-				.size())
-				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor
-						+ numLocomotives) && playerPiece >= pathCost) {
+		int numColor = Deck.count(cards, pathColor.name());
+		int numLocomotives = Deck.count(cards, Constants.trainCard.RAINBOW);
+
+		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cards.size())
+				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor + numLocomotives)
+						&& playerPiece >= pathCost) {
 			player.setPiece(playerPiece - pathCost);
 			for (TrainCard card : cards)
 				playerTrainCards.remove(card);
@@ -80,6 +81,7 @@ public class PlayerHandler {
 
 	/**
 	 * perform draw train card behave
+	 * 
 	 * @param player
 	 * @param index
 	 * @return
@@ -87,14 +89,15 @@ public class PlayerHandler {
 	public static TrainCard drawTrainCard(Player player, int index) {
 		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
-		TrainCard card=faceUpCard.remove(index);
-		if(faceDownCard.size()>0)
+		TrainCard card = faceUpCard.remove(index);
+		if (faceDownCard.size() > 0)
 			faceUpCard.add(faceDownCard.remove(0));
 		return card;
 	}
 
 	/**
 	 * perform draw train card behave
+	 * 
 	 * @param player
 	 * @return
 	 */
@@ -104,21 +107,22 @@ public class PlayerHandler {
 
 	/**
 	 * perform draw destination ticket behave
+	 * 
 	 * @param player
 	 * @return
 	 */
 	public static List<DestinationCard> drawDesTickets(Player player) {
-		List<DestinationCard> cards=new ArrayList<DestinationCard>();
-		for(int i=0; i<3&&i<Deck.desCardDeck.size();i++)
+		List<DestinationCard> cards = new ArrayList<DestinationCard>();
+		for (int i = 0; i < 3 && i < Deck.desCardDeck.size(); i++)
 			cards.add(Deck.desCardDeck.remove(0));
 		return cards;
 	}
-	
+
 	/**
 	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(List<DestinationCard> cards){
+	public static void returnDesCardToDeck(List<DestinationCard> cards) {
 		Deck.desCardDeck.addAll(cards);
 	}
 }

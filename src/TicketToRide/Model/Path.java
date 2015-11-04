@@ -6,7 +6,7 @@
  */
 package TicketToRide.Model;
 
-import TicketToRide.Model.Constants.*;
+import TicketToRide.Model.Constants.pathColor;
 
 /**
  * @author Jun He
@@ -22,6 +22,7 @@ public class Path {
 
 	/**
 	 * Basic constructor
+	 * 
 	 * @param city1
 	 * @param city2
 	 * @param color
@@ -35,16 +36,17 @@ public class Path {
 	}
 
 	/**
-	 * String arg constructor
-	 * Takes a string arg read in from a line in the csv file
-	 * and populates a path object with it
-	 * @param pathArray a single edge read in from csv file line
+	 * String arg constructor Takes a string arg read in from a line in the csv
+	 * file and populates a path object with it
+	 * 
+	 * @param pathArray
+	 *            a single edge read in from csv file line
 	 */
-	public Path(String[] pathArray) { //TODO This constructor need to be fixed
+	public Path(String[] pathArray) { // TODO This constructor need to be fixed
 		int i = 0;
 
-		//this.city1 = city.valueOf(pathArray[i++]);
-		//this.city2 = city.valueOf(pathArray[i++]);
+		// this.city1 = city.valueOf(pathArray[i++]);
+		// this.city2 = city.valueOf(pathArray[i++]);
 		this.cost = Integer.parseInt(pathArray[i++]);
 		this.color = pathColor.valueOf(pathArray[i++]);
 
