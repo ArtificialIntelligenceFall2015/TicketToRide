@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import TicketToRide.Model.Constants;
-import TicketToRide.Model.Constants.pathColor;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
@@ -56,27 +54,24 @@ public class PlayerHandler {
 	 * @param cards
 	 * @return
 	 */
-	public static boolean claimARoute(Player player, Path path, List<TrainCard> cards) {
-		int pathCost = path.getCost();
-		int playerPiece = player.getPiece();
-		pathColor pathColor = path.getColor();
+	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
 
-		List<TrainCard> playerTrainCards = player.getTrainCards();
-		int numColor = Deck.count(cards, pathColor.name());
-		int numLocomotives = Deck.count(cards, Constants.trainCard.RAINBOW);
-
-		if ((pathColor == Constants.pathColor.GRAY && path.getCost() == cards.size())
-				|| (pathColor != Constants.pathColor.GRAY && path.getCost() == numColor + numLocomotives)
-						&& playerPiece >= pathCost) {
-			player.setPiece(playerPiece - pathCost);
-			for (TrainCard card : cards)
-				playerTrainCards.remove(card);
-			path.setPlayer(player);
-			player.getOwnPath().add(path);
-			player.setScore(player.getScore() + POINT[pathCost]);
-			return true;
+		if (cardsToSpend.size() != path.getCost() || player.getPiece() < path.getCost()) {
+			return false;
 		}
-		return false;
+
+		for (TrainCard card : cardsToSpend) {
+			if (!PathHandler.canClaimBy(path, card)) {
+				return false;
+			}
+		}
+
+		player.setPiece(player.getPiece() - path.getCost());
+		player.getTrainCards().removeAll(cardsToSpend);
+		player.getOwnPath().add(path);
+		player.setScore(player.getScore() + POINT[path.getCost()]);
+		path.setOwningPlayer(player);
+		return true;
 	}
 
 	/**
@@ -92,6 +87,7 @@ public class PlayerHandler {
 		TrainCard card = faceUpCard.remove(index);
 		if (faceDownCard.size() > 0)
 			faceUpCard.add(faceDownCard.remove(0));
+		player.getTrainCards().add(card);
 		return card;
 	}
 
@@ -102,7 +98,9 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
-		return Deck.trainCardsDeck.remove(0);
+		TrainCard card = Deck.trainCardsDeck.remove(0);
+		player.getTrainCards().add(card);
+		return card;
 	}
 
 	/**
@@ -122,7 +120,7 @@ public class PlayerHandler {
 	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(List<DestinationCard> cards) {
-		Deck.desCardDeck.addAll(cards);
+	public static void returnDesCardToDeck(DestinationCard cards) {
+		Deck.desCardDeck.add(cards);
 	}
 }
