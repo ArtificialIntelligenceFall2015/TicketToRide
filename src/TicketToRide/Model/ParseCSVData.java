@@ -25,9 +25,10 @@ public class ParseCSVData {
 	private static BufferedReader br = null;
 
 	/**
-	 * Reads a csv file of destination card data line by line
-	 * For each line it creates a new destination card object
-	 * and adds it to the list, then returns the list
+	 * Reads a csv file of destination card data line by line For each line it
+	 * creates a new destination card object and adds it to the list, then
+	 * returns the list
+	 * 
 	 * @return destinationCardList a list of destination cards
 	 */
 	public static ArrayList<DestinationCard> parseDestinationCards() {
@@ -35,26 +36,28 @@ public class ParseCSVData {
 		br = null;
 
 		try {
-			//create a new buffered reader and open the csv file for reading
+			// create a new buffered reader and open the csv file for reading
 			br = new BufferedReader(new FileReader(destCSVFile));
-			//read in the first line which will be thrown out because we don't want
-			//to capture the column headings of the CSV file.
+			// read in the first line which will be thrown out because we don't
+			// want
+			// to capture the column headings of the CSV file.
 			line = br.readLine();
 
-			//as long as there is another line in the file, we want to parse it.
+			// as long as there is another line in the file, we want to parse
+			// it.
 			while ((line = br.readLine()) != null) {
-				//splits the csv line text into an array of strings
+				// splits the csv line text into an array of strings
 				String[] destinationCardArray = line.split(csvSplitBy);
-				//create an object for this line of data and add it to the destinationCardList
-				destinationCardList.add(new DestinationCard(
-						destinationCardArray));
+				// create an object for this line of data and add it to the
+				// destinationCardList
+				destinationCardList.add(new DestinationCard(destinationCardArray));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			//close io connections
+			// close io connections
 			if (br != null) {
 				try {
 					br.close();
@@ -68,9 +71,9 @@ public class ParseCSVData {
 	}
 
 	/**
-	 * Reads a csv file of city data line by line
-	 * For each line it creates a new city object
-	 * and adds it to the list, then returns the list
+	 * Reads a csv file of city data line by line For each line it creates a new
+	 * city object and adds it to the list, then returns the list
+	 * 
 	 * @return cityList a list of city objects
 	 */
 	public static ArrayList<City> parseCities() {
@@ -78,17 +81,20 @@ public class ParseCSVData {
 		br = null;
 
 		try {
-			//create a new buffered reader and open the csv file for reading
+			// create a new buffered reader and open the csv file for reading
 			br = new BufferedReader(new FileReader(cityCSVFile));
-			//read in the first line which will be thrown out because we don't want
-			//to capture the column headings of the CSV file.
+			// read in the first line which will be thrown out because we don't
+			// want
+			// to capture the column headings of the CSV file.
 			line = br.readLine();
 
-			//as long as there is another line in the file, we want to parse it.
+			// as long as there is another line in the file, we want to parse
+			// it.
 			while ((line = br.readLine()) != null) {
-				//splits the csv line text into an array of strings
+				// splits the csv line text into an array of strings
 				String[] cityArray = line.split(csvSplitBy);
-				//create an object for this line of data and add it to the cityList
+				// create an object for this line of data and add it to the
+				// cityList
 				cityList.add(new City(cityArray));
 			}
 		} catch (FileNotFoundException e) {
@@ -96,7 +102,7 @@ public class ParseCSVData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			//close io connections
+			// close io connections
 			if (br != null) {
 				try {
 					br.close();
@@ -110,9 +116,9 @@ public class ParseCSVData {
 	}
 
 	/**
-	 * Reads a csv file of route data line by line
-	 * For each line it creates a new Path object
-	 * and adds it to the list, then returns the list
+	 * Reads a csv file of route data line by line For each line it creates a
+	 * new Path object and adds it to the list, then returns the list
+	 * 
 	 * @return pathList a list of Path objects
 	 */
 	public static ArrayList<Path> parseRoutes() {
@@ -120,17 +126,20 @@ public class ParseCSVData {
 		br = null;
 
 		try {
-			//create a new buffered reader and open the csv file for reading
+			// create a new buffered reader and open the csv file for reading
 			br = new BufferedReader(new FileReader(routeCSVFile));
-			//read in the first line which will be thrown out because we don't want
-			//to capture the column headings of the CSV file.
+			// read in the first line which will be thrown out because we don't
+			// want
+			// to capture the column headings of the CSV file.
 			line = br.readLine();
 
-			//as long as there is another line in the file, we want to parse it.
+			// as long as there is another line in the file, we want to parse
+			// it.
 			while ((line = br.readLine()) != null) {
-				//splits the csv line text into an array of strings
+				// splits the csv line text into an array of strings
 				String[] pathArray = line.split(csvSplitBy);
-				//create an object for this line of data and add it to the pathList
+				// create an object for this line of data and add it to the
+				// pathList
 				pathList.add(new Path(pathArray));
 			}
 		} catch (FileNotFoundException e) {
@@ -138,7 +147,7 @@ public class ParseCSVData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			//close io connections
+			// close io connections
 			if (br != null) {
 				try {
 					br.close();

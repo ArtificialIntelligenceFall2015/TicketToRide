@@ -12,35 +12,36 @@ package TicketToRide.Model;
  *
  */
 public class DestinationCard {
-	private String city1;
-	private String city2;
+	private City city1;
+	private City city2;
 	private int point = 0;
 	private boolean completed = false;
 
 	/**
 	 * Basic constructor
+	 * 
 	 * @param city1
 	 * @param city2
 	 * @param point
 	 */
-	public DestinationCard(String city1, String city2, int point) {
+	public DestinationCard(City city1, City city2, int point) {
 		this.city1 = city1;
 		this.city2 = city2;
 		this.point = point;
 	}
 
 	/**
-	 * String arg constructor
-	 * Takes a string arg read in from a line in the csv file
-	 * and populates a destination card object with it
-	 * @param destinationCardArray a single destination
-	 * card object read in from csv file line
+	 * String arg constructor Takes a string arg read in from a line in the csv
+	 * file and populates a destination card object with it
+	 * 
+	 * @param destinationCardArray
+	 *            a single destination card object read in from csv file line
 	 */
-	public DestinationCard(String[] destinationCardArray) {	
+	public DestinationCard(String[] destinationCardArray) { 
 		int i = 0;
 
-		this.city1 = destinationCardArray[i++];
-		this.city2 = destinationCardArray[i++];
+		this.city1 = World.stringToCities.get(destinationCardArray[i++]);
+		this.city2 = World.stringToCities.get(destinationCardArray[i++]);
 		this.point = Integer.parseInt(destinationCardArray[i++]);
 
 	}
@@ -48,7 +49,7 @@ public class DestinationCard {
 	/**
 	 * @return the city1
 	 */
-	public String getCity1() {
+	public City getCity1() {
 		return city1;
 	}
 
@@ -56,14 +57,14 @@ public class DestinationCard {
 	 * @param city1
 	 *            the city1 to set
 	 */
-	public void setCity1(String city1) {
+	public void setCity1(City city1) {
 		this.city1 = city1;
 	}
 
 	/**
 	 * @return the city2
 	 */
-	public String getCity2() {
+	public City getCity2() {
 		return city2;
 	}
 
@@ -71,7 +72,7 @@ public class DestinationCard {
 	 * @param city2
 	 *            the city2 to set
 	 */
-	public void setCity2(String city2) {
+	public void setCity2(City city2) {
 		this.city2 = city2;
 	}
 

@@ -16,6 +16,7 @@ public class City {
 
 	/**
 	 * Basic Constructor
+	 * 
 	 * @param cityName
 	 * @param x_val
 	 * @param y_val
@@ -27,9 +28,11 @@ public class City {
 	}
 
 	/**
-	 * String arg contructor: creates City object based on 
-	 * values stored in cityArray read in from csv file
-	 * @param cityArray city data from csv file
+	 * String arg contructor: creates City object based on values stored in
+	 * cityArray read in from csv file
+	 * 
+	 * @param cityArray
+	 *            city data from csv file
 	 */
 	public City(String[] cityArray) {
 		int i = 0;
@@ -85,4 +88,7 @@ public class City {
 		this.y_val = y_val;
 	}
 
+	public boolean equals(City c) {
+		return cityName.equals(c.getCityName());
+	}
 }
