@@ -41,4 +41,12 @@ public class TrainCard implements Comparable<TrainCard> {
 	public void setColor(trainCard color) {
 		this.color = color;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TrainCard [color=" + color + "]";
+	}
 }

@@ -3,7 +3,9 @@
  */
 package TicketToRide.Model;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import TicketToRide.Model.Constants.trainColor;
 
 /**
@@ -12,9 +14,9 @@ import TicketToRide.Model.Constants.trainColor;
  */
 public class Player {
 	private int score = 0;
-	private List<TrainCard> trainCards;
-	private List<DestinationCard> desCards;
-	private List<Path> ownPath;
+	private List<TrainCard> trainCards = new ArrayList<TrainCard>();
+	private List<DestinationCard> desCards = new ArrayList<DestinationCard>();
+	private List<Path> ownPath = new ArrayList<Path>();
 	private trainColor color;
 	private int piece = 45;
 

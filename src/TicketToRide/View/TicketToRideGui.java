@@ -6,17 +6,26 @@
  */
 package TicketToRide.View;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -27,16 +36,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import TicketToRide.Control.PlayerHandler;
 import TicketToRide.Model.City;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.ParseCSVData;
 import TicketToRide.Model.Path;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import TicketToRide.Model.Player;
+import TicketToRide.Model.World;
 
 public class TicketToRideGui extends JFrame {
 
@@ -121,40 +127,29 @@ public class TicketToRideGui extends JFrame {
 		jlstCurrentPlayerDestCards.setFont(new Font("Courier New", Font.PLAIN, 11));
 		jlstCurrentPlayerDestCards.setVisibleRowCount(3);
 		jlstCurrentPlayerDestCards.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jlstCurrentPlayerDestCards.setModel(new AbstractListModel() {
-			String[] values = new String[] { "20:\tLos Angeles->New York",
-					"12:\tWinnipeg->Miami", " 7:\tVancouver->Washington",
-					" 5:\tCalgary->Atlanta", " 9:\tSeattle->Nashville" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		final DefaultListModel destList = new DefaultListModel(); //SF
+		jlstCurrentPlayerDestCards.setModel(destList);
 		scpCurrentPlayerDestCards.setViewportView(jlstCurrentPlayerDestCards);
 
 		JPanel pnlCurrentPlayerTrainCards = new JPanel();
 		pnlCurrentPlayer.add(pnlCurrentPlayerTrainCards, BorderLayout.CENTER);
 		pnlCurrentPlayerTrainCards.setLayout(new GridLayout(1, 12, 0, 0));
 
-		JLabel lblCurrentPlayerTrainCardPink = new JLabel("1");
+		JLabel lblCurrentPlayerTrainCardPink = new JLabel("0");
 		lblCurrentPlayerTrainCardPink.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardPink.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardPink.setOpaque(true);
 		lblCurrentPlayerTrainCardPink.setBackground(Color.PINK);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardPink);
 
-		JLabel lblCurrentPlayerTrainCardWhite = new JLabel("2");
+		JLabel lblCurrentPlayerTrainCardWhite = new JLabel("0");
 		lblCurrentPlayerTrainCardWhite.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardWhite.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardWhite.setBackground(Color.WHITE);
 		lblCurrentPlayerTrainCardWhite.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardWhite);
 
-		JLabel lblCurrentPlayerTrainCardBlue = new JLabel("3");
+		JLabel lblCurrentPlayerTrainCardBlue = new JLabel("0");
 		lblCurrentPlayerTrainCardBlue.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardBlue.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardBlue.setForeground(Color.WHITE);
@@ -162,14 +157,14 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardBlue.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardBlue);
 
-		JLabel lblCurrentPlayerTrainCardYellow = new JLabel("4");
+		JLabel lblCurrentPlayerTrainCardYellow = new JLabel("0");
 		lblCurrentPlayerTrainCardYellow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardYellow.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardYellow.setBackground(Color.YELLOW);
 		lblCurrentPlayerTrainCardYellow.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardYellow);
 
-		JLabel lblCurrentPlayerTrainCardRed = new JLabel("5");
+		JLabel lblCurrentPlayerTrainCardRed = new JLabel("0");
 		lblCurrentPlayerTrainCardRed.setForeground(Color.WHITE);
 		lblCurrentPlayerTrainCardRed.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRed.setHorizontalAlignment(SwingConstants.CENTER);
@@ -177,7 +172,7 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardRed.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardRed);
 
-		JLabel lblCurrentPlayerTrainCardBlack = new JLabel("6");
+		JLabel lblCurrentPlayerTrainCardBlack = new JLabel("0");
 		lblCurrentPlayerTrainCardBlack.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardBlack.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardBlack.setForeground(Color.WHITE);
@@ -185,7 +180,7 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardBlack.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardBlack);
 
-		JLabel lblCurrentPlayerTrainCardOrange = new JLabel("7");
+		JLabel lblCurrentPlayerTrainCardOrange = new JLabel("0");
 		lblCurrentPlayerTrainCardOrange.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardOrange.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardOrange.setForeground(Color.BLACK);
@@ -193,14 +188,14 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardOrange.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardOrange);
 
-		JLabel lblCurrentPlayerTrainCardGreen = new JLabel("8");
+		JLabel lblCurrentPlayerTrainCardGreen = new JLabel("0");
 		lblCurrentPlayerTrainCardGreen.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardGreen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardGreen.setBackground(Color.GREEN);
 		lblCurrentPlayerTrainCardGreen.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardGreen);
 
-		JLabel lblCurrentPlayerTrainCardRainbow = new JLabel("9");
+		JLabel lblCurrentPlayerTrainCardRainbow = new JLabel("0");
 		lblCurrentPlayerTrainCardRainbow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRainbow.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setForeground(Color.WHITE);
@@ -288,6 +283,42 @@ public class TicketToRideGui extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				//TODO:debug action listener code, do not leave in final version-SF
 				System.out.println("Destination Card Deck Button");
+				
+				//Get initial destination cards
+				List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(new Player());
+				List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
+				
+				JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
+				JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
+				JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
+				
+				String message = "Please choose your initial Destination Cards. You must pick a minimum of two cards.";
+				
+				Object[] params = {message, cbDestCardOpt0, cbDestCardOpt1, cbDestCardOpt2};
+				
+				JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
+				
+				if (!cbDestCardOpt2.isSelected())
+					rejectedDesCards.add(initialDesCards.remove(2));
+				if (!cbDestCardOpt1.isSelected())
+					rejectedDesCards.add(initialDesCards.remove(1));
+				if (!cbDestCardOpt0.isSelected())
+					rejectedDesCards.add(initialDesCards.remove(0));
+						
+				System.out.println("cards chosen were:" + initialDesCards); //TODO: debug
+				System.out.println("cards discarded were:" + rejectedDesCards); //TODO: debug
+				
+				PlayerHandler.returnDesCardToDeck(rejectedDesCards); 
+				Player p = new Player();
+				p.getDesCards().addAll(initialDesCards);
+				System.out.println("cards in players hand:" + p.getDesCards());
+				
+						
+				//display destination cards in JList
+				for (DestinationCard dc : p.getDesCards()) {
+					destList.addElement(dc.toString());
+				}
+
 			}
 		});
 		
@@ -363,6 +394,11 @@ public class TicketToRideGui extends JFrame {
 			}
 		});
 
+		//test
+		
+		
+		
+		//endtest
 	}
 	
 
