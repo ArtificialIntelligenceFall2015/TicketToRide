@@ -4,6 +4,8 @@
  */
 package TicketToRide.Model;
 
+import java.awt.Color;
+
 /**
  * @author Jun He
  * @author Sean Fast
@@ -19,7 +21,18 @@ public class Constants {
 	};
 
 	public static enum pathColor {
-		PINK, WHITE, BLUE, YELLOW, ORANGE, BLACK, RED, GREEN, GRAY
+		PINK(Color.PINK), WHITE(Color.WHITE), BLUE(Color.BLUE), YELLOW(Color.YELLOW), ORANGE(Color.ORANGE), BLACK(Color.BLACK), RED(Color.RED), GREEN(Color.GREEN), GRAY(Color.GRAY);
+		
+		private Color c;
+		
+		pathColor(Color c) {
+			this.c = c;
+		}
+		
+		public Color getRealColor() {
+			return this.c;
+		}
+		
 	};
 
 	public static enum decision {

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -97,13 +98,15 @@ public class TicketToRideGui extends JFrame {
 		pnlScoreLogPanel.add(scpScores);
 
 		JTextArea txtrScores = new JTextArea();
-		txtrScores.setText("scores\n" + "1\n" + "2\n" + "3\n" + "4\n" + "5");
+		txtrScores.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		txtrScores.setText("Player\tScore\tDestination Cards\tTrain Cards\tInventory\n" + "1\n" + "2\n" + "3\n" + "4\n" + "5");
 		scpScores.setViewportView(txtrScores);
 
 		JScrollPane scpLog = new JScrollPane();
 		pnlScoreLogPanel.add(scpLog);
 
 		JTextArea txtrLog = new JTextArea();
+		txtrLog.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		txtrLog.setText("log\n" + "1\n" + "2\n" + "3\n" + "4\n" + "5");
 		scpLog.setViewportView(txtrLog);
 
@@ -205,7 +208,9 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardRainbow);
 
 		JPanel pnlCurrentPlayerTurnChoices = new JPanel();
-		pnlCurrentPlayer.add(pnlCurrentPlayerTurnChoices, BorderLayout.EAST);
+		//pnlCurrentPlayer.add(pnlCurrentPlayerTurnChoices, BorderLayout.EAST);
+		pnlDecks.add(pnlCurrentPlayerTurnChoices);//TODO:SF
+
 		pnlCurrentPlayerTurnChoices.setLayout(new GridLayout(3, 1, 0, 0));
 
 		JButton btnPickTrainCards = new JButton("Pick Train Cards");
@@ -217,17 +222,17 @@ public class TicketToRideGui extends JFrame {
 		JButton btnPickDestCards = new JButton("Pick Destination Cards");
 		pnlCurrentPlayerTurnChoices.add(btnPickDestCards);
 
-		JPanel pnlDestCardDeck = new JPanel();
-		pnlDecks.add(pnlDestCardDeck);
-		pnlDestCardDeck.setLayout(new BorderLayout(0, 0));
+		//JPanel pnlDestCardDeck = new JPanel();
+		//pnlDecks.add(pnlDestCardDeck);
+		//pnlDestCardDeck.setLayout(new BorderLayout(0, 0));
 
-		JButton btnDestCardDeck = new JButton("Destination Card Deck");
-		pnlDestCardDeck.add(btnDestCardDeck, BorderLayout.CENTER);
+		//JButton btnDestCardDeck = new JButton("Destination Card Deck");
+		//pnlDestCardDeck.add(btnDestCardDeck, BorderLayout.CENTER);
 
-		JProgressBar pbrDestCardDeck = new JProgressBar();
-		pbrDestCardDeck.setOrientation(SwingConstants.VERTICAL);
-		pbrDestCardDeck.setValue(85);
-		pnlDestCardDeck.add(pbrDestCardDeck, BorderLayout.EAST);
+		//JProgressBar pbrDestCardDeck = new JProgressBar();
+		//pbrDestCardDeck.setOrientation(SwingConstants.VERTICAL);
+		//pbrDestCardDeck.setValue(85);
+		//pnlDestCardDeck.add(pbrDestCardDeck, BorderLayout.EAST);
 
 		JPanel pnlFaceUpTrainCard5 = new JPanel();
 		pnlFaceUpTrainCard5.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -275,49 +280,14 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayerAvatar.add(lblPlaceHolderAvatarLabel, BorderLayout.CENTER);
 
 		// ActionListeners for Button Clicking Actions
-		btnDestCardDeck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Destination Card Deck Button");
-				
-				//Get initial destination cards
-				List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(new Player(playerColor.BLACK));
-				List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
-				
-				JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
-				JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
-				JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
-				
-				String message = "Please choose your initial Destination Cards. You must pick a minimum of two cards.";
-				
-				Object[] params = {message, cbDestCardOpt0, cbDestCardOpt1, cbDestCardOpt2};
-				
-				JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
-				
-				if (!cbDestCardOpt2.isSelected())
-					rejectedDesCards.add(initialDesCards.remove(2));
-				if (!cbDestCardOpt1.isSelected())
-					rejectedDesCards.add(initialDesCards.remove(1));
-				if (!cbDestCardOpt0.isSelected())
-					rejectedDesCards.add(initialDesCards.remove(0));
-						
-				System.out.println("cards chosen were:" + initialDesCards); //TODO: debug
-				System.out.println("cards discarded were:" + rejectedDesCards); //TODO: debug
-				
-				PlayerHandler.returnDesCardToDeck(rejectedDesCards); 
-				Player p = new Player(playerColor.BLACK);
-				p.getDesCards().addAll(initialDesCards);
-				System.out.println("cards in players hand:" + p.getDesCards());
-				
-						
-				//display destination cards in JList
-				for (DestinationCard dc : p.getDesCards()) {
-					destList.addElement(dc.toString());
-				}
-
-			}
-		});
+//		btnDestCardDeck.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO:debug action listener code, do not leave in final
+//				// version-SF
+//				System.out.println("Destination Card Deck Button");
+//				
+//			}
+//		});
 
 		pnlFaceUpTrainCard5.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent arg0) {
@@ -394,6 +364,51 @@ public class TicketToRideGui extends JFrame {
 				// TODO:debug action listener code, do not leave in final
 				// version-SF
 				System.out.println("Current Player Pick Destination Cards Button");
+				
+				
+				//Get initial destination cards
+				List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(new Player(playerColor.BLACK));
+				List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
+				
+				//debug
+				System.out.println(initialDesCards.size());
+				for (DestinationCard dc : initialDesCards)
+					System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
+				
+				JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
+				JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
+				JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
+				
+				String message = "Please choose your initial Destination Cards. You must pick a minimum of two cards.";
+				
+				Object[] params = {message, cbDestCardOpt0, cbDestCardOpt1, cbDestCardOpt2};
+				
+				JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
+				
+				if (!cbDestCardOpt2.isSelected())
+					rejectedDesCards.add(initialDesCards.remove(2));
+				if (!cbDestCardOpt1.isSelected())
+					rejectedDesCards.add(initialDesCards.remove(1));
+				if (!cbDestCardOpt0.isSelected())
+					rejectedDesCards.add(initialDesCards.remove(0));
+						
+				System.out.println("cards chosen were:" + initialDesCards); //TODO: debug
+				System.out.println("cards discarded were:" + rejectedDesCards); //TODO: debug
+				
+				PlayerHandler.returnDesCardToDeck(rejectedDesCards); 
+				Player p = new Player(playerColor.BLACK);
+				p.getDesCards().addAll(initialDesCards);
+				System.out.println("cards in players hand:" + p.getDesCards());
+				
+						
+				//display destination cards in JList
+				for (DestinationCard dc : p.getDesCards()) {
+					destList.addElement(dc.toString());
+				}
+
+
+				
+				
 				ArrayList<DestinationCard> destinationCardList = ParseCSVData.parseDestinationCards();
 				for (DestinationCard dc : destinationCardList)
 					System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
@@ -402,7 +417,7 @@ public class TicketToRideGui extends JFrame {
 
 		//test
 		
-		
+		pnlGraph.add(new GraphView(null));
 		
 		//endtest
 	}
