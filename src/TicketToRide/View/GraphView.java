@@ -2,6 +2,7 @@ package TicketToRide.View;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -12,12 +13,6 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.World;
 
 public class GraphView extends javax.swing.JPanel {
-	Graph<? extends Displayable> graph;//TODO: remove displayable intf, attribute graph code to book
-
-	public GraphView(Graph<? extends Displayable> graph) {
-		this.graph = graph;
-	}
-
 	protected void paintComponent(java.awt.Graphics g) {
 		super.paintComponent(g);
 
@@ -48,7 +43,10 @@ public class GraphView extends javax.swing.JPanel {
 			g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
 
 			Graphics2D g2D = (Graphics2D) g;
-			g2D.setStroke(new BasicStroke(3F)); // set stroke width
+			float[] dashingPattern1 = {6f, 6f};//?
+			Stroke stroke1 = new BasicStroke(3F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, dashingPattern1, 2.0f);//?
+			g2D.setStroke(stroke1);//?
+			//g2D.setStroke(new BasicStroke(3F)); // set stroke width
 			g2D.drawLine(x1, y1, x2, y2);
 
 		}

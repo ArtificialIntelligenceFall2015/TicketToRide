@@ -74,22 +74,22 @@ public class PlayerHandler {
 		return true;
 	}
 
-	/**
-	 * perform draw train card behave
-	 * 
-	 * @param player
-	 * @param index
-	 * @return
-	 */
-	public static TrainCard drawFaceUpTrainCard(Player player, int index) {
-		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
-		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
-		TrainCard card = faceUpCard.remove(index);
-		if (faceDownCard.size() > 0)
-			faceUpCard.add(faceDownCard.remove(0));
-		player.getTrainCards().add(card);
-		return card;
-	}
+//	/**
+//	 * perform draw train card behave
+//	 * 
+//	 * @param player
+//	 * @param index
+//	 * @return
+//	 */
+//	public static TrainCard drawFaceUpTrainCard(Player player, int index) {
+//		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
+//		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
+//		TrainCard card = faceUpCard.remove(index);
+//		if (faceDownCard.size() > 0)
+//			faceUpCard.add(faceDownCard.remove(0));
+//		player.getTrainCards().add(card);
+//		return card;
+//	}
 
 	/**
 	 * perform draw train card behave
@@ -103,6 +103,23 @@ public class PlayerHandler {
 		return card;
 	}
 
+	/**
+	 * perform draw train card behave
+	 * 
+	 * @param player
+	 * @param index
+	 * @return
+	 */
+	public static TrainCard drawTrainCard(Player player, int index) {
+		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
+		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
+		TrainCard card = faceUpCard.remove(index);
+		if (faceDownCard.size() > 0)
+			faceUpCard.add(faceDownCard.remove(0));
+		player.getTrainCards().add(card);
+		return card;
+	}
+	
 	/**
 	 * perform draw destination ticket behave
 	 * 
