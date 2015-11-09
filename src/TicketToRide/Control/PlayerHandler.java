@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import TicketToRide.Model.Constants;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
@@ -17,8 +18,6 @@ import TicketToRide.Model.TrainCard;
  * @author Jun He This class's methods work as player's behave
  */
 public class PlayerHandler {
-
-	private static final int[] POINT = { 0, 1, 2, 4, 7, 10, 15 };
 
 	/**
 	 * calculate destination ticket point
@@ -69,8 +68,9 @@ public class PlayerHandler {
 		player.setPiece(player.getPiece() - path.getCost());
 		player.getTrainCards().removeAll(cardsToSpend);
 		player.getOwnPath().add(path);
-		player.setScore(player.getScore() + POINT[path.getCost()]);
+		player.setScore(player.getScore() + Constants.routeScore[path.getCost()]);
 		path.setOwningPlayer(player);
+		Deck.spendCards(cardsToSpend);
 		return true;
 	}
 

@@ -23,6 +23,18 @@ import TicketToRide.Model.TrainCard;
  *
  */
 public class PlayerHandlerAI extends PlayerHandler {
+	
+	/**
+	 * init method
+	 * call this method before do AI functions
+	 * @param player
+	 */
+	public static void populateAIFields(PlayerAI player){
+		HashMap<trainCard, Integer> handCollection = CardHandler.trainCardCollection(player.getTrainCards());
+		HashMap<trainCard, Integer> deckCollection = CardHandler.trainCardCollection(Deck.trainFaceUpCards);
+		player.setHandCollection(handCollection);
+		player.setDeckCollection(deckCollection);
+	}
 
 	/**
 	 * 
@@ -59,8 +71,6 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	private static boolean routeClaimable(PlayerAI player) {
-
-		HashMap<trainCard, Integer> cardCollection = CardHandler.trainCardCollection(player.getTrainCards());
 		Path wantClaimPath = null;
 		boolean claimable = false;
 		int offset = 0;
@@ -68,7 +78,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 		for (List<Path> list : player.getFavorPath()) {
 			for (Path path : list) {
 				if (path.getOwningPlayer() == null) {
-					int tempOffSet = numClaimAbleCards(path.getColor(), cardCollection);
+					int tempOffSet = numClaimAbleCards(path.getColor(), player.getHandCollection());
 					if (offset < tempOffSet) {
 						wantClaimPath = path;
 						offset = tempOffSet;
@@ -82,7 +92,6 @@ public class PlayerHandlerAI extends PlayerHandler {
 		}
 
 		player.setWantClaimPath(wantClaimPath);
-
 		return claimable;
 	}
 

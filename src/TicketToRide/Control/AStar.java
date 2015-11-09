@@ -11,6 +11,7 @@ import java.util.List;
 import TicketToRide.Model.City;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
+import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.World;
 
@@ -26,12 +27,12 @@ public class AStar {
 	private City startCity;
 	private City endCity;
 
-	private PlayerAI player;
+	private Player player;
 
 	/**
 	 * This method adds a new frontier to the list
 	 */
-	public AStar(PlayerAI player, DestinationCard card) {
+	public AStar(Player player, DestinationCard card) {
 		this.player = player;
 		frontiers = new ArrayList<Frontier>();
 		closed = new ArrayList<Frontier>();
@@ -48,16 +49,15 @@ public class AStar {
 	 */
 	public void run() {
 		Frontier target = frontiers.remove(0); // pop off initial state
-		while (!goal(target) || !frontiers.isEmpty()) { // check if open state
+		while(!frontiers.isEmpty()&&(goal==null||goal.getCost()>frontiers.get(0).getWeight())){
 														// is goal state
 			expandFronter(target); // if not, expand target's children states
-			Collections.sort(frontiers); // sort frontier list in ascending cost
-											// order
+			Collections.sort(frontiers); // sort frontier list in ascending cost order
 			closed.add(target); // add popped off state to closed list
 			target = frontiers.remove(0); // repeat process with new target
+			if (goal(target)&&(goal==null||goal.getCost()>target.getCost()))
+				goal = target; // invariant: target is your goal state
 		}
-		if (goal(target))
-			goal = target; // invariant: target is your goal state
 	}
 
 	/**
@@ -65,26 +65,22 @@ public class AStar {
 	 */
 	private void expandFronter(Frontier frontier) {
 		City lastCity = frontier.getLastCity();
-		int lastCityIndex = World.cities.indexOf(lastCity);
-		for (int i = 0; i < PathHandler.pathMatrix[lastCityIndex].length; i++) {
-			boolean pathExist = PathHandler.pathMatrix[lastCityIndex][i];
-			if (pathExist) {
-				List<Path> pathList = PathHandler.getPath(lastCity, World.cities.get(i));
-				boolean pathOwnAble = false;
-				for (Path p : pathList) {
-					pathOwnAble = pathOwnAble || p.getOwningPlayer() == null || p.getOwningPlayer() == player;
-				}
-				if (pathOwnAble) {
-					City expandCity = World.cities.get(i);
-					List<City> newList = new ArrayList<City>();
-					newList.addAll(frontier.getList());
-					newList.add(expandCity);
-					int cost = frontier.getCost() + calPathCost(lastCity, expandCity);
-					int heuristicCost = getHeuristicCost(expandCity);
-					Frontier newFrontier = new Frontier(newList, cost, heuristicCost);
-					if (!isContains(frontiers, newFrontier) && !isContains(frontiers, newFrontier)) {
-						frontiers.add(newFrontier);
-					}
+		List<City> connectCities=PathHandler.getConnectCities(lastCity);
+		for(City expandCity:connectCities){
+			List<Path> pathList = PathHandler.getPath(lastCity, expandCity);
+			boolean pathOwnAble = false;
+			for (Path p : pathList) {
+				pathOwnAble = pathOwnAble || p.getOwningPlayer() == null || p.getOwningPlayer() == player;
+			}
+			if (pathOwnAble) {
+				List<City> newList = new ArrayList<City>();
+				newList.addAll(frontier.getList());
+				newList.add(expandCity);
+				int cost = frontier.getCost() + calPathCost(lastCity, expandCity);
+				int heuristicCost = getHeuristicCost(expandCity);
+				Frontier newFrontier = new Frontier(newList, cost, heuristicCost);
+				if (!isContains(frontiers, newFrontier) && !isContains(frontiers, newFrontier)) {
+					frontiers.add(newFrontier);
 				}
 			}
 		}
@@ -104,11 +100,8 @@ public class AStar {
 	private boolean isContains(List<Frontier> list, Frontier frontier) {
 		for (Frontier f : list) {
 			if (f.equals(frontier)) {
-				if (frontier.getWeight() < f.getWeight()) // true could be only
-															// occurred when
-															// list is a
-															// reference of
-															// frontiers
+				// true could be only occurred when list is a reference of frontiers
+				if (frontier.getWeight() < f.getWeight()) 
 					list.set(list.indexOf(f), frontier);
 				return true;
 			}

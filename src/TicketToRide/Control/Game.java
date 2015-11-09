@@ -15,8 +15,8 @@ import TicketToRide.Model.Player;
  *
  */
 public class Game {
-	private List<Player> players;
-	private Player turn;
+	public static List<Player> players;
+	public static Player turn;
 
 	/**
 	 * 
@@ -32,9 +32,9 @@ public class Game {
 	 * 
 	 * @return winner
 	 */
-	public List<Player> getWinners() {
+	public static List<Player> getWinners() {
 		List<Player> winner = new ArrayList<Player>();
-		int maxScore = players.get(0).getScore();
+		int maxScore = 0;
 
 		for (Player player : players)
 			Math.max(maxScore, player.getScore());
@@ -49,7 +49,7 @@ public class Game {
 	/**
 	 * switch turn to next player
 	 */
-	public void nextPlayer() {
+	public static void nextPlayer() {
 		int turnIndex = players.indexOf(turn);
 		if (turnIndex == players.size() - 1)
 			turn = players.get(0);
@@ -62,8 +62,22 @@ public class Game {
 	 * 
 	 * @return
 	 */
-	public boolean gameEnd() {
+	public static boolean gameEnd() {
 		return turn.getPiece() < 3;
 	}
-
+	
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static int getRank(Player player){
+		int n=1;
+		for(Player p:players){
+			if(p.getScore()>player.getScore()){
+				n++;
+			}
+		}
+		return n;
+	}
 }

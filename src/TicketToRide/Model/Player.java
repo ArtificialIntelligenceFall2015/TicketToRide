@@ -12,7 +12,7 @@ import TicketToRide.Model.Constants.playerColor;
  * @author Jun He
  *
  */
-public class Player {
+public class Player{
 	private int score = 0;
 	private List<TrainCard> trainCards;
 	private List<DestinationCard> desCards;

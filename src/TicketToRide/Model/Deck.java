@@ -20,7 +20,7 @@ public class Deck {
 	public static List<DestinationCard> desCardDeck;
 	public static List<TrainCard> trainCardsDeck;
 	public static List<TrainCard> trainFaceUpCards;
-	public static HashMap<TrainCard, Integer> countColor;
+	public static HashMap<TrainCard, Integer> removeCount;
 
 	/**
 	 * init global variable for Deck of face down train card Deck of face up
@@ -100,5 +100,15 @@ public class Deck {
 	public static int count(List<TrainCard> cards, String name) {
 		trainCard color = trainCard.valueOf(name);
 		return count(cards, color);
+	}
+	
+	public static void spendCards(List<TrainCard> cardsToSpend){
+		for(TrainCard card: cardsToSpend){
+			int n=1;
+			if(removeCount.containsKey(card)){
+				n+=removeCount.get(card);
+			}
+			removeCount.put(card, n);
+		}
 	}
 }
