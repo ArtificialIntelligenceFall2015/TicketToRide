@@ -48,12 +48,29 @@ import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.ParseCSVData;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
+import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
 
 public class TicketToRideGui extends JFrame {
 
 	private JPanel contentPane;
-
+	DefaultListModel destList;
+	JPanel pnlFaceUpTrainCard4;
+	JPanel pnlFaceUpTrainCard3;
+	JPanel pnlFaceUpTrainCard2;
+	JPanel pnlFaceUpTrainCard1;
+	JPanel pnlFaceUpTrainCard0;
+	JLabel lblCurrentPlayerTrainCardPink;
+	JLabel lblCurrentPlayerTrainCardWhite;
+	JLabel lblCurrentPlayerTrainCardBlue;
+	JLabel lblCurrentPlayerTrainCardYellow;
+	JLabel lblCurrentPlayerTrainCardRed;
+	JLabel lblCurrentPlayerTrainCardBlack;
+	JLabel lblCurrentPlayerTrainCardOrange;
+	JLabel lblCurrentPlayerTrainCardGreen;
+	JLabel lblCurrentPlayerTrainCardRainbow;
+	List<Player> p;
+	int occurrences = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -83,13 +100,17 @@ public class TicketToRideGui extends JFrame {
 		setContentPane(contentPane);
 
 		//
-		List<Player> p = new ArrayList<Player>();
+		//initialize players
+		p = new ArrayList<Player>();
 		p.add(new Player(playerColor.BLACK));
 		p.add(new Player(playerColor.BLUE));
 		p.add(new Player(playerColor.GREEN));
 		p.add(new Player(playerColor.RED));
 		p.add(new Player(playerColor.YELLOW));
-		Deck.startHand(p);
+		
+		Deck.drawStartingHand(p);
+		Deck.drawFreshFaceUpTrainCards();
+		//TODO: check for rainbow here
 		//System.out.println(Deck.trainFaceUpCards.size());
 		//
 		
@@ -103,7 +124,7 @@ public class TicketToRideGui extends JFrame {
 		spBoard.setRightComponent(pnlBoard);
 		pnlBoard.setLayout(new BorderLayout(0, 0));
 
-		JPanel pnlDecks = new JPanel();
+		final JPanel pnlDecks = new JPanel();
 		spBoard.setLeftComponent(pnlDecks);
 		pnlDecks.setLayout(new GridLayout(8, 1, 0, 0));
 
@@ -148,7 +169,8 @@ public class TicketToRideGui extends JFrame {
 		jlstCurrentPlayerDestCards.setFont(new Font("Courier New", Font.PLAIN, 11));
 		jlstCurrentPlayerDestCards.setVisibleRowCount(3);
 		jlstCurrentPlayerDestCards.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		final DefaultListModel destList = new DefaultListModel(); //SF
+		//final DefaultListModel destList = new DefaultListModel(); //SF
+		destList = new DefaultListModel(); //SF
 		jlstCurrentPlayerDestCards.setModel(destList);
 		scpCurrentPlayerDestCards.setViewportView(jlstCurrentPlayerDestCards);
 
@@ -156,24 +178,24 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayer.add(pnlCurrentPlayerTrainCards, BorderLayout.CENTER);
 		pnlCurrentPlayerTrainCards.setLayout(new GridLayout(1, 12, 0, 0));
 
-		int occurrences = Collections.frequency(p.get(0).getTrainCards(), trainCard.PINK);//?
-		System.out.println(p.get(0).getTrainCards().size() + " " + p.get(0).getColor().equals(playerColor.BLACK));
-		JLabel lblCurrentPlayerTrainCardPink = new JLabel(Integer.toString(occurrences));
-		//JLabel lblCurrentPlayerTrainCardPink = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.PINK);		
+		lblCurrentPlayerTrainCardPink = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardPink.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardPink.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardPink.setOpaque(true);
 		lblCurrentPlayerTrainCardPink.setBackground(Color.PINK);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardPink);
 
-		JLabel lblCurrentPlayerTrainCardWhite = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.WHITE);
+		lblCurrentPlayerTrainCardWhite = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardWhite.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardWhite.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardWhite.setBackground(Color.WHITE);
 		lblCurrentPlayerTrainCardWhite.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardWhite);
 
-		JLabel lblCurrentPlayerTrainCardBlue = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.BLUE);
+		lblCurrentPlayerTrainCardBlue = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardBlue.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardBlue.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardBlue.setForeground(Color.WHITE);
@@ -181,14 +203,16 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardBlue.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardBlue);
 
-		JLabel lblCurrentPlayerTrainCardYellow = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.YELLOW);		
+		lblCurrentPlayerTrainCardYellow = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardYellow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardYellow.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardYellow.setBackground(Color.YELLOW);
 		lblCurrentPlayerTrainCardYellow.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardYellow);
 
-		JLabel lblCurrentPlayerTrainCardRed = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.RED);		
+		lblCurrentPlayerTrainCardRed = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardRed.setForeground(Color.WHITE);
 		lblCurrentPlayerTrainCardRed.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRed.setHorizontalAlignment(SwingConstants.CENTER);
@@ -196,7 +220,8 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardRed.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardRed);
 
-		JLabel lblCurrentPlayerTrainCardBlack = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.BLACK);		
+		lblCurrentPlayerTrainCardBlack = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardBlack.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardBlack.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardBlack.setForeground(Color.WHITE);
@@ -204,7 +229,8 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardBlack.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardBlack);
 
-		JLabel lblCurrentPlayerTrainCardOrange = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.ORANGE);		
+		lblCurrentPlayerTrainCardOrange = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardOrange.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardOrange.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardOrange.setForeground(Color.BLACK);
@@ -212,14 +238,16 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardOrange.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardOrange);
 
-		JLabel lblCurrentPlayerTrainCardGreen = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.GREEN);		
+		lblCurrentPlayerTrainCardGreen = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardGreen.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardGreen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardGreen.setBackground(Color.GREEN);
 		lblCurrentPlayerTrainCardGreen.setOpaque(true);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardGreen);
 
-		JLabel lblCurrentPlayerTrainCardRainbow = new JLabel("0");
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.RAINBOW);		
+		lblCurrentPlayerTrainCardRainbow = new JLabel(Integer.toString(occurrences));
 		lblCurrentPlayerTrainCardRainbow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRainbow.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setForeground(Color.WHITE);
@@ -241,35 +269,30 @@ public class TicketToRideGui extends JFrame {
 		JButton btnPickDestCards = new JButton("Pick Destination Cards");
 		pnlCurrentPlayerTurnChoices.add(btnPickDestCards);
 
-		JPanel pnlFaceUpTrainCard5 = new JPanel();
-		pnlFaceUpTrainCard5.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//pnlFaceUpTrainCard5.setBackground(Color.RED);
-		pnlFaceUpTrainCard5.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());//?
-		pnlDecks.add(pnlFaceUpTrainCard5);
-
-		JPanel pnlFaceUpTrainCard4 = new JPanel();
+		pnlFaceUpTrainCard4 = new JPanel();
 		pnlFaceUpTrainCard4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//pnlFaceUpTrainCard4.setBackground(Color.ORANGE);
-		pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());//?
+		pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
 		pnlDecks.add(pnlFaceUpTrainCard4);
 
-		JPanel pnlFaceUpTrainCard3 = new JPanel();
+		pnlFaceUpTrainCard3 = new JPanel();
 		pnlFaceUpTrainCard3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//pnlFaceUpTrainCard3.setBackground(Color.BLACK);
-		pnlFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());//?
+		pnlFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
 		pnlDecks.add(pnlFaceUpTrainCard3);
 
-		JPanel pnlFaceUpTrainCard2 = new JPanel();
+		pnlFaceUpTrainCard2 = new JPanel();
 		pnlFaceUpTrainCard2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//pnlFaceUpTrainCard2.setBackground(Color.BLUE);
-		pnlFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());//?
+		pnlFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
 		pnlDecks.add(pnlFaceUpTrainCard2);
 
-		JPanel pnlFaceUpTrainCard1 = new JPanel();
+		pnlFaceUpTrainCard1 = new JPanel();
 		pnlFaceUpTrainCard1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//pnlFaceUpTrainCard1.setBackground(Color.GREEN);
-		pnlFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());//?
+		pnlFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
 		pnlDecks.add(pnlFaceUpTrainCard1);
+
+		pnlFaceUpTrainCard0 = new JPanel();
+		pnlFaceUpTrainCard0.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		pnlFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		pnlDecks.add(pnlFaceUpTrainCard0);
 
 		JPanel pnlTrainCardDeck = new JPanel();
 		pnlDecks.add(pnlTrainCardDeck);
@@ -292,59 +315,48 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayerAvatar.add(lblPlaceHolderAvatarLabel, BorderLayout.CENTER);
 
 		// ActionListeners for Button Clicking Actions
-		pnlFaceUpTrainCard5.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent arg0) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Face Up Train Card 5");
-			}
-		});
-
 		pnlFaceUpTrainCard4.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Face Up Train Card 4");
+			public void mousePressed(MouseEvent arg0) {
+				clickFaceUpTrainCard(pnlFaceUpTrainCard4, 4);
 			}
 		});
 
 		pnlFaceUpTrainCard3.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Face Up Train Card 3");
+				clickFaceUpTrainCard(pnlFaceUpTrainCard3, 3);
 			}
 		});
 
 		pnlFaceUpTrainCard2.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Face Up Train Card 2");
+				clickFaceUpTrainCard(pnlFaceUpTrainCard2, 2);
 			}
 		});
 
 		pnlFaceUpTrainCard1.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Face Up Train Card 1");
+				clickFaceUpTrainCard(pnlFaceUpTrainCard1, 1);
+			}
+		});
+
+		pnlFaceUpTrainCard0.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				clickFaceUpTrainCard(pnlFaceUpTrainCard0, 0);
 			}
 		});
 
 		btnTrainCardDeck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Train Card Deck Button");
+				PlayerHandler.drawTrainCard(p.get(0));
+				//TODO: display joptionpane describing train card picked up from deck
+				
 			}
 		});
 
 		btnPickTrainCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Current Player Pick Train Cards Button");
+				// TODO:debug action listener code-SF
+				System.out.println("Current Player Pick Train Cards Button"); 
 				ArrayList<City> cityList = ParseCSVData.parseCities();
 				for (City c : cityList)
 					System.out.println(c.getCityName() + "\t" + c.getX_val() + "\t" + c.getY_val());
@@ -353,8 +365,7 @@ public class TicketToRideGui extends JFrame {
 
 		btnClaimARoute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
+				// TODO:debug action listener code-SF
 				System.out.println("Current Player Claim A Route Button");
 				ArrayList<Path> pathList = ParseCSVData.parseRoutes();
 				for (Path p : pathList)
@@ -364,17 +375,11 @@ public class TicketToRideGui extends JFrame {
 
 		btnPickDestCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO:debug action listener code, do not leave in final
-				// version-SF
-				System.out.println("Current Player Pick Destination Cards Button");
-				
-				
 				//Get initial destination cards
 				List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(new Player(playerColor.BLACK));
 				List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
 				
 				//debug
-				//System.out.println(initialDesCards.size());
 				for (DestinationCard dc : initialDesCards)
 					System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
 				
@@ -395,22 +400,19 @@ public class TicketToRideGui extends JFrame {
 				if (!cbDestCardOpt0.isSelected())
 					rejectedDesCards.add(initialDesCards.remove(0));
 						
-				System.out.println("cards chosen were:" + initialDesCards); //TODO: debug
-				System.out.println("cards discarded were:" + rejectedDesCards); //TODO: debug
+				//System.out.println("cards chosen were:" + initialDesCards); //TODO: debug
+				//System.out.println("cards discarded were:" + rejectedDesCards); //TODO: debug
 				
 				PlayerHandler.returnDesCardToDeck(rejectedDesCards); 
 				Player p = new Player(playerColor.BLACK);
 				p.getDesCards().addAll(initialDesCards);
-				System.out.println("cards in players hand:" + p.getDesCards());
+				System.out.println("cards in players hand:" + p.getDesCards());//debug
 				
-						
 				//display destination cards in JList
 				for (DestinationCard dc : p.getDesCards()) {
-					destList.addElement(dc.toString());
+					destList.addElement(dc.toString()); 
 				}
-
-
-				
+			
 				//debug
 				ArrayList<DestinationCard> destinationCardList = ParseCSVData.parseDestinationCards();
 				for (DestinationCard dc : destinationCardList)
@@ -424,5 +426,71 @@ public class TicketToRideGui extends JFrame {
 		
 		//endtest
 	}
+	
+	public boolean checkForTripleRainbow() {
+		boolean hasTripleRainbow = false;
+		
+		//see if 5 face up cards contain 3 rainbow cards
+		int occurrences = Collections.frequency(Deck.trainFaceUpCards, new TrainCard(trainCard.RAINBOW));
+		if (occurrences > 2)
+			hasTripleRainbow = true;
+		
+		return hasTripleRainbow;
+	}
+	
+	public int occurrenceOfTrainCardColor(List<TrainCard> playerHand, trainCard tc) {
+		int occurrences = Collections.frequency(playerHand, new TrainCard(tc));
+		return occurrences;
+	}
 
+	public void repaintFaceUpTrainCards() {
+		pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		pnlFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
+		pnlFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
+		pnlFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
+		pnlFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		
+		//debug print
+		for (TrainCard tc : Deck.trainFaceUpCards)
+			System.out.print(tc.getColor().toString() + " ");
+		System.out.println("");
+	}
+	
+	public void retallyPlayerTrainCardHand() {
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.PINK);		
+		lblCurrentPlayerTrainCardPink.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.WHITE);
+		lblCurrentPlayerTrainCardWhite.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.BLUE);
+		lblCurrentPlayerTrainCardBlue.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.YELLOW);		
+		lblCurrentPlayerTrainCardYellow.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.RED);		
+		lblCurrentPlayerTrainCardRed.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.BLACK);		
+		lblCurrentPlayerTrainCardBlack.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.ORANGE);		
+		lblCurrentPlayerTrainCardOrange.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.GREEN);		
+		lblCurrentPlayerTrainCardGreen.setText(Integer.toString(occurrences));
+		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.RAINBOW);		
+		lblCurrentPlayerTrainCardRainbow.setText(Integer.toString(occurrences));
+	}
+	
+	public void clickFaceUpTrainCard(JPanel jp, int index) {
+		//give the player the face up train card 
+		PlayerHandler.drawTrainCard(p.get(0), index);
+		//display the new face up train card (if deck is nonempty)
+		//check for null card //TODO:
+		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
+		retallyPlayerTrainCardHand();
+		while (checkForTripleRainbow()) {
+			System.out.println("triple rainbow detected"); //debug
+			System.out.println("size of train card deck:" + Deck.trainFaceUpCards.size()); //debug
+			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
+			Deck.drawFreshFaceUpTrainCards();
+			repaintFaceUpTrainCards();
+		}
+
+	}
 }

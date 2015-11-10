@@ -74,49 +74,40 @@ public class PlayerHandler {
 		return true;
 	}
 
-//	/**
-//	 * perform draw train card behave
-//	 * 
-//	 * @param player
-//	 * @param index
-//	 * @return
-//	 */
-//	public static TrainCard drawFaceUpTrainCard(Player player, int index) {
-//		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
-//		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
-//		TrainCard card = faceUpCard.remove(index);
-//		if (faceDownCard.size() > 0)
-//			faceUpCard.add(faceDownCard.remove(0));
-//		player.getTrainCards().add(card);
-//		return card;
-//	}
-
 	/**
-	 * perform draw train card behave
+	 * draw a face down train card from the deck
 	 * 
 	 * @param player
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
+		//TODO: check if deck is empty
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		return card;
 	}
 
 	/**
-	 * perform draw train card behave
+	 * draw a face up train card from the index card
 	 * 
 	 * @param player
 	 * @param index
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player, int index) {
-		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
-		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
-		TrainCard card = faceUpCard.remove(index);
-		if (faceDownCard.size() > 0)
-			faceUpCard.add(faceDownCard.remove(0));
-		player.getTrainCards().add(card);
+		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
+		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
+		TrainCard card = faceUpCards.get(index); //get face up card
+		if (faceDownCards.size() > 0) {
+			//replace face up card if deck isn't depleted
+			faceUpCards.set(index, faceDownCards.remove(0)); 
+		}
+		else {
+			//if empty, replace faceup card in list with null
+			faceUpCards.set(index, null);
+		}
+		player.getTrainCards().add(card); //put face up card in player's hand
+		//TODO: might not need to return this card, only return face down card - SF
 		return card;
 	}
 	
