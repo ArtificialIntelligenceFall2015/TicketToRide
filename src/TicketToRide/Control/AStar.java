@@ -48,15 +48,15 @@ public class AStar {
 	 * This method performs the A* algorithm on the list
 	 */
 	public void run() {
-		Frontier target = frontiers.remove(0); // pop off initial state
 		while(!frontiers.isEmpty()&&(goal==null||goal.getCost()>frontiers.get(0).getWeight())){
-														// is goal state
-			expandFronter(target); // if not, expand target's children states
+			Frontier target = frontiers.remove(0); // pop off initial state	
+			if (goal(target)&&(goal==null||goal.getCost()>target.getCost()))
+				goal = target; // invariant: target is your goal state// is goal state
+			else{
+				expandFronter(target); // if not, expand target's children states
+			}
 			Collections.sort(frontiers); // sort frontier list in ascending cost order
 			closed.add(target); // add popped off state to closed list
-			target = frontiers.remove(0); // repeat process with new target
-			if (goal(target)&&(goal==null||goal.getCost()>target.getCost()))
-				goal = target; // invariant: target is your goal state
 		}
 	}
 
@@ -124,7 +124,15 @@ public class AStar {
 
 	public int calPathCost(City city1, City city2) {
 		// TODO
-		return 0;
+		List<Path> pathList = PathHandler.getPath(city1, city2);
+		for (Path p : pathList) {
+			if(CostStrategies.ownPath(player, p)){
+				return 0;
+			}else{
+				//get min cost between pathes
+			}
+		}
+		return PathHandler.getPath(city1, city2).get(0).getCost();
 	}
 
 }

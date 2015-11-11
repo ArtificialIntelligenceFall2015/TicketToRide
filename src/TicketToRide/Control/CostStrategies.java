@@ -28,7 +28,7 @@ public class CostStrategies {
 	 * @param path
 	 * @return
 	 */
-	private static boolean ownPath(PlayerAI player, Path path){
+	public static boolean ownPath(Player player, Path path){
 		return path.getOwningPlayer()==player;
 	}
 	
