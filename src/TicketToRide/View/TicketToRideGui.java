@@ -270,9 +270,22 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayerTurnChoices.add(btnPickDestCards);
 
 		pnlFaceUpTrainCard4 = new JPanel();
-		pnlFaceUpTrainCard4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
-		pnlDecks.add(pnlFaceUpTrainCard4);
+		//pnlFaceUpTrainCard4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		//pnlFaceUpTrainCard4.setLayout(new BorderLayout());
+		//pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		final JLabel jlRainbow = new JLabel();
+		jlRainbow.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				clickFaceUpTrainCard(jlRainbow, 4);
+			}
+		});
+		jlRainbow.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		jlRainbow.setOpaque(true);
+		jlRainbow.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		//jlRainbow.setFocusable(false);
+		//pnlFaceUpTrainCard4.add(jlRainbow, BorderLayout.CENTER);
+		pnlDecks.add(jlRainbow);
 
 		pnlFaceUpTrainCard3 = new JPanel();
 		pnlFaceUpTrainCard3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -493,4 +506,22 @@ public class TicketToRideGui extends JFrame {
 		}
 
 	}
+	
+	public void clickFaceUpTrainCard(JLabel jp, int index) {
+		//give the player the face up train card 
+		PlayerHandler.drawTrainCard(p.get(0), index);
+		//display the new face up train card (if deck is nonempty)
+		//check for null card //TODO:
+		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
+		retallyPlayerTrainCardHand();
+		while (checkForTripleRainbow()) {
+			System.out.println("triple rainbow detected"); //debug
+			System.out.println("size of train card deck:" + Deck.trainFaceUpCards.size()); //debug
+			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
+			Deck.drawFreshFaceUpTrainCards();
+			repaintFaceUpTrainCards();
+		}
+
+	}
+
 }
