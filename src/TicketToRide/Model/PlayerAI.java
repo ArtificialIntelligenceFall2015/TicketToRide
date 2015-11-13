@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import TicketToRide.Model.Constants.playerColor;
+import TicketToRide.Model.Constants.strategies;
 import TicketToRide.Model.Constants.trainCard;
 
 /**
@@ -22,11 +23,14 @@ public class PlayerAI extends Player {
 	
 	private HashMap<trainCard, Integer> handCollection;
 	private HashMap<trainCard, Integer> deckCollection;
+	
+	private strategies[] strategiesList;
 
-	public PlayerAI(playerColor color) {
+	public PlayerAI(playerColor color, strategies...s) {
 		super(color);
 		favorPath = new ArrayList<List<Path>>();
 		uncompleteableDesCard = new ArrayList<DestinationCard>();
+		setStrategiesList(s);
 	}
 
 	/**
@@ -92,6 +96,14 @@ public class PlayerAI extends Player {
 	 */
 	public void setDeckCollection(HashMap<trainCard, Integer> deckCollection) {
 		this.deckCollection = deckCollection;
+	}
+
+	public strategies[] getStrategiesList() {
+		return strategiesList;
+	}
+
+	public void setStrategiesList(strategies[] strategiesList) {
+		this.strategiesList = strategiesList;
 	}
 
 

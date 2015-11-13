@@ -123,16 +123,16 @@ public class AStar {
 	}
 
 	public int calPathCost(City city1, City city2) {
-		// TODO
 		List<Path> pathList = PathHandler.getPath(city1, city2);
+		int minCost=Integer.MAX_VALUE;
 		for (Path p : pathList) {
 			if(CostStrategies.ownPath(player, p)){
-				return 0;
+				minCost=0;
 			}else{
-				//get min cost between pathes
+				minCost=Math.min(minCost, CostStrategies.getCost(player,p));
 			}
 		}
-		return PathHandler.getPath(city1, city2).get(0).getCost();
+		return minCost;
 	}
 
 }
