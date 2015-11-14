@@ -55,11 +55,11 @@ public class TicketToRideGui extends JFrame {
 
 	private JPanel contentPane;
 	DefaultListModel destList;
-	JPanel pnlFaceUpTrainCard4;
-	JPanel pnlFaceUpTrainCard3;
-	JPanel pnlFaceUpTrainCard2;
-	JPanel pnlFaceUpTrainCard1;
-	JPanel pnlFaceUpTrainCard0;
+	JLabel lblFaceUpTrainCard4;
+	JLabel lblFaceUpTrainCard3;
+	JLabel lblFaceUpTrainCard2;
+	JLabel lblFaceUpTrainCard1;
+	JLabel lblFaceUpTrainCard0;
 	JLabel lblCurrentPlayerTrainCardPink;
 	JLabel lblCurrentPlayerTrainCardWhite;
 	JLabel lblCurrentPlayerTrainCardBlue;
@@ -71,6 +71,8 @@ public class TicketToRideGui extends JFrame {
 	JLabel lblCurrentPlayerTrainCardRainbow;
 	List<Player> p;
 	int occurrences = 0;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -269,43 +271,35 @@ public class TicketToRideGui extends JFrame {
 		JButton btnPickDestCards = new JButton("Pick Destination Cards");
 		pnlCurrentPlayerTurnChoices.add(btnPickDestCards);
 
-		pnlFaceUpTrainCard4 = new JPanel();
-		//pnlFaceUpTrainCard4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//pnlFaceUpTrainCard4.setLayout(new BorderLayout());
-		//pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
-		final JLabel jlRainbow = new JLabel();
-		jlRainbow.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				clickFaceUpTrainCard(jlRainbow, 4);
-			}
-		});
-		jlRainbow.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
-		jlRainbow.setOpaque(true);
-		jlRainbow.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		//jlRainbow.setFocusable(false);
-		//pnlFaceUpTrainCard4.add(jlRainbow, BorderLayout.CENTER);
-		pnlDecks.add(jlRainbow);
+		lblFaceUpTrainCard4 = new JLabel();
+		lblFaceUpTrainCard4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		lblFaceUpTrainCard4.setOpaque(true);
+		pnlDecks.add(lblFaceUpTrainCard4);
 
-		pnlFaceUpTrainCard3 = new JPanel();
-		pnlFaceUpTrainCard3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		pnlFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
-		pnlDecks.add(pnlFaceUpTrainCard3);
+		lblFaceUpTrainCard3 = new JLabel();
+		lblFaceUpTrainCard3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
+		lblFaceUpTrainCard3.setOpaque(true);
+		pnlDecks.add(lblFaceUpTrainCard3);
 
-		pnlFaceUpTrainCard2 = new JPanel();
-		pnlFaceUpTrainCard2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		pnlFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
-		pnlDecks.add(pnlFaceUpTrainCard2);
+		lblFaceUpTrainCard2 = new JLabel();
+		lblFaceUpTrainCard2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
+		lblFaceUpTrainCard2.setOpaque(true);
+		pnlDecks.add(lblFaceUpTrainCard2);
 
-		pnlFaceUpTrainCard1 = new JPanel();
-		pnlFaceUpTrainCard1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		pnlFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
-		pnlDecks.add(pnlFaceUpTrainCard1);
+		lblFaceUpTrainCard1 = new JLabel();
+		lblFaceUpTrainCard1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
+		lblFaceUpTrainCard1.setOpaque(true);
+		pnlDecks.add(lblFaceUpTrainCard1);
 
-		pnlFaceUpTrainCard0 = new JPanel();
-		pnlFaceUpTrainCard0.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		pnlFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
-		pnlDecks.add(pnlFaceUpTrainCard0);
+		lblFaceUpTrainCard0 = new JLabel();
+		lblFaceUpTrainCard0.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		lblFaceUpTrainCard0.setOpaque(true);
+		pnlDecks.add(lblFaceUpTrainCard0);
 
 		JPanel pnlTrainCardDeck = new JPanel();
 		pnlDecks.add(pnlTrainCardDeck);
@@ -328,33 +322,33 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayerAvatar.add(lblPlaceHolderAvatarLabel, BorderLayout.CENTER);
 
 		// ActionListeners for Button Clicking Actions
-		pnlFaceUpTrainCard4.addMouseListener(new MouseAdapter() {
+		lblFaceUpTrainCard4.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent arg0) {
-				clickFaceUpTrainCard(pnlFaceUpTrainCard4, 4);
+				clickFaceUpTrainCard(lblFaceUpTrainCard4, 4);
 			}
 		});
 
-		pnlFaceUpTrainCard3.addMouseListener(new MouseAdapter() {
+		lblFaceUpTrainCard3.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				clickFaceUpTrainCard(pnlFaceUpTrainCard3, 3);
+				clickFaceUpTrainCard(lblFaceUpTrainCard3, 3);
 			}
 		});
 
-		pnlFaceUpTrainCard2.addMouseListener(new MouseAdapter() {
+		lblFaceUpTrainCard2.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				clickFaceUpTrainCard(pnlFaceUpTrainCard2, 2);
+				clickFaceUpTrainCard(lblFaceUpTrainCard2, 2);
 			}
 		});
 
-		pnlFaceUpTrainCard1.addMouseListener(new MouseAdapter() {
+		lblFaceUpTrainCard1.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				clickFaceUpTrainCard(pnlFaceUpTrainCard1, 1);
+				clickFaceUpTrainCard(lblFaceUpTrainCard1, 1);
 			}
 		});
 
-		pnlFaceUpTrainCard0.addMouseListener(new MouseAdapter() {
+		lblFaceUpTrainCard0.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				clickFaceUpTrainCard(pnlFaceUpTrainCard0, 0);
+				clickFaceUpTrainCard(lblFaceUpTrainCard0, 0);
 			}
 		});
 
@@ -457,11 +451,11 @@ public class TicketToRideGui extends JFrame {
 	}
 
 	public void repaintFaceUpTrainCards() {
-		pnlFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
-		pnlFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
-		pnlFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
-		pnlFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
-		pnlFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
+		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
+		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
+		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
 		
 		//debug print
 		for (TrainCard tc : Deck.trainFaceUpCards)
