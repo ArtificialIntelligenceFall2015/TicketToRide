@@ -92,7 +92,7 @@ public class PlayerHandler {
 	 * 
 	 * @param player
 	 * @param index
-	 * @return
+	 * @return card
 	 */
 	public static TrainCard drawTrainCard(Player player, int index) {
 		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
