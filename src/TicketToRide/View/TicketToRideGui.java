@@ -60,6 +60,7 @@ public class TicketToRideGui extends JFrame {
 	JLabel lblFaceUpTrainCard2;
 	JLabel lblFaceUpTrainCard1;
 	JLabel lblFaceUpTrainCard0;
+	JProgressBar pbrTrainCardDeck;
 	JLabel lblCurrentPlayerTrainCardPink;
 	JLabel lblCurrentPlayerTrainCardWhite;
 	JLabel lblCurrentPlayerTrainCardBlue;
@@ -305,9 +306,10 @@ public class TicketToRideGui extends JFrame {
 		pnlDecks.add(pnlTrainCardDeck);
 		pnlTrainCardDeck.setLayout(new BorderLayout(0, 0));
 
-		JProgressBar pbrTrainCardDeck = new JProgressBar();
+		pbrTrainCardDeck = new JProgressBar();
 		pbrTrainCardDeck.setOrientation(SwingConstants.VERTICAL);
-		pbrTrainCardDeck.setValue(100);
+		//pbrTrainCardDeck.setValue(100);
+		pbrTrainCardDeck.setValue((int)((Deck.trainCardsDeck.size() / 110.0) * 100));
 		pnlTrainCardDeck.add(pbrTrainCardDeck, BorderLayout.EAST);
 
 		JButton btnTrainCardDeck = new JButton("Train Card Deck");
@@ -484,26 +486,12 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardRainbow.setText(Integer.toString(occurrences));
 	}
 	
-	public void clickFaceUpTrainCard(JPanel jp, int index) {
-		//give the player the face up train card 
-		PlayerHandler.drawTrainCard(p.get(0), index);
-		//display the new face up train card (if deck is nonempty)
-		//check for null card //TODO:
-		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
-		retallyPlayerTrainCardHand();
-		while (checkForTripleRainbow()) {
-			System.out.println("triple rainbow detected"); //debug
-			System.out.println("size of train card deck:" + Deck.trainFaceUpCards.size()); //debug
-			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
-			Deck.drawFreshFaceUpTrainCards();
-			repaintFaceUpTrainCards();
-		}
-
-	}
-	
 	public void clickFaceUpTrainCard(JLabel jp, int index) {
 		//give the player the face up train card 
 		PlayerHandler.drawTrainCard(p.get(0), index);
+		System.out.println("Deck.trainCardsDeck.size =" + Deck.trainCardsDeck.size());
+		System.out.println("Deck.trainCardsDeck % =" + ((int)((Deck.trainCardsDeck.size() / 110.0) * 100)));
+		pbrTrainCardDeck.setValue((int)((Deck.trainCardsDeck.size() / 110.0) * 100));
 		//display the new face up train card (if deck is nonempty)
 		//check for null card //TODO:
 		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
