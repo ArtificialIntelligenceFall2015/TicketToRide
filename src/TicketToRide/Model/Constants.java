@@ -25,7 +25,7 @@ public class Constants {
 	public static enum decision {
 		CLAIM_A_ROUTE, DRAW_TRAIN_CARDS, DRAW_DES_TICKETS
 	};
-	
+
 	public static final int[] routeScore = { 0, 1, 2, 4, 7, 10, 15 };
 
 	public static final int TAKENCOST = 10;// TODO need to reset
