@@ -21,6 +21,7 @@ public class Deck {
 	public static List<TrainCard> trainCardsDeck;
 	public static List<TrainCard> trainFaceUpCards;
 	public static HashMap<TrainCard, Integer> removeCount;
+	public static List<TrainCard> trainCardDiscardDeck;
 
 	/**
 	 * init global variable for Deck of face down train card Deck of face up
@@ -30,6 +31,7 @@ public class Deck {
 		trainCardsDeck = new ArrayList<TrainCard>();
 		trainFaceUpCards = new ArrayList<TrainCard>();
 		desCardDeck = ParseCSVData.parseDestinationCards();
+		trainCardDiscardDeck = new ArrayList<TrainCard>();
 		for (trainCard tc : trainCard.values()) {
 			int size = 12;
 			if (tc == trainCard.RAINBOW)
@@ -43,21 +45,43 @@ public class Deck {
 		shuffle(desCardDeck);
 	}
 
-	/**
-	 * perform start hand behave in the game
-	 * 
+/**
+	 * draw initial cards for players' hand of train cards
 	 * @param players
 	 */
-	public static void startHand(List<Player> players) {
+	public static void drawStartingHand(List<Player> players) {
 		for (Player player : players) {
 			for (int i = 0; i < 4; i++) {
 				player.getTrainCards().add(trainCardsDeck.remove(0));
 			}
 		}
-
+	}
+	
+	/**
+	 * draw initial cards for 5 face up train cards
+	 */
+	public static boolean drawFreshFaceUpTrainCards() {
+		boolean deckIsEmpty = false;
+		
 		for (int i = 0; i < 5; i++) {
-			trainFaceUpCards.add(trainCardsDeck.remove(0));
+			if (trainCardsDeck.size() > 0)
+				trainFaceUpCards.add(trainCardsDeck.remove(0));
+			else {
+				trainFaceUpCards.add(null);
+				deckIsEmpty = true;
+			}
 		}
+		return deckIsEmpty;
+	}
+
+	/**
+	 * discard cards
+	 * 
+	 * @param card
+	 */
+	public static void discardAllFaceUpTrainCards(List<TrainCard> discardedTC) {
+		trainCardDiscardDeck.addAll(discardedTC);
+		discardedTC.clear();
 	}
 
 	/**

@@ -37,9 +37,7 @@ public class DestinationCard {
 	 * @param destinationCardArray
 	 *            a single destination card object read in from csv file line
 	 */
-	public DestinationCard(String[] destinationCardArray) { // TODO This
-															// constructor need
-															// to be fixed
+	public DestinationCard(String[] destinationCardArray) { 
 		int i = 0;
 
 		this.city1 = World.stringToCities.get(destinationCardArray[i++]);
@@ -106,6 +104,15 @@ public class DestinationCard {
 	 */
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+
+	/**
+	 * return a string representing the destination card for display
+	 */
+	public String toString() {
+//		return "DestinationCard [city1=" + city1 + ", city2=" + city2
+//				+ ", point=" + point + "]";
+		return point + ":" + city1 + " to " + city2;
 	}
 
 }

@@ -24,7 +24,7 @@ public class PlayerHandler {
 	 * 
 	 * @param player
 	 */
-	public static void calcDisCardPoint(Player player) {
+	public static void calcDesCardPoint(Player player) {
 		int score = 0;
 		for (DestinationCard card : player.getDesCards()) {
 			if (card.isCompleted()) {
@@ -75,34 +75,42 @@ public class PlayerHandler {
 	}
 
 	/**
-	 * perform draw train card behave
-	 * 
-	 * @param player
-	 * @param index
-	 * @return
-	 */
-	public static TrainCard drawTrainCard(Player player, int index) {
-		List<TrainCard> faceUpCard = Deck.trainFaceUpCards;
-		List<TrainCard> faceDownCard = Deck.trainCardsDeck;
-		TrainCard card = faceUpCard.remove(index);
-		if (faceDownCard.size() > 0)
-			faceUpCard.add(faceDownCard.remove(0));
-		player.getTrainCards().add(card);
-		return card;
-	}
-
-	/**
-	 * perform draw train card behave
+	 * draw a face down train card from the deck
 	 * 
 	 * @param player
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
+		//TODO: check if deck is empty
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		return card;
 	}
 
+	/**
+	 * draw a face up train card from the index card
+	 * 
+	 * @param player
+	 * @param index
+	 * @return card
+	 */
+	public static TrainCard drawTrainCard(Player player, int index) {
+		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
+		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
+		TrainCard card = faceUpCards.get(index); //get face up card
+		if (faceDownCards.size() > 0) {
+			//replace face up card if deck isn't depleted
+			faceUpCards.set(index, faceDownCards.remove(0)); 
+		}
+		else {
+			//if empty, replace faceup card in list with null
+			faceUpCards.set(index, null);
+		}
+		player.getTrainCards().add(card); //put face up card in player's hand
+		//TODO: might not need to return this card, only return face down card - SF
+		return card;
+	}
+	
 	/**
 	 * perform draw destination ticket behave
 	 * 
@@ -120,7 +128,22 @@ public class PlayerHandler {
 	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(DestinationCard cards) {
+	public static void returnDesCardToDeck(List<DestinationCard> cards) {//TODO: jun doesnt have this-SF
+		Deck.desCardDeck.addAll(cards);
+	}
+	//jun's
+	public static void returnDesCardToDeck(DestinationCard cards) { 
 		Deck.desCardDeck.add(cards);
+	}
+	
+	/**
+	 * Convert destination card list to string form for display only
+	 */
+	public static List<String> convertDesCardListToString(List<DestinationCard> desCardList) {
+		List<String> desCardStringList = new ArrayList<String>();
+		for (int i = 0; i < desCardList.size(); i++)
+			desCardStringList.add(desCardList.get(i).toString());
+		
+		return desCardStringList;
 	}
 }

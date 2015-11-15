@@ -14,9 +14,9 @@ import TicketToRide.Model.Constants.playerColor;
  */
 public class Player{
 	private int score = 0;
-	private List<TrainCard> trainCards;
-	private List<DestinationCard> desCards;
-	private List<Path> ownPath;
+	private List<TrainCard> trainCards = new ArrayList<TrainCard>();
+	private List<DestinationCard> desCards = new ArrayList<DestinationCard>();
+	private List<Path> ownPath = new ArrayList<Path>();
 	private playerColor color;
 	private int piece = 45;
 
