@@ -9,6 +9,7 @@ import java.util.List;
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.pathColor;
+import TicketToRide.Model.Constants.strategies;
 import TicketToRide.Model.Constants.trainCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
@@ -28,7 +29,7 @@ public class CostStrategies {
 	 * @param path
 	 * @return
 	 */
-	private static boolean ownPath(PlayerAI player, Path path){
+	public static boolean ownPath(Player player, Path path){
 		return path.getOwningPlayer()==player;
 	}
 	
@@ -148,6 +149,11 @@ public class CostStrategies {
 		return n;
 	}
 	
+	/**
+	 * 
+	 * @param cityFromPath
+	 * @return
+	 */
 	private static List<Player> getOwningPlayerList(City cityFromPath){
 		List<City> connectCities=PathHandler.getConnectCities(cityFromPath);
 		List<Player> players=new ArrayList<Player>();
@@ -160,5 +166,46 @@ public class CostStrategies {
 			}
 		}
 		return players;
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @param p
+	 * @return
+	 */
+	public static int getCost(Player player, Path p) {
+		if(player instanceof PlayerAI){
+			return p.getCost();
+		}else{
+			return calAICost((PlayerAI)player, p);
+		}
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @param p
+	 * @return
+	 */
+	private static int calAICost(PlayerAI player, Path p) {
+		int sum=0;
+		strategies[] list=player.getStrategiesList();
+		for(int i=0; i<list.length; i++){
+			sum+=getCostResult(list[i])*(i+1);
+		}
+		return sum;
+	}
+
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
+	private static int getCostResult(strategies s) {
+		switch(s){
+			
+		}
+		return 0;
 	}
 }

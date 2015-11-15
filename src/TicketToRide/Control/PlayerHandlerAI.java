@@ -50,6 +50,26 @@ public class PlayerHandlerAI extends PlayerHandler {
 			return decision.DRAW_TRAIN_CARDS;
 		}
 	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @param d
+	 */
+	public static void performAction(PlayerAI player, decision d){
+		switch(d){
+		case CLAIM_A_ROUTE:
+			claimARouteAI(player);
+			break;
+		case DRAW_DES_TICKETS:
+			drawDesTicketsAI(player);
+			break;
+		case DRAW_TRAIN_CARDS:
+			drawTrainCardAI(player);
+			break;
+		default:
+		}
+	}
 
 	/**
 	 * 
