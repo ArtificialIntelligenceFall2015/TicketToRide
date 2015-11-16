@@ -12,8 +12,6 @@ import TicketToRide.Model.City;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
-import TicketToRide.Model.PlayerAI;
-import TicketToRide.Model.World;
 
 /**
  * uses the A* algorithm to compute the solution path
@@ -21,8 +19,7 @@ import TicketToRide.Model.World;
 public class AStar {
 	private List<Frontier> frontiers; // list of frontier paths
 	private List<Frontier> closed; // list of closed paths
-	private Frontier goal; // final state of character array (all W's to left of
-							// leftmost B)
+	private Frontier goal; // final state
 
 	private City startCity;
 	private City endCity;
@@ -48,11 +45,11 @@ public class AStar {
 	 * This method performs the A* algorithm on the list
 	 */
 	public void run() {
-		while(!frontiers.isEmpty()&&(goal==null||goal.getCost()>frontiers.get(0).getWeight())){
-			Frontier target = frontiers.remove(0); // pop off initial state	
-			if (goal(target)&&(goal==null||goal.getCost()>target.getCost()))
-				goal = target; // invariant: target is your goal state// is goal state
-			else{
+		while (!frontiers.isEmpty() && (goal == null || goal.getCost() > frontiers.get(0).getWeight())) {
+			Frontier target = frontiers.remove(0); // pop off initial state
+			if (goal(target) && (goal == null || goal.getCost() > target.getCost()))
+				goal = target; // invariant: target is your goal state is goal state
+			else {
 				expandFronter(target); // if not, expand target's children states
 			}
 			Collections.sort(frontiers); // sort frontier list in ascending cost order
@@ -65,8 +62,8 @@ public class AStar {
 	 */
 	private void expandFronter(Frontier frontier) {
 		City lastCity = frontier.getLastCity();
-		List<City> connectCities=PathHandler.getConnectCities(lastCity);
-		for(City expandCity:connectCities){
+		List<City> connectCities = PathHandler.getConnectCities(lastCity);
+		for (City expandCity : connectCities) {
 			List<Path> pathList = PathHandler.getPath(lastCity, expandCity);
 			boolean pathOwnAble = false;
 			for (Path p : pathList) {
@@ -101,7 +98,7 @@ public class AStar {
 		for (Frontier f : list) {
 			if (f.equals(frontier)) {
 				// true could be only occurred when list is a reference of frontiers
-				if (frontier.getWeight() < f.getWeight()) 
+				if (frontier.getWeight() < f.getWeight())
 					list.set(list.indexOf(f), frontier);
 				return true;
 			}
@@ -124,12 +121,12 @@ public class AStar {
 
 	public int calPathCost(City city1, City city2) {
 		List<Path> pathList = PathHandler.getPath(city1, city2);
-		int minCost=Integer.MAX_VALUE;
+		int minCost = Integer.MAX_VALUE;
 		for (Path p : pathList) {
-			if(CostStrategies.ownPath(player, p)){
-				minCost=0;
-			}else{
-				minCost=Math.min(minCost, CostStrategies.getCost(player,p));
+			if (CostStrategies.ownPath(player, p)) {
+				minCost = 0;
+			} else {
+				minCost = Math.min(minCost, CostStrategies.getCost(player, p));
 			}
 		}
 		return minCost;

@@ -38,11 +38,10 @@ public class City {
 		int i = 0;
 
 		this.cityName = cityArray[i++];
-//		this.x_val = Integer.parseInt(cityArray[i++]);
-//		this.y_val = Integer.parseInt(cityArray[i++]);
-		this.x_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);//debug
-		this.y_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);//debug
-
+		// this.x_val = Integer.parseInt(cityArray[i++]);
+		// this.y_val = Integer.parseInt(cityArray[i++]);
+		this.x_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);// debug
+		this.y_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);// debug
 
 	}
 
@@ -95,7 +94,9 @@ public class City {
 		return cityName.equals(c.getCityName());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {

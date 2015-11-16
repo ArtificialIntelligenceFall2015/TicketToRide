@@ -20,13 +20,13 @@ public class PlayerAI extends Player {
 	private Path wantClaimPath;
 
 	private List<DestinationCard> uncompleteableDesCard;
-	
+
 	private HashMap<trainCard, Integer> handCollection;
 	private HashMap<trainCard, Integer> deckCollection;
-	
+
 	private strategies[] strategiesList;
 
-	public PlayerAI(playerColor color, strategies...s) {
+	public PlayerAI(playerColor color, strategies... s) {
 		super(color);
 		favorPath = new ArrayList<List<Path>>();
 		uncompleteableDesCard = new ArrayList<DestinationCard>();
@@ -78,7 +78,8 @@ public class PlayerAI extends Player {
 	}
 
 	/**
-	 * @param handCollection the handCollection to set
+	 * @param handCollection
+	 *            the handCollection to set
 	 */
 	public void setHandCollection(HashMap<trainCard, Integer> handCollection) {
 		this.handCollection = handCollection;
@@ -92,7 +93,8 @@ public class PlayerAI extends Player {
 	}
 
 	/**
-	 * @param deckCollection the deckCollection to set
+	 * @param deckCollection
+	 *            the deckCollection to set
 	 */
 	public void setDeckCollection(HashMap<trainCard, Integer> deckCollection) {
 		this.deckCollection = deckCollection;
@@ -105,6 +107,5 @@ public class PlayerAI extends Player {
 	public void setStrategiesList(strategies[] strategiesList) {
 		this.strategiesList = strategiesList;
 	}
-
 
 }
