@@ -14,7 +14,10 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
 
 /**
- * @author Jun He This class's methods work as player's behave
+ * @author Jun He 
+ * @author Sean Fast
+ * 
+ * This class's methods work as player's behave
  */
 public class PlayerHandler {
 
@@ -81,10 +84,20 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
-		//TODO: check if deck is empty
+		if (Deck.trainCardsDeck.isEmpty()) {
+			if (!Deck.trainCardDiscardDeck.isEmpty()) {
+				Deck.swapDiscardDeckWithActiveDeck();
+			}
+			else {
+				//TODO: no discard deck to swap in, zero cards left to draw
+			}
+		}
+		
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		return card;
+		//TODO: fix this conditional later
+		//TODO: what do we return if deck is empty?
 	}
 
 	/**
@@ -107,7 +120,6 @@ public class PlayerHandler {
 			faceUpCards.set(index, null);
 		}
 		player.getTrainCards().add(card); //put face up card in player's hand
-		//TODO: might not need to return this card, only return face down card - SF
 		return card;
 	}
 	
@@ -128,10 +140,11 @@ public class PlayerHandler {
 	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(List<DestinationCard> cards) {//TODO: jun doesnt have this-SF
+	public static void returnDesCardToDeck(List<DestinationCard> cards) {
 		Deck.desCardDeck.addAll(cards);
 	}
-	//jun's
+	
+
 	public static void returnDesCardToDeck(DestinationCard cards) { 
 		Deck.desCardDeck.add(cards);
 	}
@@ -146,4 +159,5 @@ public class PlayerHandler {
 		
 		return desCardStringList;
 	}
+	
 }

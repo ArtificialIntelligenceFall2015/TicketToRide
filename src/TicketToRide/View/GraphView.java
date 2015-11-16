@@ -3,15 +3,17 @@ package TicketToRide.View;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.World;
 
+/**
+ * @author Sean Fast
+ *
+ */
 public class GraphView extends javax.swing.JPanel {
 	protected void paintComponent(java.awt.Graphics g) {
 		super.paintComponent(g);

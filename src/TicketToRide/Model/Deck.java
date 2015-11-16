@@ -11,10 +11,11 @@ import java.util.List;
 import java.util.Random;
 
 import TicketToRide.Model.Constants.trainCard;
+import TicketToRide.View.TicketToRideGui;
 
 /**
  * @author Jun He
- *
+ * @author Sean Fast
  */
 public class Deck {
 	public static List<DestinationCard> desCardDeck;
@@ -124,5 +125,23 @@ public class Deck {
 	public static int count(List<TrainCard> cards, String name) {
 		trainCard color = trainCard.valueOf(name);
 		return count(cards, color);
+	}
+	
+	public static void addCardToDiscardDeck(TrainCard discardedCard) {
+		trainCardDiscardDeck.add(discardedCard);
+	}
+	
+	public static void addCardToDiscardDeck(List<TrainCard> discardedCards) {
+		trainCardDiscardDeck.addAll(discardedCards);
+	}
+	
+	public static void swapDiscardDeckWithActiveDeck() {
+		if (trainCardsDeck.isEmpty()) {//sanity check
+			shuffle(trainCardDiscardDeck);
+			trainCardsDeck.addAll(trainCardDiscardDeck);
+			trainCardDiscardDeck.clear();
+			TicketToRideGui.updateTrainCardDeckProgressBar();
+			//TODO: reset player's probability counts
+		}
 	}
 }
