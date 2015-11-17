@@ -81,7 +81,7 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
-		//TODO: check if deck is empty
+		Deck.performIfDeckEmpty();
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		return card;
@@ -95,22 +95,15 @@ public class PlayerHandler {
 	 * @return card
 	 */
 	public static TrainCard drawTrainCard(Player player, int index) {
+		Deck.performIfDeckEmpty();
 		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
-		TrainCard card = faceUpCards.get(index); //get face up card
-		if (faceDownCards.size() > 0) {
-			//replace face up card if deck isn't depleted
-			faceUpCards.set(index, faceDownCards.remove(0)); 
-		}
-		else {
-			//if empty, replace faceup card in list with null
-			faceUpCards.set(index, null);
-		}
-		player.getTrainCards().add(card); //put face up card in player's hand
-		//TODO: might not need to return this card, only return face down card - SF
+		TrainCard card = faceUpCards.get(index); // get face up card
+		faceUpCards.set(index, faceDownCards.remove(0));
+		player.getTrainCards().add(card);
 		return card;
 	}
-	
+
 	/**
 	 * perform draw destination ticket behave
 	 * 
@@ -128,14 +121,15 @@ public class PlayerHandler {
 	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(List<DestinationCard> cards) {//TODO: jun doesnt have this-SF
+	public static void returnDesCardToDeck(List<DestinationCard> cards) {// TODO:  jun  doesnt  have  this-SF
 		Deck.desCardDeck.addAll(cards);
 	}
-	//jun's
-	public static void returnDesCardToDeck(DestinationCard cards) { 
+
+	// jun's
+	public static void returnDesCardToDeck(DestinationCard cards) {
 		Deck.desCardDeck.add(cards);
 	}
-	
+
 	/**
 	 * Convert destination card list to string form for display only
 	 */
@@ -143,7 +137,7 @@ public class PlayerHandler {
 		List<String> desCardStringList = new ArrayList<String>();
 		for (int i = 0; i < desCardList.size(); i++)
 			desCardStringList.add(desCardList.get(i).toString());
-		
+
 		return desCardStringList;
 	}
 }

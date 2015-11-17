@@ -43,12 +43,12 @@ public class PathHandler {
 	 * @param paths
 	 */
 	public static void determinePathClose(Player player) {
-		for(DestinationCard ticket:player.getDesCards()){
-			AStar aStar=new AStar(player, ticket);
+		for (DestinationCard ticket : player.getDesCards()) {
+			AStar aStar = new AStar(player, ticket);
 			aStar.run();
-			boolean completed=false;
-			if(aStar.getGoal()!=null&&aStar.getGoal().getCost()==0){
-				completed=true;
+			boolean completed = false;
+			if (aStar.getGoal() != null && aStar.getGoal().getCost() == 0) {
+				completed = true;
 			}
 			ticket.setCompleted(completed);
 		}
@@ -95,30 +95,59 @@ public class PathHandler {
 		return key;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(Path path, TrainCard card) {
 		return canClaimBy(path.getColor(), card.getColor());
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(pathColor path, TrainCard card) {
 		return canClaimBy(path, card.getColor());
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(Path path, trainCard card) {
 		return canClaimBy(path.getColor(), card);
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(pathColor path, trainCard card) {
 		if (path == pathColor.GRAY || card == trainCard.RAINBOW) {
 			return true;
 		}
 		return path.toString().equals(card.toString());
 	}
-	
-	public static List<City> getConnectCities(City city){
-		List<City> connectCities=new ArrayList<City>();
-		for(int i=0; i<size; i++){
-			int index=World.cities.indexOf(city);
-			if(pathMatrix[index][i]==true){
+
+	/**
+	 * 
+	 * @param city
+	 * @return
+	 */
+	public static List<City> getConnectCities(City city) {
+		List<City> connectCities = new ArrayList<City>();
+		for (int i = 0; i < size; i++) {
+			int index = World.cities.indexOf(city);
+			if (pathMatrix[index][i] == true) {
 				connectCities.add(World.cities.get(i));
 			}
 		}

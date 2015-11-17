@@ -12,7 +12,7 @@ import TicketToRide.Model.Constants.playerColor;
  * @author Jun He
  *
  */
-public class Player{
+public class Player {
 	private int score = 0;
 	private List<TrainCard> trainCards = new ArrayList<TrainCard>();
 	private List<DestinationCard> desCards = new ArrayList<DestinationCard>();
@@ -26,7 +26,6 @@ public class Player{
 		ownPath = new ArrayList<Path>();
 		this.color = color;
 	}
-
 
 	/**
 	 * @return the score

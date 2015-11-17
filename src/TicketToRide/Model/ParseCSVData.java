@@ -21,7 +21,6 @@ public class ParseCSVData {
 	private static String cityCSVFile = "NodeArray.csv";
 	private static String routeCSVFile = "EdgeArray.csv";
 	private static String csvSplitBy = ",";
-	
 
 	/**
 	 * Reads a csv file of destination card data line by line For each line it
@@ -34,7 +33,7 @@ public class ParseCSVData {
 		ArrayList<DestinationCard> destinationCardList = new ArrayList<DestinationCard>();
 		BufferedReader br = null;
 		String line = "";
-		
+
 		try {
 			// create a new buffered reader and open the csv file for reading
 			br = new BufferedReader(new FileReader(destCSVFile));
@@ -80,7 +79,7 @@ public class ParseCSVData {
 		ArrayList<City> cityList = new ArrayList<City>();
 		BufferedReader br = null;
 		String line = "";
-		
+
 		try {
 			// create a new buffered reader and open the csv file for reading
 			br = new BufferedReader(new FileReader(cityCSVFile));

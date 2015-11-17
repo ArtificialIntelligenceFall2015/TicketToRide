@@ -79,16 +79,16 @@ public class Game {
 	public static boolean gameEnd() {
 		return turn.getPiece() < 3;
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 * @return
 	 */
-	public static int getRank(Player player){
-		int n=1;
-		for(Player p:players){
-			if(p.getScore()>player.getScore()){
+	public static int getRank(Player player) {
+		int n = 1;
+		for (Player p : players) {
+			if (p.getScore() > player.getScore()) {
 				n++;
 			}
 		}

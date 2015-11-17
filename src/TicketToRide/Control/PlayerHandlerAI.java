@@ -23,13 +23,13 @@ import TicketToRide.Model.TrainCard;
  *
  */
 public class PlayerHandlerAI extends PlayerHandler {
-	
+
 	/**
-	 * init method
-	 * call this method before do AI functions
+	 * init method call this method before do AI functions
+	 * 
 	 * @param player
 	 */
-	public static void populateAIFields(PlayerAI player){
+	public static void populateAIFields(PlayerAI player) {
 		HashMap<trainCard, Integer> handCollection = CardHandler.trainCardCollection(player.getTrainCards());
 		HashMap<trainCard, Integer> deckCollection = CardHandler.trainCardCollection(Deck.trainFaceUpCards);
 		player.setHandCollection(handCollection);
@@ -50,14 +50,14 @@ public class PlayerHandlerAI extends PlayerHandler {
 			return decision.DRAW_TRAIN_CARDS;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param player
 	 * @param d
 	 */
-	public static void performAction(PlayerAI player, decision d){
-		switch(d){
+	public static void performAction(PlayerAI player, decision d) {
+		switch (d) {
 		case CLAIM_A_ROUTE:
 			claimARouteAI(player);
 			break;

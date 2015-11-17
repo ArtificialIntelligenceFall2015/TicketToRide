@@ -32,6 +32,7 @@ public class Deck {
 		trainFaceUpCards = new ArrayList<TrainCard>();
 		desCardDeck = ParseCSVData.parseDestinationCards();
 		trainCardDiscardDeck = new ArrayList<TrainCard>();
+		removeCount = new HashMap<TrainCard, Integer>();
 		for (trainCard tc : trainCard.values()) {
 			int size = 12;
 			if (tc == trainCard.RAINBOW)
@@ -45,8 +46,9 @@ public class Deck {
 		shuffle(desCardDeck);
 	}
 
-/**
+	/**
 	 * draw initial cards for players' hand of train cards
+	 * 
 	 * @param players
 	 */
 	public static void drawStartingHand(List<Player> players) {
@@ -56,13 +58,13 @@ public class Deck {
 			}
 		}
 	}
-	
+
 	/**
 	 * draw initial cards for 5 face up train cards
 	 */
 	public static boolean drawFreshFaceUpTrainCards() {
 		boolean deckIsEmpty = false;
-		
+
 		for (int i = 0; i < 5; i++) {
 			if (trainCardsDeck.size() > 0)
 				trainFaceUpCards.add(trainCardsDeck.remove(0));
@@ -125,14 +127,27 @@ public class Deck {
 		trainCard color = trainCard.valueOf(name);
 		return count(cards, color);
 	}
-	
-	public static void spendCards(List<TrainCard> cardsToSpend){
-		for(TrainCard card: cardsToSpend){
-			int n=1;
-			if(removeCount.containsKey(card)){
-				n+=removeCount.get(card);
+
+	/**
+	 * 
+	 * @param cardsToSpend
+	 */
+	public static void spendCards(List<TrainCard> cardsToSpend) {
+		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
+		for (TrainCard card : cardsToSpend) {
+			int n = 1;
+			if (removeCount.containsKey(card)) {
+				n += removeCount.get(card);
 			}
 			removeCount.put(card, n);
+		}
+	}
+	
+	public static void performIfDeckEmpty(){
+		if(Deck.trainCardsDeck.isEmpty()){
+			Deck.shuffle(Deck.trainCardDiscardDeck);
+			Deck.trainCardsDeck=Deck.trainCardDiscardDeck;
+			Deck.trainCardDiscardDeck=new ArrayList<TrainCard>();
 		}
 	}
 }
