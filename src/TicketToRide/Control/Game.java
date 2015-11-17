@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Player;
+import TicketToRide.Model.PlayerAI;
 
 /**
  * @author Jun He
@@ -25,6 +27,20 @@ public class Game {
 	public Game(Player... p) {
 		players = new ArrayList<Player>();
 		Collections.addAll(players, p);
+		turn=players.get(0);
+	}
+	
+	public static void run(){
+		while(!gameEnd()){
+			if(turn instanceof PlayerAI){
+				PlayerAI ai=(PlayerAI)turn;
+				decision d=PlayerHandlerAI.decisionMaking(ai);
+				PlayerHandlerAI.performAction(ai, d);
+			}else{
+				//GUI side
+			}
+			nextPlayer();
+		}
 	}
 
 	/**
@@ -51,10 +67,8 @@ public class Game {
 	 */
 	public static void nextPlayer() {
 		int turnIndex = players.indexOf(turn);
-		if (turnIndex == players.size() - 1)
-			turn = players.get(0);
-		else
-			turn = players.get(turnIndex++);
+		turnIndex++;
+		turn=players.get(turnIndex%4);
 	}
 
 	/**
