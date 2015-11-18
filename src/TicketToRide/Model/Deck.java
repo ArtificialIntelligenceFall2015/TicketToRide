@@ -127,24 +127,6 @@ public class Deck {
 		return count(cards, color);
 	}
 	
-	public static void addCardToDiscardDeck(TrainCard discardedCard) {
-		trainCardDiscardDeck.add(discardedCard);
-	}
-	
-	public static void addCardToDiscardDeck(List<TrainCard> discardedCards) {
-		trainCardDiscardDeck.addAll(discardedCards);
-	}
-	
-	public static void swapDiscardDeckWithActiveDeck() {
-		if (trainCardsDeck.isEmpty()) {//sanity check
-			shuffle(trainCardDiscardDeck);
-			trainCardsDeck.addAll(trainCardDiscardDeck);
-			trainCardDiscardDeck.clear();
-			TicketToRideGui.updateTrainCardDeckProgressBar();
-			//TODO: reset player's probability counts
-		}
-	}
-	
 	/**
 	 * 
 	 * @param cardsToSpend
@@ -163,8 +145,10 @@ public class Deck {
 	public static void performIfDeckEmpty(){
 		if(Deck.trainCardsDeck.isEmpty()){
 			Deck.shuffle(Deck.trainCardDiscardDeck);
-			Deck.trainCardsDeck=Deck.trainCardDiscardDeck;
-			Deck.trainCardDiscardDeck=new ArrayList<TrainCard>();
+			Deck.trainCardsDeck.addAll(Deck.trainCardDiscardDeck);
+			Deck.trainCardDiscardDeck.clear();
+			TicketToRideGui.updateTrainCardDeckProgressBar();
+			//TODO: reset player's probability counts
 		}
 	}
 }
