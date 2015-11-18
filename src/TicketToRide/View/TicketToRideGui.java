@@ -54,7 +54,6 @@ import TicketToRide.Model.TrainCard;
 public class TicketToRideGui extends JFrame {
 
 	private JPanel contentPane;
-<<<<<<< HEAD
 	private DefaultListModel destList;
 	private JLabel lblFaceUpTrainCard4;
 	private JLabel lblFaceUpTrainCard3;
@@ -78,26 +77,6 @@ public class TicketToRideGui extends JFrame {
 	private List<Player> p;
 	private int occurrences = 0;
 	private int trainCardCount = 0;
-=======
-	DefaultListModel destList;
-	JLabel lblFaceUpTrainCard4;
-	JLabel lblFaceUpTrainCard3;
-	JLabel lblFaceUpTrainCard2;
-	JLabel lblFaceUpTrainCard1;
-	JLabel lblFaceUpTrainCard0;
-	JProgressBar pbrTrainCardDeck;
-	JLabel lblCurrentPlayerTrainCardPink;
-	JLabel lblCurrentPlayerTrainCardWhite;
-	JLabel lblCurrentPlayerTrainCardBlue;
-	JLabel lblCurrentPlayerTrainCardYellow;
-	JLabel lblCurrentPlayerTrainCardRed;
-	JLabel lblCurrentPlayerTrainCardBlack;
-	JLabel lblCurrentPlayerTrainCardOrange;
-	JLabel lblCurrentPlayerTrainCardGreen;
-	JLabel lblCurrentPlayerTrainCardRainbow;
-	List<Player> p;
-	int occurrences = 0;
->>>>>>> refs/heads/JunAICostCalculation
 
 	/**
 	 * Launch the application.
@@ -128,12 +107,8 @@ public class TicketToRideGui extends JFrame {
 		setContentPane(contentPane);
 
 		//
-<<<<<<< HEAD
 		//initialize players
 		//TODO: switch to Game.players constructor
-=======
-		// initialize players
->>>>>>> refs/heads/JunAICostCalculation
 		p = new ArrayList<Player>();
 		p.add(new Player(playerColor.BLACK));
 		p.add(new Player(playerColor.BLUE));
@@ -340,12 +315,7 @@ public class TicketToRideGui extends JFrame {
 
 		pbrTrainCardDeck = new JProgressBar();
 		pbrTrainCardDeck.setOrientation(SwingConstants.VERTICAL);
-<<<<<<< HEAD
 		pbrTrainCardDeck.setValue((int)((Deck.trainCardsDeck.size() / 110.0) * 100));
-=======
-		// pbrTrainCardDeck.setValue(100);
-		pbrTrainCardDeck.setValue((int) ((Deck.trainCardsDeck.size() / 110.0) * 100));
->>>>>>> refs/heads/JunAICostCalculation
 		pnlTrainCardDeck.add(pbrTrainCardDeck, BorderLayout.EAST);
 
 		btnTrainCardDeck = new JButton("Train Card Deck");
@@ -405,15 +375,7 @@ public class TicketToRideGui extends JFrame {
 
 		btnPickTrainCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				pickTrainCards();
-=======
-				// TODO:debug action listener code-SF
-				System.out.println("Current Player Pick Train Cards Button");
-				ArrayList<City> cityList = ParseCSVData.parseCities();
-				for (City c : cityList)
-					System.out.println(c.getCityName() + "\t" + c.getX_val() + "\t" + c.getY_val());
->>>>>>> refs/heads/JunAICostCalculation
 			}
 		});
 
@@ -429,17 +391,8 @@ public class TicketToRideGui extends JFrame {
 			}
 		});
 
-<<<<<<< HEAD
 		//display dynamically generated graph
 		pnlGraph.add(new GraphView()); 
-		
-=======
-		// test
-
-		pnlGraph.add(new GraphView());
-
-		// endtest
->>>>>>> refs/heads/JunAICostCalculation
 	}
 
 	private boolean checkForTripleRainbow() {
@@ -452,13 +405,8 @@ public class TicketToRideGui extends JFrame {
 
 		return hasTripleRainbow;
 	}
-<<<<<<< HEAD
 	
 	private int occurrenceOfTrainCardColor(List<TrainCard> playerHand, trainCard tc) {
-=======
-
-	public int occurrenceOfTrainCardColor(List<TrainCard> playerHand, trainCard tc) {
->>>>>>> refs/heads/JunAICostCalculation
 		int occurrences = Collections.frequency(playerHand, new TrainCard(tc));
 		return occurrences;
 	}
@@ -469,29 +417,15 @@ public class TicketToRideGui extends JFrame {
 		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
 		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
 		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
-<<<<<<< HEAD
 		
 		//debug print
 //		for (TrainCard tc : Deck.trainFaceUpCards)
 //			System.out.print(tc.getColor().toString() + " ");
 //		System.out.println("");
-=======
-
-		// debug print
-		for (TrainCard tc : Deck.trainFaceUpCards)
-			System.out.print(tc.getColor().toString() + " ");
-		System.out.println("");
->>>>>>> refs/heads/JunAICostCalculation
 	}
-<<<<<<< HEAD
 	
 	private void retallyPlayerTrainCardHand() {
 		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.PINK);		
-=======
-
-	public void retallyPlayerTrainCardHand() {
-		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.PINK);
->>>>>>> refs/heads/JunAICostCalculation
 		lblCurrentPlayerTrainCardPink.setText(Integer.toString(occurrences));
 		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.WHITE);
 		lblCurrentPlayerTrainCardWhite.setText(Integer.toString(occurrences));
@@ -510,7 +444,6 @@ public class TicketToRideGui extends JFrame {
 		occurrences = occurrenceOfTrainCardColor(p.get(0).getTrainCards(), trainCard.RAINBOW);
 		lblCurrentPlayerTrainCardRainbow.setText(Integer.toString(occurrences));
 	}
-<<<<<<< HEAD
 	
 	private void clickFaceUpTrainCard(JLabel jp, int index) {
 		if (getTrainCardCount() == 0) {
@@ -541,27 +474,14 @@ public class TicketToRideGui extends JFrame {
 		setTrainCardCount(getTrainCardCount() + 1);
 		//System.out.println("Deck.trainCardsDeck.size =" + Deck.trainCardsDeck.size()); //debug
 		//System.out.println("Deck.trainCardsDeck % =" + ((int)((Deck.trainCardsDeck.size() / 110.0) * 100))); //debug
-=======
-
-	public void clickFaceUpTrainCard(JLabel jp, int index) {
-		// give the player the face up train card
-		PlayerHandler.drawTrainCard(p.get(0), index);
-		System.out.println("Deck.trainCardsDeck.size =" + Deck.trainCardsDeck.size());
-		System.out.println("Deck.trainCardsDeck % =" + ((int) ((Deck.trainCardsDeck.size() / 110.0) * 100)));
->>>>>>> refs/heads/JunAICostCalculation
 		updateTrainCardDeckProgressBar();
 		// check for null card //TODO:
 		// display the new face up train card (if deck is nonempty)
 		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
 		retallyPlayerTrainCardHand();
 		while (checkForTripleRainbow()) {
-<<<<<<< HEAD
 			//System.out.println("triple rainbow detected"); //debug
 			//System.out.println("size of train card deck:" + Deck.trainFaceUpCards.size()); //debug
-=======
-			System.out.println("triple rainbow detected"); // debug
-			System.out.println("size of train card deck:" + Deck.trainFaceUpCards.size()); // debug
->>>>>>> refs/heads/JunAICostCalculation
 			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
 			Deck.drawFreshFaceUpTrainCards();
 			repaintFaceUpTrainCards();
@@ -570,15 +490,9 @@ public class TicketToRideGui extends JFrame {
 		
 		return trainCardSelected;
 	}
-<<<<<<< HEAD
 	
 	private void clickFaceDownTrainCard() {
 		//give player face down train card
-=======
-
-	public void clickFaceDownTrainCard() {
-		// give player face down train card
->>>>>>> refs/heads/JunAICostCalculation
 		TrainCard faceDownCard = PlayerHandler.drawTrainCard(p.get(0));
 		setTrainCardCount(getTrainCardCount() + 1);
 		updateTrainCardDeckProgressBar();
@@ -589,42 +503,21 @@ public class TicketToRideGui extends JFrame {
 		if (getTrainCardCount() == 2) 
 			endPickTrainCardsTurn();
 	}
-<<<<<<< HEAD
 	
 	public static void updateTrainCardDeckProgressBar() {
 		pbrTrainCardDeck.setValue((int)((Deck.trainCardsDeck.size() / 110.0) * 100));
-=======
-
-	private void updateTrainCardDeckProgressBar() {
-		pbrTrainCardDeck.setValue((int) ((Deck.trainCardsDeck.size() / 110.0) * 100));
->>>>>>> refs/heads/JunAICostCalculation
 	}
-<<<<<<< HEAD
 	
 	private void pickDestinationCards() {
 		disableTurnChoiceButtons();
 
 		//Get initial destination cards
-=======
-
-	public void pickDestinationCards() {
-		// Get initial destination cards
->>>>>>> refs/heads/JunAICostCalculation
 		List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(new Player(playerColor.BLACK));
 		List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
-<<<<<<< HEAD
 		
 		//debug
 //		for (DestinationCard dc : initialDesCards)
 //			System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
-		
-=======
-
-		// debug
-		for (DestinationCard dc : initialDesCards)
-			System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
-
->>>>>>> refs/heads/JunAICostCalculation
 		JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
 		JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
 		JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
@@ -645,19 +538,12 @@ public class TicketToRideGui extends JFrame {
 		PlayerHandler.returnDesCardToDeck(rejectedDesCards);
 		Player p = new Player(playerColor.BLACK);
 		p.getDesCards().addAll(initialDesCards);
-<<<<<<< HEAD
 //		System.out.println("cards in players hand:" + p.getDesCards());//debug
 		
 		//display destination cards in JList
-=======
-		System.out.println("cards in players hand:" + p.getDesCards());// debug
-
-		// display destination cards in JList
->>>>>>> refs/heads/JunAICostCalculation
 		for (DestinationCard dc : p.getDesCards()) {
 			destList.addElement(dc.toString());
 		}
-<<<<<<< HEAD
 	
 		//debug
 //		ArrayList<DestinationCard> destinationCardList = ParseCSVData.parseDestinationCards();
@@ -668,14 +554,6 @@ public class TicketToRideGui extends JFrame {
 		//TODO: switch to next player
 		
 		enableTurnChoiceButtons();
-=======
-
-		// debug
-		ArrayList<DestinationCard> destinationCardList = ParseCSVData.parseDestinationCards();
-		for (DestinationCard dc : destinationCardList)
-			System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
-
->>>>>>> refs/heads/JunAICostCalculation
 	}
 
 	private void pickTrainCards() {

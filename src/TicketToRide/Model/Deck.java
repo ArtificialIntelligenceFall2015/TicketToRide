@@ -153,10 +153,10 @@ public class Deck {
 		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
 		for (TrainCard card : cardsToSpend) {
 			int n = 1;
-			if (removeCount.containsKey(card)) {
-				n += removeCount.get(card);
+			if (countColor.containsKey(card)) {
+				n += countColor.get(card);
 			}
-			removeCount.put(card, n);
+			countColor.put(card, n);
 		}
 	}
 	
