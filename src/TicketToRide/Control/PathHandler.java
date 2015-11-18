@@ -153,4 +153,57 @@ public class PathHandler {
 		}
 		return connectCities;
 	}
+	
+	public static List<Player> getLongestPathPlayers(){
+		List<Player> players=new ArrayList<Player>();
+		List<Integer> longestPathWeight=new ArrayList<Integer>();
+		int max=0;
+		for(Player p:Game.players){
+			int weight=getLongestPath(p);
+			longestPathWeight.add(weight);
+			max=Math.max(max, weight);
+		}
+		for(int i=0; i<longestPathWeight.size(); i++){
+			if(longestPathWeight.get(i)==max){
+				players.add(Game.players.get(i));
+			}
+		}
+		return players;
+	}
+
+	private static int getLongestPath(Player player) {
+		int max=0;
+		for(City city: World.cities){
+			max=Math.max(max, longestPathDAG(player,city, new ArrayList<Path>()));
+		}
+		return max;
+	}
+
+	private static int longestPathDAG(Player player, City city, List<Path> visited) {
+		int max=0;
+		List<Path> adjPaths=new ArrayList<Path>();
+		int index=World.cities.indexOf(city);
+		City bestCity=null;
+		for(int i=0; i<size; i++){
+			if(pathMatrix[index][i]==true){
+				List<Path> paths=getPath(World.cities.get(index), World.cities.get(i));
+				for(Path path:paths){
+					if(path.getOwningPlayer()==player){
+						adjPaths.add(path);
+					}
+				}
+			}
+		}
+		
+		for(Path path: adjPaths){
+			if(!visited.contains(path)){
+				List<Path> newVisitedPath=new ArrayList<Path>();
+				newVisitedPath.addAll(visited);
+				newVisitedPath.add(path);
+				City c=path.getCity1()==city?path.getCity2():path.getCity1();
+				max=Math.max(max, longestPathDAG(player,c,newVisitedPath)+path.getCost());
+			}
+		}
+		return max;
+	}
 }
