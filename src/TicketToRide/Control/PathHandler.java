@@ -11,6 +11,7 @@ import TicketToRide.Model.Constants.pathColor;
 import TicketToRide.Model.Constants.trainCard;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
+import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
 
@@ -27,6 +28,12 @@ public class PathHandler {
 	static {
 		size = World.cities.size();
 		pathMatrix = new boolean[size][size];
+		for (Path path : World.map) {
+			int c1 = World.cities.indexOf(path.getCity1());
+			int c2 = World.cities.indexOf(path.getCity2());
+			pathMatrix[c1][c2] = true;
+			pathMatrix[c2][c1] = true;
+		}
 	}
 
 	/**
@@ -35,41 +42,16 @@ public class PathHandler {
 	 * @param cards
 	 * @param paths
 	 */
-	public static void determinePathClose(DestinationCard cards, List<Path> paths) {
-		for (Path path : paths) {
-			int c1 = World.cities.indexOf(path.getCity1());
-			int c2 = World.cities.indexOf(path.getCity2());
-			pathMatrix[c1][c2] = true;
-			pathMatrix[c2][c1] = true;
-		}
-		cards.setCompleted(pathClose(cards.getCity1(), cards.getCity2(), new ArrayList<City>()));
-	}
-
-	/**
-	 * 
-	 * @param start
-	 * @param end
-	 * @param closer
-	 * @return
-	 */
-	private static boolean pathClose(City start, City end, List<City> closer) {
-		boolean close = false;
-		if (start.equals(end))
-			return true;
-		else {
-			int index = World.cities.indexOf(start);
-			for (int i = 0; i < size; i++) {
-				if (pathMatrix[index][i] && !closer.contains(World.cities.get(i))) {
-					List<City> closerCopy = new ArrayList<City>();
-					for (City c : closer) {
-						closerCopy.add(c);
-					}
-					closerCopy.add(start);
-					close = close || pathClose(World.cities.get(i), end, closerCopy);
-				}
+	public static void determinePathClose(Player player) {
+		for (DestinationCard ticket : player.getDesCards()) {
+			AStar aStar = new AStar(player, ticket);
+			aStar.run();
+			boolean completed = false;
+			if (aStar.getGoal() != null && aStar.getGoal().getCost() == 0) {
+				completed = true;
 			}
+			ticket.setCompleted(completed);
 		}
-		return close;
 	}
 
 	/**
@@ -113,22 +95,62 @@ public class PathHandler {
 		return key;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(Path path, TrainCard card) {
 		return canClaimBy(path.getColor(), card.getColor());
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(pathColor path, TrainCard card) {
 		return canClaimBy(path, card.getColor());
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(Path path, trainCard card) {
 		return canClaimBy(path.getColor(), card);
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param card
+	 * @return
+	 */
 	public static boolean canClaimBy(pathColor path, trainCard card) {
 		if (path == pathColor.GRAY || card == trainCard.RAINBOW) {
 			return true;
 		}
 		return path.toString().equals(card.toString());
+	}
+
+	/**
+	 * 
+	 * @param city
+	 * @return
+	 */
+	public static List<City> getConnectCities(City city) {
+		List<City> connectCities = new ArrayList<City>();
+		for (int i = 0; i < size; i++) {
+			int index = World.cities.indexOf(city);
+			if (pathMatrix[index][i] == true) {
+				connectCities.add(World.cities.get(i));
+			}
+		}
+		return connectCities;
 	}
 }

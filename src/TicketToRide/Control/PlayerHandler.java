@@ -74,6 +74,7 @@ public class PlayerHandler {
 		player.getOwnPath().add(path);
 		player.setScore(player.getScore() + POINT[path.getCost()]);
 		path.setOwningPlayer(player);
+		Deck.spendCards(cardsToSpend);
 		return true;
 	}
 
@@ -84,20 +85,10 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static TrainCard drawTrainCard(Player player) {
-		if (Deck.trainCardsDeck.isEmpty()) {
-			if (!Deck.trainCardDiscardDeck.isEmpty()) {
-				Deck.swapDiscardDeckWithActiveDeck();
-			}
-			else {
-				//TODO: no discard deck to swap in, zero cards left to draw
-			}
-		}
-		
+		Deck.performIfDeckEmpty();
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		return card;
-		//TODO: fix this conditional later
-		//TODO: what do we return if deck is empty?
 	}
 
 	/**
@@ -108,18 +99,12 @@ public class PlayerHandler {
 	 * @return card
 	 */
 	public static TrainCard drawTrainCard(Player player, int index) {
+		Deck.performIfDeckEmpty();
 		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
-		TrainCard card = faceUpCards.get(index); //get face up card
-		if (faceDownCards.size() > 0) {
-			//replace face up card if deck isn't depleted
-			faceUpCards.set(index, faceDownCards.remove(0)); 
-		}
-		else {
-			//if empty, replace faceup card in list with null
-			faceUpCards.set(index, null);
-		}
-		player.getTrainCards().add(card); //put face up card in player's hand
+		TrainCard card = faceUpCards.get(index); // get face up card
+		faceUpCards.set(index, faceDownCards.remove(0));
+		player.getTrainCards().add(card);
 		return card;
 	}
 	

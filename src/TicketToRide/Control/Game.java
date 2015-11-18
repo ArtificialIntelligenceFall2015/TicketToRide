@@ -8,15 +8,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Player;
+import TicketToRide.Model.PlayerAI;
 
 /**
  * @author Jun He
  *
  */
 public class Game {
-	private List<Player> players;
-	private Player turn;
+	public static List<Player> players;
+	public static Player turn;
 
 	/**
 	 * 
@@ -25,6 +27,20 @@ public class Game {
 	public Game(Player... p) {
 		players = new ArrayList<Player>();
 		Collections.addAll(players, p);
+		turn=players.get(0);
+	}
+	
+	public static void run(){
+		while(!gameEnd()){
+			if(turn instanceof PlayerAI){
+				PlayerAI ai=(PlayerAI)turn;
+				decision d=PlayerHandlerAI.decisionMaking(ai);
+				PlayerHandlerAI.performAction(ai, d);
+			}else{
+				//GUI side
+			}
+			nextPlayer();
+		}
 	}
 
 	/**
@@ -32,9 +48,9 @@ public class Game {
 	 * 
 	 * @return winner
 	 */
-	public List<Player> getWinners() {
+	public static List<Player> getWinners() {
 		List<Player> winner = new ArrayList<Player>();
-		int maxScore = players.get(0).getScore();
+		int maxScore = 0;
 
 		for (Player player : players)
 			Math.max(maxScore, player.getScore());
@@ -49,12 +65,10 @@ public class Game {
 	/**
 	 * switch turn to next player
 	 */
-	public void nextPlayer() {
+	public static void nextPlayer() {
 		int turnIndex = players.indexOf(turn);
-		if (turnIndex == players.size() - 1)
-			turn = players.get(0);
-		else
-			turn = players.get(turnIndex++);
+		turnIndex++;
+		turn=players.get(turnIndex%4);
 	}
 
 	/**
@@ -62,8 +76,22 @@ public class Game {
 	 * 
 	 * @return
 	 */
-	public boolean gameEnd() {
+	public static boolean gameEnd() {
 		return turn.getPiece() < 3;
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static int getRank(Player player) {
+		int n = 1;
+		for (Player p : players) {
+			if (p.getScore() > player.getScore()) {
+				n++;
+			}
+		}
+		return n;
+	}
 }

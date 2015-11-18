@@ -144,4 +144,27 @@ public class Deck {
 			//TODO: reset player's probability counts
 		}
 	}
+	
+	/**
+	 * 
+	 * @param cardsToSpend
+	 */
+	public static void spendCards(List<TrainCard> cardsToSpend) {
+		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
+		for (TrainCard card : cardsToSpend) {
+			int n = 1;
+			if (removeCount.containsKey(card)) {
+				n += removeCount.get(card);
+			}
+			removeCount.put(card, n);
+		}
+	}
+	
+	public static void performIfDeckEmpty(){
+		if(Deck.trainCardsDeck.isEmpty()){
+			Deck.shuffle(Deck.trainCardDiscardDeck);
+			Deck.trainCardsDeck=Deck.trainCardDiscardDeck;
+			Deck.trainCardDiscardDeck=new ArrayList<TrainCard>();
+		}
+	}
 }

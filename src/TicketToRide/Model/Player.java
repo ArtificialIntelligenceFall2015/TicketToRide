@@ -27,7 +27,6 @@ public class Player {
 		this.color = color;
 	}
 
-
 	/**
 	 * @return the score
 	 */

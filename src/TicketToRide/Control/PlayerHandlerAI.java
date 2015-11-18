@@ -25,6 +25,18 @@ import TicketToRide.Model.TrainCard;
 public class PlayerHandlerAI extends PlayerHandler {
 
 	/**
+	 * init method call this method before do AI functions
+	 * 
+	 * @param player
+	 */
+	public static void populateAIFields(PlayerAI player) {
+		HashMap<trainCard, Integer> handCollection = CardHandler.trainCardCollection(player.getTrainCards());
+		HashMap<trainCard, Integer> deckCollection = CardHandler.trainCardCollection(Deck.trainFaceUpCards);
+		player.setHandCollection(handCollection);
+		player.setDeckCollection(deckCollection);
+	}
+
+	/**
 	 * 
 	 * @param player
 	 * @return
@@ -36,6 +48,26 @@ public class PlayerHandlerAI extends PlayerHandler {
 			return decision.DRAW_DES_TICKETS;
 		} else {
 			return decision.DRAW_TRAIN_CARDS;
+		}
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @param d
+	 */
+	public static void performAction(PlayerAI player, decision d) {
+		switch (d) {
+		case CLAIM_A_ROUTE:
+			claimARouteAI(player);
+			break;
+		case DRAW_DES_TICKETS:
+			drawDesTicketsAI(player);
+			break;
+		case DRAW_TRAIN_CARDS:
+			drawTrainCardAI(player);
+			break;
+		default:
 		}
 	}
 
@@ -59,8 +91,6 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	private static boolean routeClaimable(PlayerAI player) {
-
-		HashMap<trainCard, Integer> cardCollection = CardHandler.trainCardCollection(player.getTrainCards());
 		Path wantClaimPath = null;
 		boolean claimable = false;
 		int offset = 0;
@@ -68,7 +98,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 		for (List<Path> list : player.getFavorPath()) {
 			for (Path path : list) {
 				if (path.getOwningPlayer() == null) {
-					int tempOffSet = numClaimAbleCards(path.getColor(), cardCollection);
+					int tempOffSet = numClaimAbleCards(path.getColor(), player.getHandCollection());
 					if (offset < tempOffSet) {
 						wantClaimPath = path;
 						offset = tempOffSet;
@@ -82,7 +112,6 @@ public class PlayerHandlerAI extends PlayerHandler {
 		}
 
 		player.setWantClaimPath(wantClaimPath);
-
 		return claimable;
 	}
 
@@ -96,10 +125,15 @@ public class PlayerHandlerAI extends PlayerHandler {
 			int index = -1;
 			for (TrainCard card : Deck.trainFaceUpCards) {
 				if (PathHandler.canClaimBy(wantClaimColor, card)) {
-					index = Deck.trainFaceUpCards.indexOf(card);
+					if(i==0||(i==1&&card.getColor()!=trainCard.RAINBOW)){
+						index = Deck.trainFaceUpCards.indexOf(card);
+					}
 				}
 			}
 			if (index >= 0) {
+				if(Deck.trainFaceUpCards.get(index).getColor()==trainCard.RAINBOW){
+					i++;
+				}
 				drawTrainCard(player, index);
 			} else {
 				drawTrainCard(player);
