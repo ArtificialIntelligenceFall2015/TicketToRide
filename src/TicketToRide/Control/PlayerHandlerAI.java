@@ -77,6 +77,9 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	private static boolean completedAllDesTickets(PlayerAI player) {
+		if(Deck.desCardDeck.isEmpty())
+			return false;
+		
 		for (DestinationCard ticket : player.getDesCards()) {
 			if (!ticket.isCompleted() && !player.getUncompleteableDesCard().contains(ticket)) {
 				return false;

@@ -11,6 +11,7 @@ import java.util.List;
 import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
+import TicketToRide.Model.World;
 
 /**
  * @author Jun He
@@ -18,22 +19,36 @@ import TicketToRide.Model.PlayerAI;
  */
 public class Game {
 	public static List<Player> players;
-	public static Player turn;
+	public static Player currentPlayer;
 
 	/**
 	 * 
 	 * @param p
 	 */
 	public Game(Player... p) {
+		new World();
 		players = new ArrayList<Player>();
 		Collections.addAll(players, p);
-		turn=players.get(0);
+		currentPlayer=players.get(0);
 	}
 	
+	/**
+	 * 
+	 * @param p
+	 */
+	public Game(List<Player> p) {
+		new World();
+		players = p;
+		currentPlayer=players.get(0);
+	}
+	
+	/**
+	 * 
+	 */
 	public static void run(){
 		while(!gameEnd()){
-			if(turn instanceof PlayerAI){
-				PlayerAI ai=(PlayerAI)turn;
+			if(currentPlayer instanceof PlayerAI){
+				PlayerAI ai=(PlayerAI)currentPlayer;
 				decision d=PlayerHandlerAI.decisionMaking(ai);
 				PlayerHandlerAI.performAction(ai, d);
 			}else{
@@ -63,12 +78,12 @@ public class Game {
 	}
 
 	/**
-	 * switch turn to next player
+	 * switch currentPlayer to next player
 	 */
 	public static void nextPlayer() {
-		int turnIndex = players.indexOf(turn);
+		int turnIndex = players.indexOf(currentPlayer);
 		turnIndex++;
-		turn=players.get(turnIndex%4);
+		currentPlayer=players.get(turnIndex % players.size());
 	}
 
 	/**
@@ -77,7 +92,7 @@ public class Game {
 	 * @return
 	 */
 	public static boolean gameEnd() {
-		return turn.getPiece() < 3;
+		return currentPlayer.getPiece() < 3;
 	}
 
 	/**
