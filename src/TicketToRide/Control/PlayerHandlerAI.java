@@ -125,10 +125,15 @@ public class PlayerHandlerAI extends PlayerHandler {
 			int index = -1;
 			for (TrainCard card : Deck.trainFaceUpCards) {
 				if (PathHandler.canClaimBy(wantClaimColor, card)) {
-					index = Deck.trainFaceUpCards.indexOf(card);
+					if(i==0||(i==1&&card.getColor()!=trainCard.RAINBOW)){
+						index = Deck.trainFaceUpCards.indexOf(card);
+					}
 				}
 			}
 			if (index >= 0) {
+				if(Deck.trainFaceUpCards.get(index).getColor()==trainCard.RAINBOW){
+					i++;
+				}
 				drawTrainCard(player, index);
 			} else {
 				drawTrainCard(player);
