@@ -49,10 +49,11 @@ public class Game {
 		while(!gameEnd()){
 			if(currentPlayer instanceof PlayerAI){
 				PlayerAI ai=(PlayerAI)currentPlayer;
+				PlayerHandlerAI.populateAIFields(ai);
 				decision d=PlayerHandlerAI.decisionMaking(ai);
 				PlayerHandlerAI.performAction(ai, d);
 			}else{
-				//GUI side
+				//TODO GUI side
 			}
 			nextPlayer();
 		}

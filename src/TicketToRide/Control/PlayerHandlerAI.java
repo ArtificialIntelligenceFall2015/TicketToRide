@@ -32,7 +32,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * 
 	 * @param player
 	 */
-	public static void populateAIFields(PlayerAI player) {
+	private static void populateAIFields(PlayerAI player) {
 		HashMap<trainCard, Integer> handCollection = CardHandler.trainCardCollection(player.getTrainCards());
 		HashMap<trainCard, Integer> deckCollection = CardHandler.trainCardCollection(Deck.trainFaceUpCards);
 		player.setHandCollection(handCollection);
@@ -45,6 +45,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	public static decision decisionMaking(PlayerAI player) {
+		populateAIFields(player);
 		if (routeClaimable(player)) {
 			return decision.CLAIM_A_ROUTE;
 		} else if (completedAllDesTickets(player)) {
