@@ -114,7 +114,7 @@ public class PlayerHandler {
 	 * @param player
 	 * @return
 	 */
-	public static List<DestinationCard> drawDesTickets(Player player) {
+	public static List<DestinationCard> drawDesTickets() {
 		List<DestinationCard> cards = new ArrayList<DestinationCard>();
 		for (int i = 0; i < 3 && i < Deck.desCardDeck.size(); i++)
 			cards.add(Deck.desCardDeck.remove(0));

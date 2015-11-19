@@ -170,7 +170,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @param player
 	 */
 	public static void drawDesTicketsAI(PlayerAI player) {
-		List<DestinationCard> tickets = drawDesTickets(player);
+		List<DestinationCard> tickets = drawDesTickets();
 		List<Integer> costs = new ArrayList<Integer>();
 		int minCost = 0;
 
