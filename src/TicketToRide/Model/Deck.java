@@ -32,6 +32,7 @@ public class Deck {
 		trainCardsDeck = new ArrayList<TrainCard>();
 		trainFaceUpCards = new ArrayList<TrainCard>();
 		desCardDeck = ParseCSVData.parseDestinationCards();
+		countColor = new HashMap<TrainCard, Integer>();
 		trainCardDiscardDeck = new ArrayList<TrainCard>();
 		for (trainCard tc : trainCard.values()) {
 			int size = 12;

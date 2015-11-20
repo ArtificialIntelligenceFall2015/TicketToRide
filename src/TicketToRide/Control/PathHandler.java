@@ -154,6 +154,10 @@ public class PathHandler {
 		return connectCities;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public static List<Player> getLongestPathPlayers(){
 		List<Player> players=new ArrayList<Player>();
 		List<Integer> longestPathWeight=new ArrayList<Integer>();
@@ -171,6 +175,11 @@ public class PathHandler {
 		return players;
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
 	public static int getLongestPath(Player player) {
 		int max=0;
 		for(City city: World.cities){
@@ -179,6 +188,13 @@ public class PathHandler {
 		return max;
 	}
 
+	/**
+	 * 
+	 * @param player
+	 * @param city
+	 * @param visited
+	 * @return
+	 */
 	private static int longestPathDAG(Player player, City city, List<Path> visited) {
 		int max=0;
 		List<Path> adjPaths=new ArrayList<Path>();
