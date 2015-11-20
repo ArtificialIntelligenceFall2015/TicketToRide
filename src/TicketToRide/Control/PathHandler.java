@@ -171,7 +171,7 @@ public class PathHandler {
 		return players;
 	}
 
-	private static int getLongestPath(Player player) {
+	public static int getLongestPath(Player player) {
 		int max=0;
 		for(City city: World.cities){
 			max=Math.max(max, longestPathDAG(player,city, new ArrayList<Path>()));

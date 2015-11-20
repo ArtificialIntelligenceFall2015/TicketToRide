@@ -19,6 +19,7 @@ public class Player {
 	private List<Path> ownPath = new ArrayList<Path>();
 	private playerColor color;
 	private int piece = 45;
+	private boolean lastTurn;
 
 	public Player(playerColor color) {
 		trainCards = new ArrayList<TrainCard>();
@@ -115,6 +116,20 @@ public class Player {
 	 */
 	public void setPiece(int piece) {
 		this.piece = piece;
+	}
+
+	/**
+	 * @return the lastTurn
+	 */
+	public boolean isLastTurn() {
+		return lastTurn;
+	}
+
+	/**
+	 * @param lastTurn the lastTurn to set
+	 */
+	public void setLastTurn(boolean lastTurn) {
+		this.lastTurn = lastTurn;
 	}
 
 }

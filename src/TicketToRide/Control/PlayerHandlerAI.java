@@ -192,7 +192,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 			AStar aStar = new AStar(player, ticket);
 			aStar.run();
 			int cost=aStar.getGoal().getCost();
-			list.add(PlayerHandlerAI.getInstance().getAssistClass(ticket, cost));
+			list.add(new DestinationCardAssist(ticket, cost));
 		}
 		
 		Collections.sort(list);
@@ -231,28 +231,10 @@ public class PlayerHandlerAI extends PlayerHandler {
 	
 	/**
 	 * 
-	 * @return
-	 */
-	protected static PlayerHandlerAI getInstance(){
-		return instance;
-	}
-	
-	/**
-	 * 
-	 * @param ticket
-	 * @param cost
-	 * @return
-	 */
-	private DestinationCardAssist getAssistClass(DestinationCard ticket, int cost){
-		return new DestinationCardAssist(ticket,cost);
-	}
-	
-	/**
-	 * 
 	 * @author jhe
 	 *
 	 */
-	private class DestinationCardAssist implements Comparable<DestinationCardAssist>{
+	private static class DestinationCardAssist implements Comparable<DestinationCardAssist>{
 
 		DestinationCard ticket;
 		int cost;
