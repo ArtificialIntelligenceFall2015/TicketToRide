@@ -20,6 +20,7 @@ public class Player {
 	private playerColor color;
 	private int piece = 45;
 	private boolean lastTurn;
+	private int numTicketComplete=0;
 
 	public Player(playerColor color) {
 		trainCards = new ArrayList<TrainCard>();
@@ -130,6 +131,20 @@ public class Player {
 	 */
 	public void setLastTurn(boolean lastTurn) {
 		this.lastTurn = lastTurn;
+	}
+
+	/**
+	 * @return the numTicketComplete
+	 */
+	public int getNumTicketComplete() {
+		return numTicketComplete;
+	}
+
+	/**
+	 * @param numTicketComplete the numTicketComplete to set
+	 */
+	public void setNumTicketComplete(int numTicketComplete) {
+		this.numTicketComplete = numTicketComplete;
 	}
 
 }

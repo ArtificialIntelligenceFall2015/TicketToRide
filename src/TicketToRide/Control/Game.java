@@ -24,16 +24,17 @@ public class Game {
 	public static List<Player> players;
 	public static Player currentPlayer;
 	public static TicketToRideGui gui;
+
 	/**
 	 * 
 	 * @param p
-	 * @param gui 
+	 * @param gui
 	 */
 	public Game(List<Player> p, TicketToRideGui gui) {
 		new World();
 		players = p;
-		this.gui=gui;
-		currentPlayer=players.get(0);
+		this.gui = gui;
+		currentPlayer = players.get(0);
 	}
 
 	/**
@@ -50,19 +51,19 @@ public class Game {
 	 * switch currentPlayer to next player
 	 */
 	public static void nextPlayer() {
-		if(gameEnd()){
+		if (gameEnd()) {
 			performGameEndedCalculation();
-		}
-		
-		int turnIndex = players.indexOf(currentPlayer);
-		turnIndex++;
-		currentPlayer=players.get(turnIndex % players.size());
-			
-		if(currentPlayer instanceof PlayerAI){
-			PlayerAI ai=(PlayerAI)currentPlayer;
-			decision d=PlayerHandlerAI.decisionMaking(ai);
-			PlayerHandlerAI.performAction(ai, d);
-			nextPlayer();
+		} else {
+			int turnIndex = players.indexOf(currentPlayer);
+			turnIndex++;
+			currentPlayer = players.get(turnIndex % players.size());
+
+			if (currentPlayer instanceof PlayerAI) {
+				PlayerAI ai = (PlayerAI) currentPlayer;
+				decision d = PlayerHandlerAI.decisionMaking(ai);
+				PlayerHandlerAI.performAction(ai, d);
+				nextPlayer();
+			}
 		}
 	}
 
@@ -72,14 +73,14 @@ public class Game {
 	 * @return
 	 */
 	public static boolean gameEnd() {
-		if(currentPlayer.isLastTurn()){
+		if (currentPlayer.isLastTurn()) {
 			return true;
 		}
-		
-		if(currentPlayer.getPiece() < 3){
+
+		if (currentPlayer.getPiece() < 3) {
 			currentPlayer.setLastTurn(true);
 		}
-		
+
 		return false;
 	}
 
@@ -97,64 +98,55 @@ public class Game {
 		}
 		return n;
 	}
-	
+
 	/**
 	 * 
 	 */
 	private static void performGameEndedCalculation() {
 		gui.disableTurnChoiceButtons();
-		for(Player player:players){
+		for (Player player : players) {
 			PathHandler.determinePathClose(player);
 			PlayerHandler.calcDesCardPoint(player);
 		}
-		
-		List<Player> playersHaveLongestPath=PathHandler.getLongestPathPlayers();
-		
-		for(Player player:playersHaveLongestPath){
-			player.setScore(player.getScore()+10);
+
+		List<Player> playersHaveLongestPath = PathHandler.getLongestPathPlayers();
+
+		for (Player player : playersHaveLongestPath) {
+			player.setScore(player.getScore() + 10);
 		}
-		
-		Player winner=getWinner();
-		String message="Game Over!\n";
-		if(winner instanceof PlayerAI){
-			message="Sorry, you lost!";
-		}else{
-			message="Congratulations! You won!";
+
+		Player winner = getWinner();
+		String message = "Game Over!\n";
+		if (winner instanceof PlayerAI) {
+			message = "Sorry, you lost!";
+		} else {
+			message = "Congratulations! You won!";
 		}
 		gui.popupMessage(message);
 		System.exit(0);
 	}
-	
+
 	/**
 	 * 
 	 * @author jhe
 	 *
 	 */
-	private static class winnerComparator implements Comparator<Player>{
+	private static class winnerComparator implements Comparator<Player> {
 
 		@Override
 		public int compare(Player p1, Player p2) {
-			if(p1.getScore()==p2.getScore()){
-				int numCompleteDesCard1=0;
-				int numCompleteDesCard2=0;
-				for(DestinationCard card:p1.getDesCards()){
-					if(card.isCompleted())
-						numCompleteDesCard1++;
-				}
-				
-				for(DestinationCard card:p2.getDesCards()){
-					if(card.isCompleted())
-						numCompleteDesCard2++;
-				}
-				
-				if(numCompleteDesCard1==numCompleteDesCard2){
+			if (p1.getScore() == p2.getScore()) {
+				int numCompleteDesCard1 = p1.getNumTicketComplete();
+				int numCompleteDesCard2 = p2.getNumTicketComplete();
+
+				if (numCompleteDesCard1 == numCompleteDesCard2) {
 					return PathHandler.getLongestPath(p2) - PathHandler.getLongestPath(p1);
-					
-				}else{
+
+				} else {
 					return numCompleteDesCard2 - numCompleteDesCard1;
 				}
-			}else{
-				return p2.getScore()-p1.getScore();
+			} else {
+				return p2.getScore() - p1.getScore();
 			}
 		}
 	}

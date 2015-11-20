@@ -37,6 +37,32 @@ public class PlayerHandlerAI extends PlayerHandler {
 		HashMap<trainCard, Integer> deckCollection = CardHandler.trainCardCollection(Deck.trainFaceUpCards);
 		player.setHandCollection(handCollection);
 		player.setDeckCollection(deckCollection);
+		
+		for(DestinationCard ticket:player.getDesCards()){
+			if(!ticket.isCompleted()&&!player.getUncompleteableDesCard().contains(ticket)){
+				Frontier goal=null;
+				AStar aStar=new AStar(player, ticket);
+				aStar.run();
+				goal=aStar.getGoal();
+				
+				if(goal==null){
+					player.getUncompleteableDesCard().add(ticket);
+				}else if(goal.getCost()==0){
+					ticket.setCompleted(true);
+				}else{
+					List<Path> paths=new ArrayList<Path>();
+					for(int i=0; i<goal.getList().size();i++){
+						List<Path> p=PathHandler.getPath(goal.getList().get(i-1), goal.getList().get(i));
+						if(p.get(0).getOwningPlayer()==null||p.get(0).getOwningPlayer()==player){
+							paths.add(p.get(0));
+						}else{
+							paths.add(p.get(1));
+						}
+					}
+					player.getFavorPath().add(paths);
+				}
+			}
+		}
 	}
 
 	/**

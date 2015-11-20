@@ -43,15 +43,18 @@ public class PathHandler {
 	 * @param paths
 	 */
 	public static void determinePathClose(Player player) {
+		int n=0;
 		for (DestinationCard ticket : player.getDesCards()) {
 			AStar aStar = new AStar(player, ticket);
 			aStar.run();
 			boolean completed = false;
 			if (aStar.getGoal() != null && aStar.getGoal().getCost() == 0) {
 				completed = true;
+				n++;
 			}
 			ticket.setCompleted(completed);
 		}
+		player.setNumTicketComplete(n);
 	}
 
 	/**
