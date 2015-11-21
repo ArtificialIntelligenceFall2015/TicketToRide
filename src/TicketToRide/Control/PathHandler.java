@@ -16,7 +16,9 @@ import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
 
 /**
- * @author Jun He This class handler path functionality
+ * @author Jun He 
+ * @author Sean Fast
+ * This class handler path functionality
  */
 public class PathHandler {
 	private static int size;
@@ -152,5 +154,18 @@ public class PathHandler {
 			}
 		}
 		return connectCities;
+	}
+	
+	public static List<Path> generateUnclaimedRoutes() {
+		List<Path> unclaimedRoutes = new ArrayList<Path>();
+		
+		for (Path p : World.map) {
+			if (p.getOwningPlayer() == null) {
+				unclaimedRoutes.add(p);
+			}
+		}
+		
+		return unclaimedRoutes;
+		
 	}
 }

@@ -38,13 +38,16 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import TicketToRide.Control.Game;
+import TicketToRide.Control.PathHandler;
 import TicketToRide.Control.PlayerHandler;
 import TicketToRide.Model.Constants.playerColor;
 import TicketToRide.Model.Constants.trainCard;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
+import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
+import TicketToRide.Model.World;
 
 /**
  * @author Sean Fast
@@ -177,7 +180,6 @@ public class TicketToRideGui extends JFrame {
 		jlstCurrentPlayerDestCards.setFont(new Font("Courier New", Font.PLAIN, 11));
 		jlstCurrentPlayerDestCards.setVisibleRowCount(3);
 		jlstCurrentPlayerDestCards.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// final DefaultListModel destList = new DefaultListModel(); //SF
 		destList = new DefaultListModel(); // SF
 		jlstCurrentPlayerDestCards.setModel(destList);
 		scpCurrentPlayerDestCards.setViewportView(jlstCurrentPlayerDestCards);
@@ -570,9 +572,52 @@ public class TicketToRideGui extends JFrame {
 	private void claimARoute() {
 		disableTurnChoiceButtons();
 		
-		//TODO: claim a route functionality
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " claimed the route:");//TODO: finish line
+//		display dialog for user to choose which path to claim
+		Path routeToClaim = displayPathOptionsToClaim();
+		
+//		display dialog for user to choose how to pay for route
+		
+		
+//		check train card values
+//		update train cards quantities in players hand
+//		add paid cards to discard pile
+//		relabel edge in graph
+//		mark route as claimed
+//		check if route completes path for destination card, if so, mark destination card completed
+//		check if player now has current longest continuous path, update data
+//		update score for player
+//		update quantity of users train piece count, check if final round conditions are met, and enter if necessary
+
+		
+		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " claimed the route:" + routeToClaim.toString());
 		switchToNextPlayer();
+	}
+	
+	private Path displayPathOptionsToClaim() {
+		Path routeToClaim;
+
+		//generate list of available paths for user
+		List<Path> unclaimedPaths = PathHandler.generateUnclaimedRoutes();
+		
+		//convert to strings for display of route
+		List<String> unclaimedPathsStrings = new ArrayList<String>();
+		
+		for (Path p : unclaimedPaths) {
+			unclaimedPathsStrings.add(p.toString());
+		}
+		
+		//convert to array for display in dialog
+		Object[] possibleValues = unclaimedPathsStrings.toArray();
+
+		Object selectedRoute = JOptionPane.showInputDialog(null,
+			             "Choose a route to claim:", "Claim a Route",
+			             JOptionPane.INFORMATION_MESSAGE, null,
+			             possibleValues, possibleValues[0]);
+		
+		//find path using index of string chosen in string array
+		routeToClaim = unclaimedPaths.get(unclaimedPathsStrings.indexOf(selectedRoute));
+				
+		return routeToClaim;
 	}
 	
 	private void enableTurnChoiceButtons() {
