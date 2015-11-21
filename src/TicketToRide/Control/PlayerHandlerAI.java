@@ -24,8 +24,6 @@ import TicketToRide.Model.TrainCard;
  *
  */
 public class PlayerHandlerAI extends PlayerHandler {
-	
-	private static PlayerHandlerAI instance=new PlayerHandlerAI();
 
 	/**
 	 * init method call this method before do AI functions

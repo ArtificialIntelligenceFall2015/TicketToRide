@@ -4,13 +4,11 @@
  */
 package TicketToRide.Control;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import TicketToRide.Model.Constants.decision;
-import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.World;
@@ -33,7 +31,7 @@ public class Game {
 	public Game(List<Player> p, TicketToRideGui gui) {
 		new World();
 		players = p;
-		this.gui = gui;
+		Game.gui = gui;
 		currentPlayer = players.get(0);
 	}
 

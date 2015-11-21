@@ -186,7 +186,8 @@ public class PathHandler {
 	public static int getLongestPath(Player player) {
 		int max=0;
 		for(City city: World.cities){
-			max=Math.max(max, longestPathDAG(player,city, new ArrayList<Path>()));
+			int longestPathDAG=longestPathDAG(player,city, new ArrayList<Path>());
+			max=Math.max(max, longestPathDAG);
 		}
 		return max;
 	}
@@ -202,9 +203,8 @@ public class PathHandler {
 		int max=0;
 		List<Path> adjPaths=new ArrayList<Path>();
 		int index=World.cities.indexOf(city);
-		City bestCity=null;
 		for(int i=0; i<size; i++){
-			if(pathMatrix[index][i]==true){
+			if(pathMatrix[index][i]){
 				List<Path> paths=getPath(World.cities.get(index), World.cities.get(i));
 				for(Path path:paths){
 					if(path.getOwningPlayer()==player){

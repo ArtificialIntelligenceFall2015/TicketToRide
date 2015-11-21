@@ -185,9 +185,9 @@ public class CostStrategies {
 	 */
 	public static int getCost(Player player, Path p) {
 		if (player instanceof PlayerAI) {
-			return p.getCost();
-		} else {
 			return calAICost((PlayerAI) player, p);
+		} else {
+			return p.getCost();
 		}
 	}
 
