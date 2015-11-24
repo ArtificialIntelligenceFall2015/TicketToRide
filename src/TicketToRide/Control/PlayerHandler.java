@@ -74,7 +74,7 @@ public class PlayerHandler {
 		player.getOwnPath().add(path);
 		player.setScore(player.getScore() + POINT[path.getCost()]);
 		path.setOwningPlayer(player);
-		//Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
+		Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
 		return true;
 	}
 

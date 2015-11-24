@@ -87,7 +87,7 @@ public class TestAIPlayer {
 
 	@Test
 	public void testDecisionMaking() {
-		playerAI.getDesCards().addAll(PlayerHandler.drawDesTickets(playerAI));
+		playerAI.getDesCards().addAll(PlayerHandler.drawDesTickets());
 		PlayerHandlerAI.populateAIFields(playerAI);
 		System.out.println(PlayerHandlerAI.decisionMaking(playerAI));
 	}
