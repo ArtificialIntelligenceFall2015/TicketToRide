@@ -185,11 +185,30 @@ public class PathHandler {
 	 */
 	public static int getLongestPath(Player player) {
 		int max=0;
-		for(City city: World.cities){
-			int longestPathDAG=longestPathDAG(player,city, new ArrayList<Path>());
-			max=Math.max(max, longestPathDAG);
+		boolean[] cityAssocPath=getCityAssocPath(player);
+		
+		for(int i=0; i<cityAssocPath.length; i++){
+			if(cityAssocPath[i]){
+				City city=World.cities.get(i);
+				int longestPathDAG=longestPathDAG(player,city, new ArrayList<Path>());
+				max=Math.max(max, longestPathDAG);
+			}
 		}
 		return max;
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	private static boolean[] getCityAssocPath(Player player) {
+		boolean[] cityAssocPath=new boolean[World.cities.size()];
+		for(Path path:player.getOwnPath()){
+			cityAssocPath[World.cities.indexOf(path.getCity1())]=true;
+			cityAssocPath[World.cities.indexOf(path.getCity2())]=true;
+		}
+		return cityAssocPath;
 	}
 
 	/**
@@ -225,4 +244,6 @@ public class PathHandler {
 		}
 		return max;
 	}
+	
+	
 }

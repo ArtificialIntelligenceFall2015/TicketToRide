@@ -122,16 +122,17 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	private static boolean routeClaimable(PlayerAI player) {
+		HashMap<trainCard, Integer> collection= player.getHandCollection();
 		Path wantClaimPath = null;
 		boolean claimable = false;
 		int offset = 0;
-		int numRainbow =  player.getHandCollection().get(trainCard.RAINBOW);
+		int numRainbow =  collection.containsKey(trainCard.RAINBOW)?collection.get(trainCard.RAINBOW):0;
 
 		for (List<Path> list : player.getFavorPath()) {
 			for (Path path : list) {
 				if (path.getOwningPlayer() == null && player.getPiece()>=path.getCost()) {
 					trainCard trainCardColor=claimAbleCards(path.getColor(), player.getHandCollection());
-					int tempOffSet = player.getHandCollection().get(trainCardColor)+numRainbow;
+					int tempOffSet = collection.containsKey(trainCardColor)?collection.get(trainCardColor):0+numRainbow;
 					if (offset < tempOffSet) {
 						wantClaimPath = path;
 						offset = tempOffSet;

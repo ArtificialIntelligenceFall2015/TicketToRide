@@ -63,6 +63,7 @@ public class Constants {
 	};
 
 	public static enum strategies {
+		CR, RC, PP, RR
 
 	};
 
