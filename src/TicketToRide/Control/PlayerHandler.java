@@ -59,22 +59,22 @@ public class PlayerHandler {
 	 */
 	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
 
-		if (cardsToSpend.size() != path.getCost() || player.getPiece() < path.getCost()) {
-			return false;
-		}
-
-		for (TrainCard card : cardsToSpend) {
-			if (!PathHandler.canClaimBy(path, card)) {
-				return false;
-			}
-		}
+//		if (cardsToSpend.size() != path.getCost() || player.getPiece() < path.getCost()) {
+//			return false;
+//		}
+//
+//		for (TrainCard card : cardsToSpend) {
+//			if (!PathHandler.canClaimBy(path, card)) {
+//				return false;
+//			}
+//		}
 
 		player.setPiece(player.getPiece() - path.getCost());
 		player.getTrainCards().removeAll(cardsToSpend);
 		player.getOwnPath().add(path);
 		player.setScore(player.getScore() + POINT[path.getCost()]);
 		path.setOwningPlayer(player);
-		Deck.spendCards(cardsToSpend);
+		//Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
 		return true;
 	}
 

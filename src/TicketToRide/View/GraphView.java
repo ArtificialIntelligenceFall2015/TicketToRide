@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.List;
 
+import TicketToRide.Control.Game;
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Path;
@@ -37,21 +38,27 @@ public class GraphView extends javax.swing.JPanel {
 			int x2 = edges.get(i).getCity2().getX_val();
 			int y2 = edges.get(i).getCity2().getY_val();
 			int cost = edges.get(i).getCost();
-			Constants.pathColor color = edges.get(i).getColor();
+			Constants.pathColor pathColor = edges.get(i).getColor();
 
-			g.setColor(color.getRealColor());
+			g.setColor(pathColor.getRealColor());
 
-			// g.drawLine(x1, y1, x2, y2);
 			g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
 
 			Graphics2D g2D = (Graphics2D) g;
-			float[] dashingPattern1 = { 6f, 6f };// ?
-			Stroke stroke1 = new BasicStroke(3F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, dashingPattern1,
-					2.0f);// ?
-			g2D.setStroke(stroke1);// ?
-			// g2D.setStroke(new BasicStroke(3F)); // set stroke width
-			g2D.drawLine(x1, y1, x2, y2);
+			float[] dashingPattern1 = { 6f, 6f };
+			Stroke unclaimedRoute = new BasicStroke(3F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, dashingPattern1,
+					2.0f); 
+			Stroke claimedRoute = new BasicStroke(4F);
+			
+			if (edges.get(i).getOwningPlayer() == null) {
+				g2D.setStroke(unclaimedRoute);
+			}
+			else {
+				g.setColor(edges.get(i).getOwningPlayer().getColor().getRealColor());
+				g2D.setStroke(claimedRoute);
+			}
 
+			g2D.drawLine(x1, y1, x2, y2);
 		}
 	}
 }

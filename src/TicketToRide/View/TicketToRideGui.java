@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,6 +30,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -40,6 +42,7 @@ import javax.swing.border.EmptyBorder;
 import TicketToRide.Control.Game;
 import TicketToRide.Control.PathHandler;
 import TicketToRide.Control.PlayerHandler;
+import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.playerColor;
 import TicketToRide.Model.Constants.trainCard;
 import TicketToRide.Model.Deck;
@@ -79,6 +82,8 @@ public class TicketToRideGui extends JFrame {
 	private JLabel lblCurrentPlayerTrainCardGreen;
 	private JLabel lblCurrentPlayerTrainCardRainbow;
 	private JLabel lblPlaceHolderAvatarLabel;
+	private JPanel pnlGraph;
+	private GraphView gv;
 	private List<Player> p;
 	private int occurrences = 0;
 	private int trainCardCount = 0;
@@ -159,7 +164,7 @@ public class TicketToRideGui extends JFrame {
 		jtaLog.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		scpLog.setViewportView(jtaLog);
 
-		JPanel pnlGraph = new JPanel();
+		pnlGraph = new JPanel();
 		pnlGraph.setToolTipText("");
 		pnlGraph.setBackground(Color.CYAN);
 		pnlBoard.add(pnlGraph, BorderLayout.CENTER);
@@ -397,7 +402,8 @@ public class TicketToRideGui extends JFrame {
 		});
 
 		//display dynamically generated graph
-		pnlGraph.add(new GraphView()); 
+		gv = new GraphView();
+		pnlGraph.add(gv); 
 	}
 
 	private boolean checkForTripleRainbow() {
@@ -422,11 +428,6 @@ public class TicketToRideGui extends JFrame {
 		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
 		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
 		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
-		
-		//debug print
-//		for (TrainCard tc : Deck.trainFaceUpCards)
-//			System.out.print(tc.getColor().toString() + " ");
-//		System.out.println("");
 	}
 	
 	private void retallyPlayerTrainCardHand() {
@@ -478,16 +479,13 @@ public class TicketToRideGui extends JFrame {
 		TrainCard trainCardSelected = PlayerHandler.drawTrainCard(Game.currentPlayer, index);
 		setTrainCardCount(getTrainCardCount() + 1);
 		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took a face up train card of color:" + trainCardSelected.getColor());
-		//System.out.println("Deck.trainCardsDeck.size =" + Deck.trainCardsDeck.size()); //debug
-		//System.out.println("Deck.trainCardsDeck % =" + ((int)((Deck.trainCardsDeck.size() / 110.0) * 100))); //debug
 		updateTrainCardDeckProgressBar();
 		// check for null card //TODO:
 		// display the new face up train card (if deck is nonempty)
 		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
 		retallyPlayerTrainCardHand();
 		while (checkForTripleRainbow()) {
-			//System.out.println("triple rainbow detected"); //debug
-			//System.out.println("size of train card deck:" + Deck.trainFaceUpCards.size()); //debug
+			//triple rainbow detected
 			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
 			Deck.drawFreshFaceUpTrainCards();
 			repaintFaceUpTrainCards();
@@ -504,7 +502,6 @@ public class TicketToRideGui extends JFrame {
 		updateTrainCardDeckProgressBar();
 		retallyPlayerTrainCardHand();
 		JOptionPane.showMessageDialog(contentPane, "You picked a " + faceDownCard.getColor() + " card from the deck.");
-		//System.out.println("you picked a face down train card");//debug
 		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took a face down train card of color:" + faceDownCard.getColor());
 		
 		if (getTrainCardCount() == 2) 
@@ -522,9 +519,6 @@ public class TicketToRideGui extends JFrame {
 		List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(); 
 		List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
 		
-		//debug
-//		for (DestinationCard dc : initialDesCards)
-//			System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
 		JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
 		JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
 		JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
@@ -544,16 +538,10 @@ public class TicketToRideGui extends JFrame {
 
 		PlayerHandler.returnDesCardToDeck(rejectedDesCards);
 		Game.currentPlayer.getDesCards().addAll(initialDesCards);
-//		System.out.println("cards in players hand:" + p.getDesCards());//debug
 		
 		displayCurrentPlayerDestinationCards();
 		
 		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took the following destination cards:\n" + initialDesCards);
-		
-		//debug
-//		ArrayList<DestinationCard> destinationCardList = ParseCSVData.parseDestinationCards();
-//		for (DestinationCard dc : destinationCardList)
-//			System.out.println(dc.getCity1() + "\t" + dc.getCity2() + "\t" + dc.getPoint());
 		
 		switchToNextPlayer();
 	}
@@ -572,25 +560,53 @@ public class TicketToRideGui extends JFrame {
 	private void claimARoute() {
 		disableTurnChoiceButtons();
 		
-//		display dialog for user to choose which path to claim
+		//display dialog for user to choose which path to claim
 		Path routeToClaim = displayPathOptionsToClaim();
 		
-//		display dialog for user to choose how to pay for route
+		//display dialog for user to choose how to pay for route
+		trainCard tc = displayPaymentOptions(routeToClaim);
 		
+//		add paid cards to discard pile //TODO: have jun fix this
+		//generate list of turned in cards
+		List<TrainCard> cardsToSpend = generateListOfTurnedInCards(tc, routeToClaim);
 		
-//		check train card values
-//		update train cards quantities in players hand
-//		add paid cards to discard pile
-//		relabel edge in graph
-//		mark route as claimed
+		System.out.println(cardsToSpend);//debug
+		
+		if (cardsToSpend.size() > 0) {
+			PlayerHandler.claimARoute(Game.currentPlayer, routeToClaim, cardsToSpend);
+		}
+		else {
+			System.out.println("you messed up bro");//debug
+		}
+		
+		//mark route as claimed
+		//routeToClaim.setOwningPlayer(Game.currentPlayer);//jun does this in playerhandler
 //		check if route completes path for destination card, if so, mark destination card completed
 //		check if player now has current longest continuous path, update data
-//		update score for player
-//		update quantity of users train piece count, check if final round conditions are met, and enter if necessary
-
 		
+		//display route as claimed in graph
+		pnlGraph.repaint(); 
+
 		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " claimed the route:" + routeToClaim.toString());
 		switchToNextPlayer();
+	}
+	
+	private List<TrainCard> generateListOfTurnedInCards(trainCard tc, Path routeToBuy) {
+		List <TrainCard> tcList = new ArrayList<TrainCard>();
+		
+		if (occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), tc) >= routeToBuy.getCost()) {
+			for (int i = 0; i < routeToBuy.getCost(); i++)
+				tcList.add(new TrainCard(tc));
+		} 
+		else { // cards plus rainbow
+			for (int i = 0; i < occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), tc); i++)
+				tcList.add(new TrainCard(tc));
+			int remaining = routeToBuy.getCost() - tcList.size();
+			for (int i = 0; i < remaining; i++)
+				tcList.add(new TrainCard(trainCard.RAINBOW));
+		}
+		
+		return tcList;
 	}
 	
 	private Path displayPathOptionsToClaim() {
@@ -618,6 +634,71 @@ public class TicketToRideGui extends JFrame {
 		routeToClaim = unclaimedPaths.get(unclaimedPathsStrings.indexOf(selectedRoute));
 				
 		return routeToClaim;
+	}
+	
+	private trainCard displayPaymentOptions(Path routeToBuy) {
+		//disable payment option if color + rainbow < cost
+		
+		List<String> colorStrings = new ArrayList<String>();
+		if (trueIfQuantityMeetsCost(trainCard.PINK, routeToBuy))
+			colorStrings.add("PINK");
+		if (trueIfQuantityMeetsCost(trainCard.WHITE, routeToBuy))
+			colorStrings.add("WHITE");
+		if (trueIfQuantityMeetsCost(trainCard.BLUE, routeToBuy))
+			colorStrings.add("BLUE");
+		if (trueIfQuantityMeetsCost(trainCard.YELLOW, routeToBuy))
+			colorStrings.add("YELLOW");
+		if (trueIfQuantityMeetsCost(trainCard.RED, routeToBuy))
+			colorStrings.add("RED");
+		if (trueIfQuantityMeetsCost(trainCard.BLACK, routeToBuy))
+			colorStrings.add("BLACK");
+		if (trueIfQuantityMeetsCost(trainCard.ORANGE, routeToBuy))
+			colorStrings.add("ORANGE");
+		if (trueIfQuantityMeetsCost(trainCard.GREEN, routeToBuy))
+			colorStrings.add("GREEN");
+		if (occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.RAINBOW) 
+				>= routeToBuy.getCost())
+			colorStrings.add("RAINBOW");
+
+		Object selectedColor = null;
+		trainCard tc = null;
+		
+		if (colorStrings.size() > 0) {
+			//convert to array for display in dialog
+			Object[] colorPay = colorStrings.toArray();
+
+			selectedColor = JOptionPane.showInputDialog(null,
+				             "Which color would you like to pay with? If below cost, rainbow will be added if available."
+				             + "", "Choose Payment Option",
+				             JOptionPane.INFORMATION_MESSAGE, null,
+				             colorPay, colorPay[0]);
+			
+			tc = trainCard.valueOf(selectedColor.toString());
+		}
+		else
+			System.out.println("no cards to pay with");
+		
+		
+		return tc;
+	}
+	
+	private boolean trueIfQuantityMeetsCost(trainCard trainCardColor, Path routeToBuy) {
+		boolean retVal = false;
+		
+		if (occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCardColor) > 0) {
+			System.out.println("color > 0");
+			
+			if ((routeToBuy.getColor().getRealColor().equals(trainCardColor.getRealColor())) || 
+				(routeToBuy.getColor().equals(Constants.pathColor.GRAY)))  {
+				if ((occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCardColor) + 
+						occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.RAINBOW)
+						>= routeToBuy.getCost())) {
+					retVal = true; 
+				}
+			}
+		}
+		
+		return retVal;
 	}
 	
 	private void enableTurnChoiceButtons() {
@@ -669,14 +750,12 @@ public class TicketToRideGui extends JFrame {
 	
 	private void updateScoreboard() {
 		String outputString = "Player\tScore\tDest Cards\tTrain Cards\tInventory\n";
-		//outputString += generateScoreboardRows();//debug
 		List<String> playerScores = generateScoreboardRows();
 		for (String s : playerScores) {
 			outputString += s;
 		}
 		
 		jtaScores.setText(outputString);
-		//System.out.println(outputString);
 	}
 	
 	private List<String> generateScoreboardRows() {
@@ -687,8 +766,7 @@ public class TicketToRideGui extends JFrame {
 			outputString += p + "\n";
 			playerScores.add(p.printTotals() + "\n");
 		}
-		
-		//System.out.println(outputString);//debug
+
 		return playerScores;
 	}
 	
