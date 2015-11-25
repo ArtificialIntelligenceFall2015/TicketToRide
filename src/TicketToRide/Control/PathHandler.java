@@ -16,9 +16,7 @@ import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
 
 /**
- * @author Jun He 
- * @author Sean Fast
- * This class handler path functionality
+ * @author Jun He This class handler path functionality
  */
 public class PathHandler {
 	private static int size;
@@ -45,15 +43,18 @@ public class PathHandler {
 	 * @param paths
 	 */
 	public static void determinePathClose(Player player) {
+		int n=0;
 		for (DestinationCard ticket : player.getDesCards()) {
 			AStar aStar = new AStar(player, ticket);
 			aStar.run();
 			boolean completed = false;
 			if (aStar.getGoal() != null && aStar.getGoal().getCost() == 0) {
 				completed = true;
+				n++;
 			}
 			ticket.setCompleted(completed);
 		}
+		player.setNumTicketComplete(n);
 	}
 
 	/**
@@ -154,6 +155,94 @@ public class PathHandler {
 			}
 		}
 		return connectCities;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static List<Player> getLongestPathPlayers(){
+		List<Player> players=new ArrayList<Player>();
+		List<Integer> longestPathWeight=new ArrayList<Integer>();
+		int max=0;
+		for(Player p:Game.players){
+			int weight=getLongestPath(p);
+			longestPathWeight.add(weight);
+			max=Math.max(max, weight);
+		}
+		for(int i=0; i<longestPathWeight.size(); i++){
+			if(longestPathWeight.get(i)==max){
+				players.add(Game.players.get(i));
+			}
+		}
+		return players;
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public static int getLongestPath(Player player) {
+		int max=0;
+		boolean[] cityAssocPath=getCityAssocPath(player);
+		
+		for(int i=0; i<cityAssocPath.length; i++){
+			if(cityAssocPath[i]){
+				City city=World.cities.get(i);
+				int longestPathDAG=longestPathDAG(player,city, new ArrayList<Path>());
+				max=Math.max(max, longestPathDAG);
+			}
+		}
+		return max;
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @return
+	 */
+	private static boolean[] getCityAssocPath(Player player) {
+		boolean[] cityAssocPath=new boolean[World.cities.size()];
+		for(Path path:player.getOwnPath()){
+			cityAssocPath[World.cities.indexOf(path.getCity1())]=true;
+			cityAssocPath[World.cities.indexOf(path.getCity2())]=true;
+		}
+		return cityAssocPath;
+	}
+
+	/**
+	 * 
+	 * @param player
+	 * @param city
+	 * @param visited
+	 * @return
+	 */
+	private static int longestPathDAG(Player player, City city, List<Path> visited) {
+		int max=0;
+		List<Path> adjPaths=new ArrayList<Path>();
+		int index=World.cities.indexOf(city);
+		for(int i=0; i<size; i++){
+			if(pathMatrix[index][i]){
+				List<Path> paths=getPath(World.cities.get(index), World.cities.get(i));
+				for(Path path:paths){
+					if(path.getOwningPlayer()==player){
+						adjPaths.add(path);
+					}
+				}
+			}
+		}
+		
+		for(Path path: adjPaths){
+			if(!visited.contains(path)){
+				List<Path> newVisitedPath=new ArrayList<Path>();
+				newVisitedPath.addAll(visited);
+				newVisitedPath.add(path);
+				City c=path.getCity1()==city?path.getCity2():path.getCity1();
+				max=Math.max(max, longestPathDAG(player,c,newVisitedPath)+path.getCost());
+			}
+		}
+		return max;
 	}
 	
 	public static List<Path> generateUnclaimedRoutes() {

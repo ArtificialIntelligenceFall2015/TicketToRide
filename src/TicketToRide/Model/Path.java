@@ -42,7 +42,7 @@ public class Path {
 	 * @param pathArray
 	 *            a single edge read in from csv file line
 	 */
-	public Path(String[] pathArray) { // TODO This constructor need to be fixed
+	public Path(String[] pathArray) {
 		int i = 0;
 
 		this.city1 = World.stringToCities.get(pathArray[i++]);

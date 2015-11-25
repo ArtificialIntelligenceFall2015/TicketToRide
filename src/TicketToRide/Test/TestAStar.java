@@ -2,14 +2,18 @@ package TicketToRide.Test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
 import TicketToRide.Control.AStar;
+import TicketToRide.Control.Game;
 import TicketToRide.Control.PathHandler;
+import TicketToRide.Control.PlayerHandlerAI;
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants.playerColor;
+import TicketToRide.Model.Constants.strategies;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
@@ -41,5 +45,19 @@ public class TestAStar {
 		}
 		PathHandler.determinePathClose(p);
 		assertTrue(p.getDesCards().get(0).isCompleted());
+	}
+	
+	@Test
+	public void testPlayerAI(){
+		PlayerAI p= new PlayerAI(playerColor.BLACK, strategies.PP, strategies.RR, strategies.RC, strategies.CR);
+		List <Player> list=new ArrayList<Player>();
+		list.add(p);
+		new Game(list, null);
+		Deck.drawStartingHand(list);
+		PlayerHandlerAI.decisionMaking(p);
+		p.getDesCards().add(Deck.desCardDeck.get(0));
+		AStar aStar = new AStar(p, Deck.desCardDeck.get(0));
+		aStar.run();
+		System.out.println(aStar.getGoal().getCost());
 	}
 }

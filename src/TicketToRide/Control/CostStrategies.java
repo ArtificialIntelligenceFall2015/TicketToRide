@@ -4,7 +4,11 @@
 package TicketToRide.Control;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
@@ -33,11 +37,9 @@ public class CostStrategies {
 		return path.getOwningPlayer() == player;
 	}
 
-	// what is the point value on the destination card to complete the entire
-	// route? (is it worth the effort? conservative players choose small point
-	// routes, risky players choose big point routes)
-
 	/**
+	 * Strategies RR
+	 * 
 	 * what is my rank on the scoreboard? (if im in the lead, i could be
 	 * conservative and take small routes that keep me there and avoid big
 	 * routes that might deduct points) (if im in last place, i can afford to be
@@ -48,7 +50,7 @@ public class CostStrategies {
 	 * @param path
 	 * @return
 	 */
-	private static int claimRouteByRank(PlayerAI player, Path path) {
+	private static int routeVSRank(PlayerAI player, Path path) {
 		int cost = path.getCost();
 		int rank = Game.getRank(player);
 		if (cost >= rank) {
@@ -74,6 +76,8 @@ public class CostStrategies {
 	}
 
 	/**
+	 * Strategies PP
+	 * 
 	 * does this path connect 2 paths owned by another player/players? (can i
 	 * block someone from completing a route? am i in a rush to complete this
 	 * route before someone cuts me off?)
@@ -95,50 +99,39 @@ public class CostStrategies {
 	}
 
 	/**
-	 * what is point value associated with claiming the route? (15 points for a
-	 * 6 car route vs only 2 points for a 2 car route…)
+	 * Strategies RC
 	 * 
 	 * @param path
 	 * @return
 	 */
-	private static int routeScore(Path path) {
-		return Constants.routeScore[path.getCost()];
-	}
-
-	/**
-	 * what train cards are currently in my hand? what train cards are face up?
-	 * combine the total number of claim able cards and make the difference
-	 * between the cost of path the more close to the cost of path, it return
-	 * lower cost strategies
-	 * 
-	 * @param player
-	 * @param path
-	 * @return
-	 */
-	private static int cardsInHand(PlayerAI player, Path path) {
-
-		int n = 0;
-		if (path.getColor() == pathColor.GRAY) {
-			n = player.getTrainCards().size();
-		} else {
-			trainCard tc = trainCard.valueOf(path.getColor().toString());
-			n += player.getHandCollection().get(tc) + player.getHandCollection().get(trainCard.RAINBOW);
-			n += player.getDeckCollection().get(tc) + player.getDeckCollection().get(trainCard.RAINBOW);
+	private static int routeVSCard(PlayerAI player, Path path) {
+		HashMap<trainCard, Integer> collection=player.getHandCollection();
+		int numRainbow=collection.containsKey(trainCard.RAINBOW)?collection.get(trainCard.RAINBOW):0;
+		int numOther=0;
+		if(path.getColor()==pathColor.GRAY){
+			Iterator<Entry<trainCard, Integer>> it=collection.entrySet().iterator();
+			while(it.hasNext()){
+				Entry<trainCard, Integer> pair= it.next();
+				if(pair.getKey()!=trainCard.RAINBOW){
+					numOther=Math.max(numOther, pair.getValue());
+				}
+			}
+		}else{
+			trainCard card=trainCard.valueOf(path.getColor().toString());
+			numOther=collection.containsKey(card)?collection.get(card):0;
 		}
-		return Math.abs(n - path.getCost());
+		
+		int total=numRainbow+numOther;
+		if(total>path.getCost()){
+			return total/path.getCost();
+		}else{
+			return path.getCost()/total;
+		}
 	}
 
 	/**
-	 * what is the probability of the train cards i need to complete this
-	 * route/path being in the deck? + keep track of total cards of every color
-	 * starting at beginning of game - cards i have in my hand (both from blind
-	 * draw and face up) - cards face up - cards other players have picked up
-	 * from face up (can’t know what they picked up from blind draw) - cards
-	 * other players have spent on routes/cards ive spent on routes (discard
-	 * pile contents)
-	 **/
-
-	/**
+	 * Strategies CR
+	 * 
 	 * can one or more of the routes on these destination cards be combined? (do
 	 * they overlap, killing two birds with one stone?) The higher combined
 	 * route, which has better cost
@@ -185,9 +178,9 @@ public class CostStrategies {
 	 */
 	public static int getCost(Player player, Path p) {
 		if (player instanceof PlayerAI) {
-			return p.getCost();
-		} else {
 			return calAICost((PlayerAI) player, p);
+		} else {
+			return p.getCost();
 		}
 	}
 
@@ -201,20 +194,33 @@ public class CostStrategies {
 		int sum = 0;
 		strategies[] list = player.getStrategiesList();
 		for (int i = 0; i < list.length; i++) {
-			sum += getCostResult(list[i]) * (i + 1);
+			sum += getCostResult(player, p, list[i]) * (i + 1);
 		}
 		return sum;
 	}
 
 	/**
 	 * 
+	 * @param player 
+	 * @param p 
 	 * @param s
 	 * @return
 	 */
-	private static int getCostResult(strategies s) {
+	private static int getCostResult(PlayerAI player, Path p, strategies s) {
+		int n=0;
 		switch (s) {
-		// TODO
+		case CR:
+			n= combineRoute(player, p);
+			break;
+		case RC:
+			n= routeVSCard(player, p);
+			break;
+		case PP:
+			n= pairPlayers(p);
+			break;
+		case RR:
+			n= routeVSRank(player, p);
 		}
-		return 0;
+		return n;
 	}
 }

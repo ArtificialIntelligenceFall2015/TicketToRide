@@ -4,14 +4,15 @@
  */
 package TicketToRide.Control;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.World;
+import TicketToRide.View.TicketToRideGui;
 
 /**
  * @author Jun He
@@ -20,43 +21,19 @@ import TicketToRide.Model.World;
 public class Game {
 	public static List<Player> players;
 	public static Player currentPlayer;
-	public static boolean firstTurn=true;
+	public static boolean firstTurn = true;
+	public static TicketToRideGui gui;
 
 	/**
 	 * 
 	 * @param p
+	 * @param gui
 	 */
-	public Game(Player... p) {
-		new World();
-		players = new ArrayList<Player>();
-		Collections.addAll(players, p);
-		currentPlayer=players.get(0);
-	}
-	
-	/**
-	 * 
-	 * @param p
-	 */
-	public Game(List<Player> p) {
+	public Game(List<Player> p, TicketToRideGui gui) {
 		new World();
 		players = p;
-		currentPlayer=players.get(0);
-	}
-	
-	/**
-	 * 
-	 */
-	public static void run(){
-		while(!gameEnd()){
-			if(currentPlayer instanceof PlayerAI){
-				PlayerAI ai=(PlayerAI)currentPlayer;
-				decision d=PlayerHandlerAI.decisionMaking(ai);
-				PlayerHandlerAI.performAction(ai, d);
-			}else{
-				//GUI side
-			}
-			nextPlayer();
-		}
+		Game.gui = gui;
+		currentPlayer = players.get(0);
 	}
 
 	/**
@@ -64,31 +41,29 @@ public class Game {
 	 * 
 	 * @return winner
 	 */
-	public static List<Player> getWinners() {
-		List<Player> winner = new ArrayList<Player>();
-		int maxScore = 0;
-
-		for (Player player : players)
-			Math.max(maxScore, player.getScore());
-
-		for (Player player : players)
-			if (maxScore == player.getScore())
-				winner.add(player);
-
-		return winner;
+	public static Player getWinner() {
+		Collections.sort(players, new winnerComparator());
+		return players.get(0);
 	}
 
 	/**
 	 * switch currentPlayer to next player
 	 */
 	public static void nextPlayer() {
-		int turnIndex = players.indexOf(currentPlayer);
-		turnIndex++;
-		turnIndex=turnIndex % players.size();
-		if(firstTurn && turnIndex==0){
-			firstTurn = false;
+		if (gameEnd()) {
+			performGameEndedCalculation();
+		} else {
+			int turnIndex = players.indexOf(currentPlayer);
+			turnIndex++;
+			currentPlayer = players.get(turnIndex % players.size());
+
+			if (currentPlayer instanceof PlayerAI) {
+				PlayerAI ai = (PlayerAI) currentPlayer;
+				decision d = PlayerHandlerAI.decisionMaking(ai);
+				PlayerHandlerAI.performAction(ai, d);
+				nextPlayer();
+			}
 		}
-		currentPlayer=players.get(turnIndex);
 	}
 
 	/**
@@ -97,7 +72,15 @@ public class Game {
 	 * @return
 	 */
 	public static boolean gameEnd() {
-		return currentPlayer.getPiece() < 3;
+		if (currentPlayer.isLastTurn()) {
+			return true;
+		}
+
+		if (currentPlayer.getPiece() < 3) {
+			currentPlayer.setLastTurn(true);
+		}
+
+		return false;
 	}
 
 	/**
@@ -113,5 +96,57 @@ public class Game {
 			}
 		}
 		return n;
+	}
+
+	/**
+	 * 
+	 */
+	private static void performGameEndedCalculation() {
+		gui.disableTurnChoiceButtons();
+		for (Player player : players) {
+			PathHandler.determinePathClose(player);
+			PlayerHandler.calcDesCardPoint(player);
+		}
+
+		List<Player> playersHaveLongestPath = PathHandler.getLongestPathPlayers();
+
+		for (Player player : playersHaveLongestPath) {
+			player.setScore(player.getScore() + 10);
+		}
+
+		Player winner = getWinner();
+		String message = "Game Over!\n";
+		if (winner instanceof PlayerAI) {
+			message = "Sorry, you lost!";
+		} else {
+			message = "Congratulations! You won!";
+		}
+		gui.popupMessage(message);
+		System.exit(0);
+	}
+
+	/**
+	 * 
+	 * @author jhe
+	 *
+	 */
+	private static class winnerComparator implements Comparator<Player> {
+
+		@Override
+		public int compare(Player p1, Player p2) {
+			if (p1.getScore() == p2.getScore()) {
+				int numCompleteDesCard1 = p1.getNumTicketComplete();
+				int numCompleteDesCard2 = p2.getNumTicketComplete();
+
+				if (numCompleteDesCard1 == numCompleteDesCard2) {
+					return PathHandler.getLongestPath(p2) - PathHandler.getLongestPath(p1);
+
+				} else {
+					return numCompleteDesCard2 - numCompleteDesCard1;
+				}
+			} else {
+				return p2.getScore() - p1.getScore();
+			}
+		}
 	}
 }
