@@ -101,7 +101,7 @@ public class Game {
 	 * 
 	 */
 	private static void performGameEndedCalculation() {
-		gui.disableTurnChoiceButtons();
+		//TODO gui.disableTurnChoiceButtons();
 		for (Player player : players) {
 			PathHandler.determinePathClose(player);
 			PlayerHandler.calcDesCardPoint(player);

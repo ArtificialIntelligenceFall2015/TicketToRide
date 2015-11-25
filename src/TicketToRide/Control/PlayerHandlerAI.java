@@ -210,7 +210,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @param player
 	 */
 	public static void drawDesTicketsAI(PlayerAI player, int minTokenNum) {
-		List<DestinationCard> tickets = drawDesTickets(player);
+		List<DestinationCard> tickets = drawDesTickets();
 		List<DestinationCardAssist> list=new ArrayList<DestinationCardAssist>();
 		
 

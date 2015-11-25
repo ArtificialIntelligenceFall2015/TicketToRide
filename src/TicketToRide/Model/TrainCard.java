@@ -50,7 +50,7 @@ public class TrainCard implements Comparable<TrainCard> {
 	 */
 	@Override
 	public String toString() {
-		return "TrainCard [color=" + color + "]";
+		return this.color.name();
 	}
 
 	/*

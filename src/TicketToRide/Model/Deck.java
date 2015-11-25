@@ -21,7 +21,6 @@ public class Deck {
 	public static List<DestinationCard> desCardDeck;
 	public static List<TrainCard> trainCardsDeck;
 	public static List<TrainCard> trainFaceUpCards;
-	public static HashMap<TrainCard, Integer> countColor;
 	public static List<TrainCard> trainCardDiscardDeck;
 
 	/**
@@ -32,7 +31,6 @@ public class Deck {
 		trainCardsDeck = new ArrayList<TrainCard>();
 		trainFaceUpCards = new ArrayList<TrainCard>();
 		desCardDeck = ParseCSVData.parseDestinationCards();
-		countColor = new HashMap<TrainCard, Integer>();
 		trainCardDiscardDeck = new ArrayList<TrainCard>();
 		for (trainCard tc : trainCard.values()) {
 			int size = 12;
@@ -134,13 +132,6 @@ public class Deck {
 	 */
 	public static void spendCards(List<TrainCard> cardsToSpend) {
 		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
-		for (TrainCard card : cardsToSpend) {
-			int n = 1;
-			if (countColor.containsKey(card)) {
-				n += countColor.get(card);
-			}
-			countColor.put(card, n);
-		}
 	}
 	
 	public static void performIfDeckEmpty(){

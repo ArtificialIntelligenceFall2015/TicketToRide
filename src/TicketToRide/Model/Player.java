@@ -147,4 +147,12 @@ public class Player {
 		this.numTicketComplete = numTicketComplete;
 	}
 
+	public String toString() {
+		return this.color.name() + "\t" + this.score + "\t" + this.desCards + "\t" + this.trainCards + "\t" + piece;
+	}
+	
+	public String printTotals() {
+		return this.color.name() + "\t" + this.score + "\t" + this.desCards.size() + "\t\t" + this.trainCards.size() + "\t\t" + piece;
+	}
+
 }

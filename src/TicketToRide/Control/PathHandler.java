@@ -245,5 +245,16 @@ public class PathHandler {
 		return max;
 	}
 	
-	
+	public static List<Path> generateUnclaimedRoutes() {
+		List<Path> unclaimedRoutes = new ArrayList<Path>();
+		
+		for (Path p : World.map) {
+			if (p.getOwningPlayer() == null) {
+				unclaimedRoutes.add(p);
+			}
+		}
+		
+		return unclaimedRoutes;
+		
+	}
 }
