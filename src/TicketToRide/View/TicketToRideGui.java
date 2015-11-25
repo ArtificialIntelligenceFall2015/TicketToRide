@@ -701,19 +701,19 @@ public class TicketToRideGui extends JFrame {
 		return retVal;
 	}
 	
-	private void enableTurnChoiceButtons() {
+	public void enableTurnChoiceButtons() {
 		btnPickTrainCards.setEnabled(true);
 		btnClaimARoute.setEnabled(true);
 		btnPickDestCards.setEnabled(true);
 	}
 	
-	private void disableTurnChoiceButtons() {
+	public void disableTurnChoiceButtons() {
 		btnPickTrainCards.setEnabled(false);
 		btnClaimARoute.setEnabled(false);
 		btnPickDestCards.setEnabled(false);
 	}
 	
-	private void enableTrainCardChoices() {
+	public void enableTrainCardChoices() {
 		lblFaceUpTrainCard4.setEnabled(true);
 		lblFaceUpTrainCard3.setEnabled(true);
 		lblFaceUpTrainCard2.setEnabled(true);
@@ -722,7 +722,7 @@ public class TicketToRideGui extends JFrame {
 		btnTrainCardDeck.setEnabled(true);
 	}
 	
-	private void disableTrainCardChoices() {
+	public void disableTrainCardChoices() {
 		lblFaceUpTrainCard4.setEnabled(false);
 		lblFaceUpTrainCard3.setEnabled(false);
 		lblFaceUpTrainCard2.setEnabled(false);
