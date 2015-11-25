@@ -150,6 +150,22 @@ public class CostStrategies {
 		}
 		return n;
 	}
+	
+
+	/**
+	 * Strategies PL, PM
+	 * 
+	 * @param p
+	 * @param b
+	 * @return
+	 */
+	private static int preferred(Path p, boolean flag) {
+		if(flag)
+			return 7-p.getCost();
+		
+		int[] weight={0,5,3,1,2,4,6};
+		return weight[p.getCost()];
+	}
 
 	/**
 	 * 
@@ -220,6 +236,13 @@ public class CostStrategies {
 			break;
 		case RR:
 			n= routeVSRank(player, p);
+			break;
+		case PM:
+			n= preferred(p, false);
+			break;
+		case PL:
+			n= preferred(p, true);
+			break;
 		}
 		return n;
 	}
