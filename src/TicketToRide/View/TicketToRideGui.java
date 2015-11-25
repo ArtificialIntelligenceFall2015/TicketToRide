@@ -123,6 +123,7 @@ public class TicketToRideGui extends JFrame {
 		p.add(new Player(playerColor.GREEN));
 		p.add(new Player(playerColor.RED));
 		p.add(new Player(playerColor.YELLOW));
+		
 
 		Deck.drawStartingHand(p);
 		Deck.drawFreshFaceUpTrainCards();
@@ -277,12 +278,15 @@ public class TicketToRideGui extends JFrame {
 		pnlCurrentPlayerTurnChoices.setLayout(new GridLayout(3, 1, 0, 0));
 
 		btnPickTrainCards = new JButton("Pick Train Cards");
+		btnPickTrainCards.setEnabled(false);
 		pnlCurrentPlayerTurnChoices.add(btnPickTrainCards);
 
 		btnClaimARoute = new JButton("Claim a Route");
+		btnClaimARoute.setEnabled(false);
 		pnlCurrentPlayerTurnChoices.add(btnClaimARoute);
 
 		btnPickDestCards = new JButton("Pick Destination Cards");
+		btnPickDestCards.setEnabled(false);
 		pnlCurrentPlayerTurnChoices.add(btnPickDestCards);
 
 		// Face Up Train Cards
@@ -330,6 +334,7 @@ public class TicketToRideGui extends JFrame {
 		
 		disableTrainCardChoices();
 		updateScoreboard();
+		enableTurnChoiceButtons();
 		
 		JPanel pnlCurrentPlayerAvatar = new JPanel();
 		pnlDecks.add(pnlCurrentPlayerAvatar);
@@ -514,6 +519,10 @@ public class TicketToRideGui extends JFrame {
 	
 	private void pickDestinationCards() {
 		disableTurnChoiceButtons();
+		int minDestCardNum = 1;
+		
+		if (Game.firstTurn)
+			minDestCardNum = 2;
 
 		//Get initial destination cards
 		List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(); 
@@ -526,14 +535,28 @@ public class TicketToRideGui extends JFrame {
 		String message = "Please choose your initial Destination Cards. You must pick a minimum of two cards.";
 
 		Object[] params = { message, cbDestCardOpt0, cbDestCardOpt1, cbDestCardOpt2 };
+		
+		int selectionCount = 0;
 
-		JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
-
+		do {
+			JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
+			
+			selectionCount = 0;
+			
+			if (cbDestCardOpt0.isSelected())
+				selectionCount++;
+			if (cbDestCardOpt1.isSelected()) 
+				selectionCount++;
+			if (cbDestCardOpt2.isSelected()) 
+				selectionCount++;
+			
+		} while (selectionCount < minDestCardNum);
+			
 		if (!cbDestCardOpt2.isSelected())
 			rejectedDesCards.add(initialDesCards.remove(2));
-		if (!cbDestCardOpt1.isSelected())
+		if (!cbDestCardOpt1.isSelected()) 
 			rejectedDesCards.add(initialDesCards.remove(1));
-		if (!cbDestCardOpt0.isSelected())
+		if (!cbDestCardOpt0.isSelected()) 
 			rejectedDesCards.add(initialDesCards.remove(0));
 
 		PlayerHandler.returnDesCardToDeck(rejectedDesCards);
@@ -702,9 +725,15 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private void enableTurnChoiceButtons() {
-		btnPickTrainCards.setEnabled(true);
-		btnClaimARoute.setEnabled(true);
-		btnPickDestCards.setEnabled(true);
+		if (Game.firstTurn) {
+			btnPickDestCards.setEnabled(true);
+		}
+		else {
+			btnPickTrainCards.setEnabled(true);
+			btnClaimARoute.setEnabled(true);
+			btnPickDestCards.setEnabled(true);
+		}
+			
 	}
 	
 	private void disableTurnChoiceButtons() {

@@ -20,6 +20,7 @@ import TicketToRide.Model.World;
 public class Game {
 	public static List<Player> players;
 	public static Player currentPlayer;
+	public static boolean firstTurn=true;
 
 	/**
 	 * 
@@ -83,7 +84,11 @@ public class Game {
 	public static void nextPlayer() {
 		int turnIndex = players.indexOf(currentPlayer);
 		turnIndex++;
-		currentPlayer=players.get(turnIndex % players.size());
+		turnIndex=turnIndex % players.size();
+		if(firstTurn && turnIndex==0){
+			firstTurn = false;
+		}
+		currentPlayer=players.get(turnIndex);
 	}
 
 	/**
