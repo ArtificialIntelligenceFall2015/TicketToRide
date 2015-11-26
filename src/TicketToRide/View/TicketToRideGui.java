@@ -280,7 +280,7 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardRainbow.setHorizontalTextPosition(JButton.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setVerticalTextPosition(JButton.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setOpaque(true);
-		lblCurrentPlayerTrainCardRainbow.setIcon(new ImageIcon("rainbow.jpg"));
+		lblCurrentPlayerTrainCardRainbow.setIcon(new ImageIcon("rainbow2.jpg"));
 		lblCurrentPlayerTrainCardRainbow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRainbow.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setForeground(Color.BLACK);
@@ -466,6 +466,7 @@ public class TicketToRideGui extends JFrame {
 		if (tc == trainCard.RAINBOW) {
 			faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
 		} else {
+			faceUpTrainCard.setIcon(null);
 			faceUpTrainCard.setBackground(tc.getRealColor());
 		}
 	}
