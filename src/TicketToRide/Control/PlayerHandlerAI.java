@@ -49,7 +49,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 					ticket.setCompleted(true);
 				}else{
 					List<Path> paths=new ArrayList<Path>();
-					for(int i=0; i<goal.getList().size();i++){
+					for(int i=1; i<goal.getList().size();i++){
 						List<Path> p=PathHandler.getPath(goal.getList().get(i-1), goal.getList().get(i));
 						if(p.get(0).getOwningPlayer()==null||p.get(0).getOwningPlayer()==player){
 							paths.add(p.get(0));

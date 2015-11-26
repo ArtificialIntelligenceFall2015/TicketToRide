@@ -54,6 +54,7 @@ import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
 import javax.swing.ImageIcon;
+import java.awt.Dimension;
 
 /**
  * @author Sean Fast
@@ -121,17 +122,19 @@ public class TicketToRideGui extends JFrame {
 
 		//initialize players
 		p = new ArrayList<Player>();
-//		p.add(new PlayerAI(playerColor.BLACK, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		//1 human, 4 ai
+		p.add(new PlayerAI(playerColor.BLACK));
+		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
 
-		p.add(new Player(playerColor.BLACK));
-		p.add(new Player(playerColor.BLUE));
-		p.add(new Player(playerColor.GREEN));
-		p.add(new Player(playerColor.RED));
-		p.add(new Player(playerColor.YELLOW));
+		//5 human, debug only
+//		p.add(new Player(playerColor.BLACK));
+//		p.add(new Player(playerColor.BLUE));
+//		p.add(new Player(playerColor.GREEN));
+//		p.add(new Player(playerColor.RED));
+//		p.add(new Player(playerColor.YELLOW));
 		
 
 		Deck.drawStartingHand(p);
@@ -519,7 +522,8 @@ public class TicketToRideGui extends JFrame {
 		updateTrainCardDeckProgressBar();
 		// check for null card //TODO:
 		// display the new face up train card (if deck is nonempty)
-		jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
+		//jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
+		setFaceUpTrainCardColor(jp, index);
 		retallyPlayerTrainCardHand();
 		while (checkForTripleRainbow()) {
 			//triple rainbow detected
