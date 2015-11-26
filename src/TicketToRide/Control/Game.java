@@ -55,7 +55,11 @@ public class Game {
 		} else {
 			int turnIndex = players.indexOf(currentPlayer);
 			turnIndex++;
-			currentPlayer = players.get(turnIndex % players.size());
+			turnIndex=turnIndex % players.size();
+			currentPlayer = players.get(turnIndex);
+			
+			if(firstTurn&&turnIndex==0)
+				firstTurn=false;
 
 			if (currentPlayer instanceof PlayerAI) {
 				PlayerAI ai = (PlayerAI) currentPlayer;
