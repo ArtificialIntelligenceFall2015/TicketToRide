@@ -53,11 +53,7 @@ public class CostStrategies {
 	private static int routeVSRank(PlayerAI player, Path path) {
 		int cost = path.getCost();
 		int rank = Game.getRank(player);
-		if (cost >= rank) {
-			return cost / rank;
-		} else {
-			return rank / cost;
-		}
+		return cost > rank ? cost / rank : rank / cost;
 	}
 
 	/**
@@ -106,7 +102,7 @@ public class CostStrategies {
 	 */
 	private static int routeVSCard(PlayerAI player, Path path) {
 		HashMap<trainCard, Integer> collection=player.getHandCollection();
-		int numRainbow=collection.containsKey(trainCard.RAINBOW)?collection.get(trainCard.RAINBOW):0;
+		int numRainbow=PlayerHandlerAI.getCollectionAmount(player, trainCard.RAINBOW);
 		int numOther=0;
 		if(path.getColor()==pathColor.GRAY){
 			Iterator<Entry<trainCard, Integer>> it=collection.entrySet().iterator();
@@ -118,15 +114,11 @@ public class CostStrategies {
 			}
 		}else{
 			trainCard card=trainCard.valueOf(path.getColor().toString());
-			numOther=collection.containsKey(card)?collection.get(card):0;
+			numOther=PlayerHandlerAI.getCollectionAmount(player, card);
 		}
 		
 		int total=numRainbow+numOther;
-		if(total>path.getCost()){
-			return total/path.getCost();
-		}else{
-			return path.getCost()/total;
-		}
+		return path.getCost()/(total+1);
 	}
 
 	/**

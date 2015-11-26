@@ -122,17 +122,18 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	private static boolean routeClaimable(PlayerAI player) {
-		HashMap<trainCard, Integer> collection= player.getHandCollection();
 		Path wantClaimPath = null;
 		boolean claimable = false;
-		int offset = 0;
-		int numRainbow =  collection.containsKey(trainCard.RAINBOW)?collection.get(trainCard.RAINBOW):0;
+		int offset = Integer.MIN_VALUE;
+		int numRainbow =  getCollectionAmount(player, trainCard.RAINBOW);
 
 		for (List<Path> list : player.getFavorPath()) {
 			for (Path path : list) {
 				if (path.getOwningPlayer() == null && player.getPiece()>=path.getCost()) {
 					trainCard trainCardColor=claimAbleCards(path.getColor(), player.getHandCollection());
-					int tempOffSet = collection.containsKey(trainCardColor)?collection.get(trainCardColor):0+numRainbow;
+					int tempOffSet = numRainbow - path.getCost();
+					if(trainCardColor!=null)
+						tempOffSet += getCollectionAmount(player, trainCardColor);
 					if (offset < tempOffSet) {
 						wantClaimPath = path;
 						offset = tempOffSet;
@@ -147,6 +148,11 @@ public class PlayerHandlerAI extends PlayerHandler {
 
 		player.setWantClaimPath(wantClaimPath);
 		return claimable;
+	}
+
+	public static int getCollectionAmount(PlayerAI player, trainCard card) {
+		HashMap<trainCard, Integer> collection= player.getHandCollection();
+		return collection.containsKey(card)?collection.get(card):0;
 	}
 
 	/**
@@ -226,6 +232,9 @@ public class PlayerHandlerAI extends PlayerHandler {
 		for(int i=0; i<list.size(); i++){
 			if(i<minTokenNum||list.get(i).cost<Constants.TAKENCOST)
 				player.getDesCards().add(list.get(i).ticket);
+			else{
+				returnDesCardToDeck(list.get(i).ticket);
+			}
 		}
 	}
 
@@ -280,4 +289,6 @@ public class PlayerHandlerAI extends PlayerHandler {
 			return cost-o.cost;
 		}
 	}
+	
+	
 }
