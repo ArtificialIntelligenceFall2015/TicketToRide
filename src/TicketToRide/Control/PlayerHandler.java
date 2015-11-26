@@ -81,6 +81,7 @@ public class PlayerHandler {
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		TicketToRideGui.appendLog("took a face down train card of color.");
+		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
 
@@ -99,6 +100,7 @@ public class PlayerHandler {
 		faceUpCards.set(index, faceDownCards.remove(0));
 		player.getTrainCards().add(card);
 		TicketToRideGui.appendLog("took a face up train card of color:" + card.getColor());
+		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
 	

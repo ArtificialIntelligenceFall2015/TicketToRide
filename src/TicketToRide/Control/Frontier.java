@@ -8,20 +8,21 @@ package TicketToRide.Control;
 import java.util.List;
 
 import TicketToRide.Model.City;
+import TicketToRide.Model.World;
 
 /**
  * This class defines the Frontier object which represents the frontier of the
  * A* search
  */
 public class Frontier implements Comparable<Frontier> {
-	List<City> list; // collection of characters in iteration
+	List<Integer> list; // collection of characters in iteration
 	int cost; // current cost to get to the path
 	int heuristicCost;
 
 	/**
 	 * Constructor for Frontier object
 	 */
-	public Frontier(List<City> list, int cost, int heuristicCost) {
+	public Frontier(List<Integer> list, int cost, int heuristicCost) {
 		this.list = list;
 		this.cost = cost;
 		this.heuristicCost = heuristicCost;
@@ -30,7 +31,7 @@ public class Frontier implements Comparable<Frontier> {
 	/**
 	 * @return the list
 	 */
-	public List<City> getList() {
+	public List<Integer> getList() {
 		return list;
 	}
 
@@ -64,6 +65,6 @@ public class Frontier implements Comparable<Frontier> {
 	}
 
 	public City getLastCity() {
-		return list.get(list.size() - 1);
+		return World.cities.get(list.get(list.size() - 1));
 	}
 }

@@ -18,7 +18,7 @@ public class Player {
 	private List<DestinationCard> desCards = new ArrayList<DestinationCard>();
 	private List<Path> ownPath = new ArrayList<Path>();
 	private playerColor color;
-	private int piece = 45;
+	private int piece = 10;
 	private boolean lastTurn;
 	private int numTicketComplete=0;
 

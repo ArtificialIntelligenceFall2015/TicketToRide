@@ -446,7 +446,7 @@ public class TicketToRideGui extends JFrame {
 		return occurrences;
 	}
 
-	private void repaintFaceUpTrainCards() {
+	public void repaintFaceUpTrainCards() {
 //		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
 //		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
 //		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
@@ -841,7 +841,10 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	public void switchToNextPlayer() {
-		JOptionPane.showMessageDialog(null, "next player", "next player", JOptionPane.INFORMATION_MESSAGE);
+		Game.nextPlayer();
+		Game.nextPlayer();
+		Game.nextPlayer();
+		Game.nextPlayer();
 		Game.nextPlayer();
 		enableTurnChoiceButtons();
 	}

@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
@@ -53,6 +55,7 @@ public class Game {
 		if (gameEnd()) {
 			performGameEndedCalculation();
 		} else {
+			JOptionPane.showMessageDialog(null, "next player", "next player", JOptionPane.INFORMATION_MESSAGE);
 			int turnIndex = players.indexOf(currentPlayer);
 			turnIndex++;
 			turnIndex=turnIndex % players.size();
@@ -65,7 +68,7 @@ public class Game {
 			gui.displayCurrentPlayerDestinationCards();
 			gui.updateCurrentPlayerAvatar();
 			gui.updateScoreboard();
-			TicketToRideGui.appendLog("It is now " + currentPlayer.getColor() + "'s turn.");
+			TicketToRideGui.appendLog("'s turn.");
 
 			if (currentPlayer instanceof PlayerAI) {
 				PlayerAI ai = (PlayerAI) currentPlayer;
@@ -77,7 +80,6 @@ public class Game {
 					System.out.println(d);
 					PlayerHandlerAI.performAction(ai, d);
 				}
-				gui.switchToNextPlayer();
 			}
 		}
 	}

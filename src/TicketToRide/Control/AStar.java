@@ -12,6 +12,7 @@ import TicketToRide.Model.City;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
+import TicketToRide.Model.World;
 
 /**
  * uses the A* algorithm to compute the solution path
@@ -35,8 +36,8 @@ public class AStar {
 		closed = new ArrayList<Frontier>();
 		startCity = card.getCity1();
 		endCity = card.getCity2();
-		List<City> list = new ArrayList<City>();
-		list.add(startCity);
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(World.cities.indexOf(startCity));
 
 		frontiers.add(new Frontier(list, 0, getHeuristicCost(startCity)));
 	}
@@ -70,9 +71,11 @@ public class AStar {
 				pathOwnAble = pathOwnAble || p.getOwningPlayer() == null || p.getOwningPlayer() == player;
 			}
 			if (pathOwnAble) {
-				List<City> newList = new ArrayList<City>();
-				newList.addAll(frontier.getList());
-				newList.add(expandCity);
+				List<Integer> newList = new ArrayList<Integer>();
+				for(Integer i: frontier.getList()){
+					newList.add(i);
+				}
+				newList.add(World.cities.indexOf(expandCity));
 				int cost = frontier.getCost() + calPathCost(lastCity, expandCity);
 				int heuristicCost = getHeuristicCost(expandCity);
 				Frontier newFrontier = new Frontier(newList, cost, heuristicCost);

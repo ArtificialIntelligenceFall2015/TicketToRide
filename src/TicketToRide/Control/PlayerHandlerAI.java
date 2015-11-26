@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Constants.pathColor;
@@ -16,6 +17,7 @@ import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
+import TicketToRide.Model.World;
 import TicketToRide.View.TicketToRideGui;
 
 /**
@@ -51,7 +53,9 @@ public class PlayerHandlerAI extends PlayerHandler {
 				}else{
 					List<Path> paths=new ArrayList<Path>();
 					for(int i=1; i<goal.getList().size();i++){
-						List<Path> p=PathHandler.getPath(goal.getList().get(i-1), goal.getList().get(i));
+						City c1=World.cities.get(goal.getList().get(i-1));
+						City c2=World.cities.get(goal.getList().get(i));
+						List<Path> p=PathHandler.getPath(c1, c2);
 						if(p.get(0).getOwningPlayer()==null||p.get(0).getOwningPlayer()==player){
 							paths.add(p.get(0));
 						}else{
@@ -72,7 +76,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	public static decision decisionMaking(PlayerAI player) {
 		if (routeClaimable(player)) {
 			return decision.CLAIM_A_ROUTE;
-		} else if (completedAllDesTickets(player)) {
+		} else if (mustDrawDesTickets(player)) {
 			return decision.DRAW_DES_TICKETS;
 		} else {
 			return decision.DRAW_TRAIN_CARDS;
@@ -104,9 +108,9 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @param player
 	 * @return
 	 */
-	private static boolean completedAllDesTickets(PlayerAI player) {
-		if(Deck.desCardDeck.isEmpty())
-			return false;
+	private static boolean mustDrawDesTickets(PlayerAI player) {
+		if(Deck.trainCardsDeck.isEmpty())
+			return true;
 		
 		for (DestinationCard ticket : player.getDesCards()) {
 			if (!ticket.isCompleted() && !player.getUncompleteableDesCard().contains(ticket)) {

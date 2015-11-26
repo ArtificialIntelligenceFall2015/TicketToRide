@@ -10,6 +10,7 @@ import org.junit.Test;
 import TicketToRide.Control.AStar;
 import TicketToRide.Control.PathHandler;
 import TicketToRide.Model.Constants.playerColor;
+import TicketToRide.Model.City;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.PlayerAI;
@@ -25,9 +26,12 @@ public class TestLongestPath {
 		aStar.run();
 		List<Path> list=new ArrayList<Path>();
 		for(int i=1; i<aStar.getGoal().getList().size(); i++){
-			Path path=PathHandler.getPath(aStar.getGoal().getList().get(i-1), aStar.getGoal().getList().get(i)).get(0);
+			City c1=World.cities.get(aStar.getGoal().getList().get(i-1));
+			City c2=World.cities.get(aStar.getGoal().getList().get(i));
+			Path path=PathHandler.getPath(c1, c2).get(0);
 			path.setOwningPlayer(player);
 			list.add(path);
+			player.getOwnPath().add(path);
 		}
 		
 		int cost=0;
