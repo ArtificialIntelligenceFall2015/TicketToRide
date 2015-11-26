@@ -65,7 +65,8 @@ public class PlayerHandler {
 		player.setScore(player.getScore() + POINT[path.getCost()]);
 		path.setOwningPlayer(player);
 		Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
-		TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " " + player.getColor() + " claimed the route:" + path.toString());
+		TicketToRideGui.appendLog("claimed the route:" + path.toString());
+		Game.gui.repaintGraph();
 		return true;
 	}
 
@@ -79,7 +80,7 @@ public class PlayerHandler {
 		Deck.performIfDeckEmpty();
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
-		TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " " + player.getColor() + " took a face down train card of color.");
+		TicketToRideGui.appendLog("took a face down train card of color.");
 		return card;
 	}
 
@@ -97,7 +98,7 @@ public class PlayerHandler {
 		TrainCard card = faceUpCards.get(index); // get face up card
 		faceUpCards.set(index, faceDownCards.remove(0));
 		player.getTrainCards().add(card);
-		TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " " + player.getColor() + " took a face up train card of color:" + card.getColor());
+		TicketToRideGui.appendLog("took a face up train card of color:" + card.getColor());
 		return card;
 	}
 	

@@ -238,7 +238,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 				returnDesCardToDeck(list.get(i).ticket);
 			}
 		}
-		TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " " + player.getColor() + " took the following destination cards:\n" + tokenCards);
+		TicketToRideGui.appendLog("took the following destination cards:\n" + tokenCards);
 	}
 
 	/**

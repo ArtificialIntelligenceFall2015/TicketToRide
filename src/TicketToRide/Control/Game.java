@@ -65,7 +65,7 @@ public class Game {
 			gui.displayCurrentPlayerDestinationCards();
 			gui.updateCurrentPlayerAvatar();
 			gui.updateScoreboard();
-			TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " It is now " + currentPlayer.getColor() + "'s turn.");
+			TicketToRideGui.appendLog("It is now " + currentPlayer.getColor() + "'s turn.");
 
 			if (currentPlayer instanceof PlayerAI) {
 				PlayerAI ai = (PlayerAI) currentPlayer;

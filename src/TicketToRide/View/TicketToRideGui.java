@@ -599,7 +599,7 @@ public class TicketToRideGui extends JFrame {
 		
 		displayCurrentPlayerDestinationCards();
 		
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took the following destination cards:\n" + initialDesCards);
+		appendLog("took the following destination cards:\n" + initialDesCards);
 		
 		switchToNextPlayer();
 	}
@@ -643,9 +643,12 @@ public class TicketToRideGui extends JFrame {
 //		check if player now has current longest continuous path, update data
 		
 		//display route as claimed in graph
-		pnlGraph.repaint(); 
 
 		switchToNextPlayer();
+	}
+	
+	public void repaintGraph(){
+		pnlGraph.repaint(); 
 	}
 	
 	private List<TrainCard> generateListOfTurnedInCards(trainCard tc, Path routeToBuy) {
@@ -838,13 +841,13 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	public void switchToNextPlayer() {
-		JOptionPane.showMessageDialog(null, "new player", "new player", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "next player", "next player", JOptionPane.INFORMATION_MESSAGE);
 		Game.nextPlayer();
 		enableTurnChoiceButtons();
 	}
 	
 	public static void appendLog(String actionTaken) {
-		jtaLog.append(actionTaken + "\n");
+		jtaLog.append(getCurrentTime() + " " + Game.currentPlayer.getColor() + " " + actionTaken + "\n");
 	}
 	
 	public static String getCurrentTime() {
