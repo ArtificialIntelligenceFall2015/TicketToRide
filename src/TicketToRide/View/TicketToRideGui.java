@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -53,8 +55,12 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
+
 import javax.swing.ImageIcon;
+
 import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Sean Fast
@@ -123,18 +129,18 @@ public class TicketToRideGui extends JFrame {
 		//initialize players
 		p = new ArrayList<Player>();
 		//1 human, 4 ai
-		p.add(new PlayerAI(playerColor.BLACK));
-		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.BLACK));
+//		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
 
 		//5 human, debug only
-//		p.add(new Player(playerColor.BLACK));
-//		p.add(new Player(playerColor.BLUE));
-//		p.add(new Player(playerColor.GREEN));
-//		p.add(new Player(playerColor.RED));
-//		p.add(new Player(playerColor.YELLOW));
+		p.add(new Player(playerColor.BLACK));
+		p.add(new Player(playerColor.BLUE));
+		p.add(new Player(playerColor.GREEN));
+		p.add(new Player(playerColor.RED));
+		p.add(new Player(playerColor.YELLOW));
 		
 
 		Deck.drawStartingHand(p);
@@ -280,7 +286,7 @@ public class TicketToRideGui extends JFrame {
 		lblCurrentPlayerTrainCardRainbow.setHorizontalTextPosition(JButton.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setVerticalTextPosition(JButton.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setOpaque(true);
-		lblCurrentPlayerTrainCardRainbow.setIcon(new ImageIcon("rainbow.jpg"));
+		lblCurrentPlayerTrainCardRainbow.setIcon(new ImageIcon("rainbow2.jpg"));
 		lblCurrentPlayerTrainCardRainbow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRainbow.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentPlayerTrainCardRainbow.setForeground(Color.BLACK);
@@ -466,6 +472,7 @@ public class TicketToRideGui extends JFrame {
 		if (tc == trainCard.RAINBOW) {
 			faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
 		} else {
+			faceUpTrainCard.setIcon(null);
 			faceUpTrainCard.setBackground(tc.getRealColor());
 		}
 	}
