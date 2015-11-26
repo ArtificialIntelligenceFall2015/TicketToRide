@@ -123,7 +123,7 @@ public class TicketToRideGui extends JFrame {
 		//initialize players
 		p = new ArrayList<Player>();
 		//1 human, 4 ai
-		p.add(new PlayerAI(playerColor.BLACK));
+		p.add(new Player(playerColor.BLACK));
 		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
 		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
 		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
@@ -470,7 +470,7 @@ public class TicketToRideGui extends JFrame {
 		}
 	}
 	
-	private void retallyPlayerTrainCardHand() {
+	public void retallyPlayerTrainCardHand() {
 		occurrences = occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.PINK);		
 		lblCurrentPlayerTrainCardPink.setText(Integer.toString(occurrences));
 		occurrences = occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.WHITE);
@@ -518,7 +518,6 @@ public class TicketToRideGui extends JFrame {
 		//give the player the face up train card 
 		TrainCard trainCardSelected = PlayerHandler.drawTrainCard(Game.currentPlayer, index);
 		setTrainCardCount(getTrainCardCount() + 1);
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took a face up train card of color:" + trainCardSelected.getColor());
 		updateTrainCardDeckProgressBar();
 		// check for null card //TODO:
 		// display the new face up train card (if deck is nonempty)
@@ -543,7 +542,6 @@ public class TicketToRideGui extends JFrame {
 		updateTrainCardDeckProgressBar();
 		retallyPlayerTrainCardHand();
 		JOptionPane.showMessageDialog(contentPane, "You picked a " + faceDownCard.getColor() + " card from the deck.");
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took a face down train card of color:" + faceDownCard.getColor());
 		
 		if (getTrainCardCount() == 2) 
 			endPickTrainCardsTurn();
@@ -646,7 +644,6 @@ public class TicketToRideGui extends JFrame {
 		//display route as claimed in graph
 		pnlGraph.repaint(); 
 
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " claimed the route:" + routeToClaim.toString());
 		switchToNextPlayer();
 	}
 	
@@ -803,7 +800,7 @@ public class TicketToRideGui extends JFrame {
 		this.trainCardCount = trainCardCount;
 	}
 
-	private void displayCurrentPlayerDestinationCards() {
+	public void displayCurrentPlayerDestinationCards() {
 		destList.clear();
 		
 		//display destination cards in JList
@@ -812,7 +809,7 @@ public class TicketToRideGui extends JFrame {
 		}
 	}
 	
-	private void updateScoreboard() {
+	public void updateScoreboard() {
 		String outputString = "Player\tScore\tDest Cards\tTrain Cards\tInventory\n";
 		List<String> playerScores = generateScoreboardRows();
 		for (String s : playerScores) {
@@ -834,19 +831,14 @@ public class TicketToRideGui extends JFrame {
 		return playerScores;
 	}
 	
-	private void updateCurrentPlayerAvatar() {
+	public void updateCurrentPlayerAvatar() {
 		lblPlaceHolderAvatarLabel.setText(Game.currentPlayer.getColor().toString());
 		//TODO: add pics for every player
 	}
 	
-	private void switchToNextPlayer() {
+	public void switchToNextPlayer() {
 		JOptionPane.showMessageDialog(null, "new player", "new player", JOptionPane.INFORMATION_MESSAGE);
 		Game.nextPlayer();
-		retallyPlayerTrainCardHand();
-		displayCurrentPlayerDestinationCards();
-		updateCurrentPlayerAvatar();
-		updateScoreboard();
-		appendLog(getCurrentTime() + " It is now " + Game.currentPlayer.getColor() + "'s turn.");
 		enableTurnChoiceButtons();
 	}
 	

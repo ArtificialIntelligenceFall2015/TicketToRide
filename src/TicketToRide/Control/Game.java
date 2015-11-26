@@ -57,15 +57,27 @@ public class Game {
 			turnIndex++;
 			turnIndex=turnIndex % players.size();
 			currentPlayer = players.get(turnIndex);
-			
+			System.out.println(turnIndex);
 			if(firstTurn&&turnIndex==0)
 				firstTurn=false;
+			
+			gui.retallyPlayerTrainCardHand();
+			gui.displayCurrentPlayerDestinationCards();
+			gui.updateCurrentPlayerAvatar();
+			gui.updateScoreboard();
+			TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " It is now " + currentPlayer.getColor() + "'s turn.");
 
 			if (currentPlayer instanceof PlayerAI) {
 				PlayerAI ai = (PlayerAI) currentPlayer;
-				decision d = PlayerHandlerAI.decisionMaking(ai);
-				PlayerHandlerAI.performAction(ai, d);
-				nextPlayer();
+				PlayerHandlerAI.populateAIFields(ai);
+				if(Game.firstTurn){
+					PlayerHandlerAI.drawDesTicketsAI(ai, 2);
+				}else{
+					decision d = PlayerHandlerAI.decisionMaking(ai);
+					System.out.println(d);
+					PlayerHandlerAI.performAction(ai, d);
+				}
+				gui.switchToNextPlayer();
 			}
 		}
 	}

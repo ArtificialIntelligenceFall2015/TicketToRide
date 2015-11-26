@@ -16,6 +16,7 @@ import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
+import TicketToRide.View.TicketToRideGui;
 
 /**
  * This class help decision making for AI
@@ -30,7 +31,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * 
 	 * @param player
 	 */
-	private static void populateAIFields(PlayerAI player) {
+	public static void populateAIFields(PlayerAI player) {
 		HashMap<trainCard, Integer> handCollection = CardHandler.trainCardCollection(player.getTrainCards());
 		HashMap<trainCard, Integer> deckCollection = CardHandler.trainCardCollection(Deck.trainFaceUpCards);
 		player.setHandCollection(handCollection);
@@ -69,7 +70,6 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	public static decision decisionMaking(PlayerAI player) {
-		populateAIFields(player);
 		if (routeClaimable(player)) {
 			return decision.CLAIM_A_ROUTE;
 		} else if (completedAllDesTickets(player)) {
@@ -228,14 +228,17 @@ public class PlayerHandlerAI extends PlayerHandler {
 		}
 		
 		Collections.sort(list);
+		List<DestinationCard> tokenCards=new ArrayList<DestinationCard>();
 		
 		for(int i=0; i<list.size(); i++){
-			if(i<minTokenNum||list.get(i).cost<Constants.TAKENCOST)
+			if(i<minTokenNum||list.get(i).cost<Constants.TAKENCOST){
 				player.getDesCards().add(list.get(i).ticket);
-			else{
+				tokenCards.add(list.get(i).ticket);
+			}else{
 				returnDesCardToDeck(list.get(i).ticket);
 			}
 		}
+		TicketToRideGui.appendLog(TicketToRideGui.getCurrentTime() + " " + player.getColor() + " took the following destination cards:\n" + tokenCards);
 	}
 
 	/**
