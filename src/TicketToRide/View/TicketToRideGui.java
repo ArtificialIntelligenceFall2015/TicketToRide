@@ -44,13 +44,16 @@ import TicketToRide.Control.PathHandler;
 import TicketToRide.Control.PlayerHandler;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.playerColor;
+import TicketToRide.Model.Constants.strategies;
 import TicketToRide.Model.Constants.trainCard;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
+import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
+import javax.swing.ImageIcon;
 
 /**
  * @author Sean Fast
@@ -118,6 +121,12 @@ public class TicketToRideGui extends JFrame {
 
 		//initialize players
 		p = new ArrayList<Player>();
+//		p.add(new PlayerAI(playerColor.BLACK, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+//		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+
 		p.add(new Player(playerColor.BLACK));
 		p.add(new Player(playerColor.BLUE));
 		p.add(new Player(playerColor.GREEN));
@@ -265,11 +274,13 @@ public class TicketToRideGui extends JFrame {
 
 		occurrences = occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.RAINBOW);
 		lblCurrentPlayerTrainCardRainbow = new JLabel(Integer.toString(occurrences));
+		lblCurrentPlayerTrainCardRainbow.setHorizontalTextPosition(JButton.CENTER);
+		lblCurrentPlayerTrainCardRainbow.setVerticalTextPosition(JButton.CENTER);
+		lblCurrentPlayerTrainCardRainbow.setOpaque(true);
+		lblCurrentPlayerTrainCardRainbow.setIcon(new ImageIcon("rainbow.jpg"));
 		lblCurrentPlayerTrainCardRainbow.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCurrentPlayerTrainCardRainbow.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCurrentPlayerTrainCardRainbow.setForeground(Color.WHITE);
-		lblCurrentPlayerTrainCardRainbow.setBackground(Color.MAGENTA);
-		lblCurrentPlayerTrainCardRainbow.setOpaque(true);
+		lblCurrentPlayerTrainCardRainbow.setForeground(Color.BLACK);
 		pnlCurrentPlayerTrainCards.add(lblCurrentPlayerTrainCardRainbow);
 
 		JPanel pnlCurrentPlayerTurnChoices = new JPanel();
@@ -292,31 +303,36 @@ public class TicketToRideGui extends JFrame {
 		// Face Up Train Cards
 		lblFaceUpTrainCard4 = new JLabel();
 		lblFaceUpTrainCard4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		//lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+		setFaceUpTrainCardColor(lblFaceUpTrainCard4, 4);
 		lblFaceUpTrainCard4.setOpaque(true);
 		pnlDecks.add(lblFaceUpTrainCard4);
 
 		lblFaceUpTrainCard3 = new JLabel();
 		lblFaceUpTrainCard3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
+		//lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
+		setFaceUpTrainCardColor(lblFaceUpTrainCard3, 3);
 		lblFaceUpTrainCard3.setOpaque(true);
 		pnlDecks.add(lblFaceUpTrainCard3);
 
 		lblFaceUpTrainCard2 = new JLabel();
 		lblFaceUpTrainCard2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
+		//lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
+		setFaceUpTrainCardColor(lblFaceUpTrainCard2, 2);
 		lblFaceUpTrainCard2.setOpaque(true);
 		pnlDecks.add(lblFaceUpTrainCard2);
 
 		lblFaceUpTrainCard1 = new JLabel();
 		lblFaceUpTrainCard1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
+		//lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
+		setFaceUpTrainCardColor(lblFaceUpTrainCard1, 1);
 		lblFaceUpTrainCard1.setOpaque(true);
 		pnlDecks.add(lblFaceUpTrainCard1);
 
 		lblFaceUpTrainCard0 = new JLabel();
 		lblFaceUpTrainCard0.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		//lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		setFaceUpTrainCardColor(lblFaceUpTrainCard0, 0);
 		lblFaceUpTrainCard0.setOpaque(true);
 		pnlDecks.add(lblFaceUpTrainCard0);
 
@@ -428,11 +444,27 @@ public class TicketToRideGui extends JFrame {
 	}
 
 	private void repaintFaceUpTrainCards() {
-		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
-		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
-		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
-		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
-		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+//		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
+//		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
+//		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
+//		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
+//		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
+		setFaceUpTrainCardColor(lblFaceUpTrainCard4, 4);
+		setFaceUpTrainCardColor(lblFaceUpTrainCard3, 3);
+		setFaceUpTrainCardColor(lblFaceUpTrainCard2, 2);
+		setFaceUpTrainCardColor(lblFaceUpTrainCard1, 1);
+		setFaceUpTrainCardColor(lblFaceUpTrainCard0, 0);
+		
+	}
+	
+	private void setFaceUpTrainCardColor(JLabel faceUpTrainCard, int index) {
+		trainCard tc = Deck.trainFaceUpCards.get(index).getColor();
+		
+		if (tc == trainCard.RAINBOW) {
+			faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
+		} else {
+			faceUpTrainCard.setBackground(tc.getRealColor());
+		}
 	}
 	
 	private void retallyPlayerTrainCardHand() {
