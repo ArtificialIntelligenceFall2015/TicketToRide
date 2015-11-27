@@ -40,27 +40,21 @@ public class AStar {
 		list.add(startCity);
 
 		frontiers.add(new Frontier(list, 0, getHeuristicCost(startCity)));
-		System.out.println("AStar: "+card.toString());
 	}
 
 	/**
 	 * This method performs the A* algorithm on the list
 	 */
 	public void run() {
-		int i=0;
-		while (!frontiers.isEmpty() && goal==null) {
+		while (!frontiers.isEmpty() && (goal == null || goal.getCost() > frontiers.get(0).getWeight())) {
 			Frontier target = frontiers.remove(0); // pop off initial state
-			if (goal(target))
+			if (goal(target) && (goal == null || goal.getCost() > target.getCost()))
 				goal = target; // invariant: target is your goal state is goal state
 			else {
 				expandFronter(target); // if not, expand target's children states
 			}
 			Collections.sort(frontiers); // sort frontier list in ascending cost order
 			closed.add(target); // add popped off state to closed list
-			i++;
-			if(i>10000){
-				frontiers.size();
-			}
 		}
 	}
 

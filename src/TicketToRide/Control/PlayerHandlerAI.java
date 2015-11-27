@@ -143,6 +143,21 @@ public class PlayerHandlerAI extends PlayerHandler {
 				}
 			}
 		}
+		
+		if(wantClaimPath==null){
+			for(Path path:World.map){
+				if(path.getOwningPlayer()==null && player.getPiece()>=path.getCost()){
+					trainCard trainCardColor=claimAbleCards(path.getColor(), player.getHandCollection());
+					int tempOffSet = numRainbow - path.getCost();
+					if(trainCardColor!=null)
+						tempOffSet += getCollectionAmount(player, trainCardColor);
+					if (offset < tempOffSet) {
+						wantClaimPath = path;
+						offset = tempOffSet;
+					}
+				}
+			}
+		}
 
 		if (offset >= 0) {
 			claimable = true;
@@ -225,7 +240,9 @@ public class PlayerHandlerAI extends PlayerHandler {
 		for (DestinationCard ticket:tickets) {
 			AStar aStar = new AStar(player, ticket);
 			aStar.run();
-			int cost=aStar.getGoal().getCost();
+			int cost=Integer.MAX_VALUE;
+			if(aStar.getGoal()!=null)
+				aStar.getGoal().getCost();
 			list.add(new DestinationCardAssist(ticket, cost));
 		}
 		

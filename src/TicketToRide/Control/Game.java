@@ -60,7 +60,6 @@ public class Game {
 			turnIndex++;
 			turnIndex=turnIndex % players.size();
 			currentPlayer = players.get(turnIndex);
-			System.out.println(turnIndex);
 			if(firstTurn&&turnIndex==0)
 				firstTurn=false;
 			
@@ -77,7 +76,6 @@ public class Game {
 					PlayerHandlerAI.drawDesTicketsAI(ai, 2);
 				}else{
 					decision d = PlayerHandlerAI.decisionMaking(ai);
-					System.out.println(d);
 					PlayerHandlerAI.performAction(ai, d);
 				}
 			}
