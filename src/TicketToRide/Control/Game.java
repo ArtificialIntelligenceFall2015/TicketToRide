@@ -121,19 +121,30 @@ public class Game {
 	 */
 	private static void performGameEndedCalculation() {
 		gui.disableTurnChoiceButtons();
+		gui.popupMessage("Game Over!");
+		gui.popupMessage("Compute Destination Card Score.");
 		for (Player player : players) {
 			PathHandler.determinePathClose(player);
 			PlayerHandler.calcDesCardPoint(player);
 		}
+		gui.updateScoreboard();
 
+		gui.popupMessage("Compute Longest Path.");
 		List<Player> playersHaveLongestPath = PathHandler.getLongestPathPlayers();
 
+		String name="";
+		for(Player player:playersHaveLongestPath){
+			name+=player.getColor()+" ";
+		}
+		gui.popupMessage("Player(s) who have longest path: "+name);
 		for (Player player : playersHaveLongestPath) {
 			player.setScore(player.getScore() + 10);
 		}
+		
+		gui.updateScoreboard();
 
 		Player winner = getWinner();
-		String message = "Game Over!\n";
+		String message = "";
 		if (winner instanceof PlayerAI) {
 			message = "Sorry, you lost!";
 		} else {

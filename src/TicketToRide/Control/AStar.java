@@ -36,25 +36,31 @@ public class AStar {
 		closed = new ArrayList<Frontier>();
 		startCity = card.getCity1();
 		endCity = card.getCity2();
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(World.cities.indexOf(startCity));
+		List<City> list = new ArrayList<City>();
+		list.add(startCity);
 
 		frontiers.add(new Frontier(list, 0, getHeuristicCost(startCity)));
+		System.out.println("AStar: "+card.toString());
 	}
 
 	/**
 	 * This method performs the A* algorithm on the list
 	 */
 	public void run() {
-		while (!frontiers.isEmpty() && (goal == null || goal.getCost() > frontiers.get(0).getWeight())) {
+		int i=0;
+		while (!frontiers.isEmpty() && goal==null) {
 			Frontier target = frontiers.remove(0); // pop off initial state
-			if (goal(target) && (goal == null || goal.getCost() > target.getCost()))
+			if (goal(target))
 				goal = target; // invariant: target is your goal state is goal state
 			else {
 				expandFronter(target); // if not, expand target's children states
 			}
 			Collections.sort(frontiers); // sort frontier list in ascending cost order
 			closed.add(target); // add popped off state to closed list
+			i++;
+			if(i>10000){
+				frontiers.size();
+			}
 		}
 	}
 
@@ -71,15 +77,13 @@ public class AStar {
 				pathOwnAble = pathOwnAble || p.getOwningPlayer() == null || p.getOwningPlayer() == player;
 			}
 			if (pathOwnAble) {
-				List<Integer> newList = new ArrayList<Integer>();
-				for(Integer i: frontier.getList()){
-					newList.add(i);
-				}
-				newList.add(World.cities.indexOf(expandCity));
+				List<City> newList = new ArrayList<City>();
+				newList.addAll(frontier.getList());
+				newList.add(expandCity);
 				int cost = frontier.getCost() + calPathCost(lastCity, expandCity);
 				int heuristicCost = getHeuristicCost(expandCity);
 				Frontier newFrontier = new Frontier(newList, cost, heuristicCost);
-				if (!isContains(frontiers, newFrontier) && !isContains(frontiers, newFrontier)) {
+				if (!isContains(frontiers, newFrontier) && !isContains(closed, newFrontier)) {
 					frontiers.add(newFrontier);
 				}
 			}
@@ -134,5 +138,4 @@ public class AStar {
 		}
 		return minCost;
 	}
-
 }

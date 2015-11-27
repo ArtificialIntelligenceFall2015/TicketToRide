@@ -26,9 +26,9 @@ public class TestAStar {
 		new World();
 		AStar aStar = new AStar(new PlayerAI(playerColor.BLACK), Deck.desCardDeck.get(0));
 		aStar.run();
-		List<Integer> city = aStar.getGoal().getList();
-		for (Integer c : city) {
-			System.out.println(World.cities.get(c).getCityName());
+		List<City> city = aStar.getGoal().getList();
+		for (City c : city) {
+			System.out.println(c.getCityName());
 		}
 	}
 
@@ -39,11 +39,9 @@ public class TestAStar {
 		p.getDesCards().add(Deck.desCardDeck.get(0));
 		AStar aStar = new AStar(p, Deck.desCardDeck.get(0));
 		aStar.run();
-		List<Integer> city = aStar.getGoal().getList();
+		List<City> city = aStar.getGoal().getList();
 		for (int i = 1; i < city.size(); i++) {
-			City c1=World.cities.get(city.get(i - 1));
-			City c2=World.cities.get(city.get(i));
-			PathHandler.getPath(c1, c2).get(0).setOwningPlayer(p);
+			PathHandler.getPath(city.get(i - 1), city.get(i)).get(0).setOwningPlayer(p);
 		}
 		PathHandler.determinePathClose(p);
 		assertTrue(p.getDesCards().get(0).isCompleted());

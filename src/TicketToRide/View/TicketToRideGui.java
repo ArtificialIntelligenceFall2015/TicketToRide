@@ -841,11 +841,15 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	public void switchToNextPlayer() {
-		Game.nextPlayer();
-		Game.nextPlayer();
-		Game.nextPlayer();
-		Game.nextPlayer();
-		Game.nextPlayer();
+		for(Player p:Game.players){
+			Game.nextPlayer();
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
 		enableTurnChoiceButtons();
 	}
 	
