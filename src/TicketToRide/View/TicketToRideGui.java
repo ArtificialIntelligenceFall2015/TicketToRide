@@ -473,8 +473,9 @@ public class TicketToRideGui extends JFrame {
 			faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
 		} else {
 			faceUpTrainCard.setIcon(null);
-			faceUpTrainCard.setBackground(tc.getRealColor());
 		}
+		faceUpTrainCard.setBackground(tc.getRealColor());
+
 	}
 	
 	private void retallyPlayerTrainCardHand() {
