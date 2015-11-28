@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -21,7 +20,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -55,12 +53,8 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
-
 import javax.swing.ImageIcon;
-
 import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Sean Fast
@@ -129,18 +123,18 @@ public class TicketToRideGui extends JFrame {
 		//initialize players
 		p = new ArrayList<Player>();
 		//1 human, 4 ai
-//		p.add(new PlayerAI(playerColor.BLACK));
-//		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-//		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new Player(playerColor.BLACK));
+		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
 
 		//5 human, debug only
-		p.add(new Player(playerColor.BLACK));
-		p.add(new Player(playerColor.BLUE));
-		p.add(new Player(playerColor.GREEN));
-		p.add(new Player(playerColor.RED));
-		p.add(new Player(playerColor.YELLOW));
+//		p.add(new Player(playerColor.BLACK));
+//		p.add(new Player(playerColor.BLUE));
+//		p.add(new Player(playerColor.GREEN));
+//		p.add(new Player(playerColor.RED));
+//		p.add(new Player(playerColor.YELLOW));
 		
 
 		Deck.drawStartingHand(p);
@@ -452,7 +446,7 @@ public class TicketToRideGui extends JFrame {
 		return occurrences;
 	}
 
-	private void repaintFaceUpTrainCards() {
+	public void repaintFaceUpTrainCards() {
 //		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
 //		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
 //		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
@@ -478,7 +472,7 @@ public class TicketToRideGui extends JFrame {
 
 	}
 	
-	private void retallyPlayerTrainCardHand() {
+	public void retallyPlayerTrainCardHand() {
 		occurrences = occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.PINK);		
 		lblCurrentPlayerTrainCardPink.setText(Integer.toString(occurrences));
 		occurrences = occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCard.WHITE);
@@ -526,7 +520,6 @@ public class TicketToRideGui extends JFrame {
 		//give the player the face up train card 
 		TrainCard trainCardSelected = PlayerHandler.drawTrainCard(Game.currentPlayer, index);
 		setTrainCardCount(getTrainCardCount() + 1);
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took a face up train card of color:" + trainCardSelected.getColor());
 		updateTrainCardDeckProgressBar();
 		// check for null card //TODO:
 		// display the new face up train card (if deck is nonempty)
@@ -551,7 +544,6 @@ public class TicketToRideGui extends JFrame {
 		updateTrainCardDeckProgressBar();
 		retallyPlayerTrainCardHand();
 		JOptionPane.showMessageDialog(contentPane, "You picked a " + faceDownCard.getColor() + " card from the deck.");
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took a face down train card of color:" + faceDownCard.getColor());
 		
 		if (getTrainCardCount() == 2) 
 			endPickTrainCardsTurn();
@@ -608,7 +600,7 @@ public class TicketToRideGui extends JFrame {
 		
 		displayCurrentPlayerDestinationCards();
 		
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " took the following destination cards:\n" + initialDesCards);
+		appendLog("took the following destination cards:\n" + initialDesCards);
 		
 		switchToNextPlayer();
 	}
@@ -652,10 +644,12 @@ public class TicketToRideGui extends JFrame {
 //		check if player now has current longest continuous path, update data
 		
 		//display route as claimed in graph
-		pnlGraph.repaint(); 
 
-		appendLog(getCurrentTime() + " " + Game.currentPlayer.getColor() + " claimed the route:" + routeToClaim.toString());
 		switchToNextPlayer();
+	}
+	
+	public void repaintGraph(){
+		pnlGraph.repaint(); 
 	}
 	
 	private List<TrainCard> generateListOfTurnedInCards(trainCard tc, Path routeToBuy) {
@@ -811,7 +805,7 @@ public class TicketToRideGui extends JFrame {
 		this.trainCardCount = trainCardCount;
 	}
 
-	private void displayCurrentPlayerDestinationCards() {
+	public void displayCurrentPlayerDestinationCards() {
 		destList.clear();
 		
 		//display destination cards in JList
@@ -820,7 +814,7 @@ public class TicketToRideGui extends JFrame {
 		}
 	}
 	
-	private void updateScoreboard() {
+	public void updateScoreboard() {
 		String outputString = "Player\tScore\tDest Cards\tTrain Cards\tInventory\n";
 		List<String> playerScores = generateScoreboardRows();
 		for (String s : playerScores) {
@@ -842,24 +836,26 @@ public class TicketToRideGui extends JFrame {
 		return playerScores;
 	}
 	
-	private void updateCurrentPlayerAvatar() {
+	public void updateCurrentPlayerAvatar() {
 		lblPlaceHolderAvatarLabel.setText(Game.currentPlayer.getColor().toString());
 		//TODO: add pics for every player
 	}
 	
-	private void switchToNextPlayer() {
-		JOptionPane.showMessageDialog(null, "new player", "new player", JOptionPane.INFORMATION_MESSAGE);
-		Game.nextPlayer();
-		retallyPlayerTrainCardHand();
-		displayCurrentPlayerDestinationCards();
-		updateCurrentPlayerAvatar();
-		updateScoreboard();
-		appendLog(getCurrentTime() + " It is now " + Game.currentPlayer.getColor() + "'s turn.");
+	public void switchToNextPlayer() {
+		for(Player p:Game.players){
+			Game.nextPlayer();
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
 		enableTurnChoiceButtons();
 	}
 	
 	public static void appendLog(String actionTaken) {
-		jtaLog.append(actionTaken + "\n");
+		jtaLog.append(getCurrentTime() + " " + Game.currentPlayer.getColor() + " " + actionTaken + "\n");
 	}
 	
 	public static String getCurrentTime() {

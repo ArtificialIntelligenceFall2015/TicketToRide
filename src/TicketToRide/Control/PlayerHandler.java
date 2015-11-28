@@ -12,6 +12,7 @@ import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
+import TicketToRide.View.TicketToRideGui;
 
 /**
  * @author Jun He 
@@ -64,6 +65,8 @@ public class PlayerHandler {
 		player.setScore(player.getScore() + POINT[path.getCost()]);
 		path.setOwningPlayer(player);
 		Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
+		TicketToRideGui.appendLog("claimed the route:" + path.toString());
+		Game.gui.repaintGraph();
 		return true;
 	}
 
@@ -77,6 +80,8 @@ public class PlayerHandler {
 		Deck.performIfDeckEmpty();
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
+		TicketToRideGui.appendLog("took a face down train card of color.");
+		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
 
@@ -94,6 +99,8 @@ public class PlayerHandler {
 		TrainCard card = faceUpCards.get(index); // get face up card
 		faceUpCards.set(index, faceDownCards.remove(0));
 		player.getTrainCards().add(card);
+		TicketToRideGui.appendLog("took a face up train card of color:" + card.getColor());
+		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
 	

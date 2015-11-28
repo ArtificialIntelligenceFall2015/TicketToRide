@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import TicketToRide.Control.Game;
 import TicketToRide.Control.PlayerHandler;
 import TicketToRide.Control.PlayerHandlerAI;
 import TicketToRide.Model.Constants.playerColor;
@@ -18,6 +19,7 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
+import TicketToRide.View.TicketToRideGui;
 
 public class TestAIPlayer {
 	List<Path> map;
@@ -33,6 +35,7 @@ public class TestAIPlayer {
 		playerAI = new PlayerAI(playerColor.RED);
 		players.add(player);
 		players.add(playerAI);
+		new Game(players,new TicketToRideGui());
 		System.out.println("Size of Path:" + World.map.size());
 		System.out.println("Size of City:" + World.cities.size());
 		System.out.println("Size of Des Card Deck:" + Deck.desCardDeck.size());

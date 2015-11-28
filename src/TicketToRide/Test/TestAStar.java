@@ -54,6 +54,7 @@ public class TestAStar {
 		list.add(p);
 		new Game(list, null);
 		Deck.drawStartingHand(list);
+		PlayerHandlerAI.populateAIFields(p);
 		PlayerHandlerAI.decisionMaking(p);
 		p.getDesCards().add(Deck.desCardDeck.get(0));
 		AStar aStar = new AStar(p, Deck.desCardDeck.get(0));

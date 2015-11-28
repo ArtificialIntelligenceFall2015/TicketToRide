@@ -12,6 +12,7 @@ import TicketToRide.Model.City;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
+import TicketToRide.Model.World;
 
 /**
  * uses the A* algorithm to compute the solution path
@@ -76,7 +77,7 @@ public class AStar {
 				int cost = frontier.getCost() + calPathCost(lastCity, expandCity);
 				int heuristicCost = getHeuristicCost(expandCity);
 				Frontier newFrontier = new Frontier(newList, cost, heuristicCost);
-				if (!isContains(frontiers, newFrontier) && !isContains(frontiers, newFrontier)) {
+				if (!isContains(frontiers, newFrontier) && !isContains(closed, newFrontier)) {
 					frontiers.add(newFrontier);
 				}
 			}
@@ -131,5 +132,4 @@ public class AStar {
 		}
 		return minCost;
 	}
-
 }
