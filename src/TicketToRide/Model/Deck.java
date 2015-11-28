@@ -32,6 +32,7 @@ public class Deck {
 		trainFaceUpCards = new ArrayList<TrainCard>();
 		desCardDeck = ParseCSVData.parseDestinationCards();
 		trainCardDiscardDeck = new ArrayList<TrainCard>();
+		
 		for (trainCard tc : trainCard.values()) {
 			int size = 12;
 			if (tc == trainCard.RAINBOW)
@@ -41,6 +42,7 @@ public class Deck {
 				trainCardsDeck.add(c);
 			}
 		}
+		
 		shuffle(trainCardsDeck);
 		shuffle(desCardDeck);
 	}
@@ -132,6 +134,8 @@ public class Deck {
 	 */
 	public static void spendCards(List<TrainCard> cardsToSpend) {
 		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
+		//System.out.println("discard deck just added:" + cardsToSpend);//debug
+		//System.out.println("discard deck:" + Deck.trainCardDiscardDeck);//debug
 	}
 	
 	public static void performIfDeckEmpty(){

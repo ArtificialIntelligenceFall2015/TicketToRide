@@ -59,13 +59,16 @@ public class PlayerHandler {
 	 * @return
 	 */
 	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
-		player.setPiece(player.getPiece() - path.getCost());
-		player.getTrainCards().removeAll(cardsToSpend);
-		player.getOwnPath().add(path);
-		player.setScore(player.getScore() + POINT[path.getCost()]);
-		path.setOwningPlayer(player);
+		player.setPiece(player.getPiece() - path.getCost()); //subtract pieces from inventory
+		
+		for (TrainCard tc : cardsToSpend)
+			player.getTrainCards().remove(tc); //remove each train card from players hand
+		
+		player.getOwnPath().add(path); //add route to players list of owned routes
+		player.setScore(player.getScore() + POINT[path.getCost()]); //update players score
+		path.setOwningPlayer(player); //mark route as owned by player in global path list
 		Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
-		TicketToRideGui.appendLog("claimed the route:" + path.toString());
+		TicketToRideGui.appendLog("claimed the route:" + path + " with the cards:" + cardsToSpend);
 		Game.gui.repaintGraph();
 		return true;
 	}
@@ -97,8 +100,11 @@ public class PlayerHandler {
 		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
 		TrainCard card = faceUpCards.get(index); // get face up card
-		faceUpCards.set(index, faceDownCards.remove(0));
-		player.getTrainCards().add(card);
+		
+		faceUpCards.set(index, faceDownCards.remove(0)); //replace taken face up card
+		Game.gui.refreshIfTripleRainbow();
+
+		player.getTrainCards().add(card); //add taken card to players hand
 		TicketToRideGui.appendLog("took a face up train card of color:" + card.getColor());
 		Game.gui.repaintFaceUpTrainCards();
 		return card;

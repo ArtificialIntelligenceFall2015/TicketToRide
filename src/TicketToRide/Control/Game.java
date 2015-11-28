@@ -55,7 +55,7 @@ public class Game {
 		if (gameEnd()) {
 			performGameEndedCalculation();
 		} else {
-			JOptionPane.showMessageDialog(null, "next player", "next player", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "next player", "Next Player's Turn", JOptionPane.INFORMATION_MESSAGE);
 			int turnIndex = players.indexOf(currentPlayer);
 			turnIndex++;
 			turnIndex=turnIndex % players.size();
