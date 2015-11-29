@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
@@ -53,8 +54,13 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
+
 import javax.swing.ImageIcon;
+
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 /**
  * @author Sean Fast
@@ -63,7 +69,7 @@ import java.awt.Dimension;
 public class TicketToRideGui extends JFrame {
 
 	private JPanel contentPane;
-	private JTextArea jtaScores;
+	private static JTextArea jtaScores;
 	private static JTextArea jtaLog;
 	private DefaultListModel destList;
 	private JLabel lblFaceUpTrainCard4;
@@ -416,7 +422,10 @@ public class TicketToRideGui extends JFrame {
 
 		btnClaimARoute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				claimARoute();
+				 if (playerHasNoTrainCards()) 
+					 JOptionPane.showMessageDialog(null, "You need train cards first!", "Error", JOptionPane.ERROR_MESSAGE);
+				 else
+					 claimARoute();
 			}
 		});
 
@@ -447,11 +456,6 @@ public class TicketToRideGui extends JFrame {
 	}
 
 	public void repaintFaceUpTrainCards() {
-//		lblFaceUpTrainCard4.setBackground(Deck.trainFaceUpCards.get(4).getColor().getRealColor());
-//		lblFaceUpTrainCard3.setBackground(Deck.trainFaceUpCards.get(3).getColor().getRealColor());
-//		lblFaceUpTrainCard2.setBackground(Deck.trainFaceUpCards.get(2).getColor().getRealColor());
-//		lblFaceUpTrainCard1.setBackground(Deck.trainFaceUpCards.get(1).getColor().getRealColor());
-//		lblFaceUpTrainCard0.setBackground(Deck.trainFaceUpCards.get(0).getColor().getRealColor());
 		setFaceUpTrainCardColor(lblFaceUpTrainCard4, 4);
 		setFaceUpTrainCardColor(lblFaceUpTrainCard3, 3);
 		setFaceUpTrainCardColor(lblFaceUpTrainCard2, 2);
@@ -527,15 +531,6 @@ public class TicketToRideGui extends JFrame {
 		setFaceUpTrainCardColor(jp, index);
 		retallyPlayerTrainCardHand();
 		refreshIfTripleRainbow();
-//		while (checkForTripleRainbow()) {
-//			//triple rainbow detected
-//			appendLog("Triple Face Up Rainbow card detected! Dealing five new face up cards.");
-//			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
-//			Deck.drawFreshFaceUpTrainCards();
-//			repaintFaceUpTrainCards();
-//			updateTrainCardDeckProgressBar();
-//		}
-		
 		return trainCardSelected;
 	}
 	
@@ -630,25 +625,25 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private void claimARoute() {
+		
 		disableTurnChoiceButtons();
 		
 		//display dialog for user to choose which path to claim
 		Path routeToClaim = displayPathOptionsToClaim();
 		
-		//display dialog for user to choose how to pay for route
-		trainCard tc = displayPaymentOptions(routeToClaim);
-		
-		//check if tc == null (no cards to claim with)
-		
-//		add paid cards to discard pile //TODO: have jun fix this
-		//generate list of turned in cards
-		List<TrainCard> cardsToSpend = generateListOfTurnedInCards(tc, routeToClaim);
-		
-		if (cardsToSpend.size() > 0) {
-			PlayerHandler.claimARoute(Game.currentPlayer, routeToClaim, cardsToSpend);
-		}
-		else {
-			System.out.println("you messed up bro");//debug
+		if (routeToClaim != null) {
+			//display dialog for user to choose how to pay for route
+			trainCard tc = displayPaymentOptions(routeToClaim);
+
+			//generate list of turned in cards
+			List<TrainCard> cardsToSpend = generateListOfTurnedInCards(tc, routeToClaim);
+			
+			if (cardsToSpend.size() > 0) {
+				PlayerHandler.claimARoute(Game.currentPlayer, routeToClaim, cardsToSpend);
+			}
+			else {
+				System.out.println("you messed up bro");//debug
+			}
 		}
 		
 		retallyPlayerTrainCardHand(); //update hand of cards before switching
@@ -678,7 +673,7 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private Path displayPathOptionsToClaim() {
-		Path routeToClaim;
+		Path routeToClaim = null;
 
 		//generate list of available paths for user
 		List<Path> unclaimedPaths = PathHandler.generateUnclaimedRoutes();
@@ -690,17 +685,21 @@ public class TicketToRideGui extends JFrame {
 			unclaimedPathsStrings.add(p.toString());
 		}
 		
-		//convert to array for display in dialog
-		Object[] possibleValues = unclaimedPathsStrings.toArray();
-
-		Object selectedRoute = JOptionPane.showInputDialog(null,
-			             "Choose a route to claim:", "Claim a Route",
-			             JOptionPane.INFORMATION_MESSAGE, null,
-			             possibleValues, possibleValues[0]);
-		
-		//find path using index of string chosen in string array
-		routeToClaim = unclaimedPaths.get(unclaimedPathsStrings.indexOf(selectedRoute));
-				
+		if (unclaimedPathsStrings.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Sorry, you don't have any claimable routes.", "Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			//convert to array for display in dialog
+			Object[] possibleValues = unclaimedPathsStrings.toArray();
+			
+			Object selectedRoute = JOptionPane.showInputDialog(null,
+				             "Choose a route to claim:", "Claim a Route",
+				             JOptionPane.INFORMATION_MESSAGE, null,
+				             possibleValues, possibleValues[0]);
+			
+			//find path using index of string chosen in string array
+			routeToClaim = unclaimedPaths.get(unclaimedPathsStrings.indexOf(selectedRoute));
+		}
+						
 		return routeToClaim;
 	}
 	
@@ -754,7 +753,6 @@ public class TicketToRideGui extends JFrame {
 		boolean retVal = false;
 		
 		if (occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCardColor) > 0) {
-			//System.out.println("color > 0"); //debug
 			
 			if ((routeToBuy.getColor().getRealColor().equals(trainCardColor.getRealColor())) || 
 				(routeToBuy.getColor().equals(Constants.pathColor.GRAY)))  {
@@ -832,11 +830,9 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private List<String> generateScoreboardRows() {
-		String outputString = "";
 		List<String> playerScores = new ArrayList<String>();
 		
 		for (Player p : Game.players) {
-			outputString += p + "\n";
 			playerScores.add(p.printTotals() + "\n");
 		}
 
@@ -845,7 +841,6 @@ public class TicketToRideGui extends JFrame {
 	
 	public void updateCurrentPlayerAvatar() {
 		lblPlaceHolderAvatarLabel.setText(Game.currentPlayer.getColor().toString());
-		//TODO: add pics for every player
 	}
 	
 	public void switchToNextPlayer() {
@@ -870,7 +865,30 @@ public class TicketToRideGui extends JFrame {
 		return calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
 	}
 
-	public void popupMessage(String s){
+	public void popupMessage(String s) {
 		JOptionPane.showMessageDialog(contentPane, s);
+	}
+	
+	public static void writeLogToFile() {
+		File targetfile = new File("log.txt");
+					
+		PrintWriter output = null;
+		try {
+			output = new PrintWriter(targetfile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		output.println(jtaLog.getText() + "\n" + jtaScores.getText());
+		output.close();
+	}
+	
+	private boolean playerHasNoTrainCards() {
+		System.out.println("players train cards amount:" + Game.currentPlayer.getTrainCards().size());
+		if(Game.currentPlayer.getTrainCards().size() == 0)
+			return true;
+		else
+			return false;
 	}
 }

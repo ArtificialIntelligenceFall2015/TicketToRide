@@ -151,7 +151,10 @@ public class Game {
 			message = "Congratulations! You won!";
 		}
 		gui.popupMessage(message);
-		System.exit(0);
+		//System.exit(0);
+		TicketToRideGui.appendLog("Writing all actions in game to log.txt...");
+		TicketToRideGui.writeLogToFile();
+		
 	}
 
 	/**
