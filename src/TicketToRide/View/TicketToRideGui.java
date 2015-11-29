@@ -638,6 +638,8 @@ public class TicketToRideGui extends JFrame {
 		//display dialog for user to choose how to pay for route
 		trainCard tc = displayPaymentOptions(routeToClaim);
 		
+		//check if tc == null (no cards to claim with)
+		
 //		add paid cards to discard pile //TODO: have jun fix this
 		//generate list of turned in cards
 		List<TrainCard> cardsToSpend = generateListOfTurnedInCards(tc, routeToClaim);
@@ -752,7 +754,7 @@ public class TicketToRideGui extends JFrame {
 		boolean retVal = false;
 		
 		if (occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCardColor) > 0) {
-			System.out.println("color > 0");
+			System.out.println("color > 0"); //debug
 			
 			if ((routeToBuy.getColor().getRealColor().equals(trainCardColor.getRealColor())) || 
 				(routeToBuy.getColor().equals(Constants.pathColor.GRAY)))  {
