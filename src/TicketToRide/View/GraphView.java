@@ -42,7 +42,7 @@ public class GraphView extends javax.swing.JPanel {
 
 			g.setColor(pathColor.getRealColor());
 
-			g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
+			//g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
 
 			Graphics2D g2D = (Graphics2D) g;
 			float[] dashingPattern1 = { 6f, 6f };
@@ -52,6 +52,7 @@ public class GraphView extends javax.swing.JPanel {
 			
 			if (edges.get(i).getOwningPlayer() == null) {
 				g2D.setStroke(unclaimedRoute);
+				g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
 			}
 			else {
 				g.setColor(edges.get(i).getOwningPlayer().getColor().getRealColor());
