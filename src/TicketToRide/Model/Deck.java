@@ -144,7 +144,7 @@ public class Deck {
 			Deck.trainCardsDeck.addAll(Deck.trainCardDiscardDeck);
 			Deck.trainCardDiscardDeck.clear();
 			TicketToRideGui.updateTrainCardDeckProgressBar();
-			//TODO: reset player's probability counts
+			TicketToRideGui.appendLog(" The discard deck has been reshuffled into the face down deck.");
 		}
 	}
 }
