@@ -852,6 +852,8 @@ public class TicketToRideGui extends JFrame {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
+			if(Game.gameover)
+				return;
 		}
 		enableTurnChoiceButtons();
 	}

@@ -48,14 +48,17 @@ public class PathHandler {
 	public static void determinePathClose(Player player) {
 		int n=0;
 		for (DestinationCard ticket : player.getDesCards()) {
-			AStar aStar = new AStar(player, ticket);
-			aStar.run();
-			boolean completed = false;
-			if (aStar.getGoal() != null && aStar.getGoal().getCost() == 0) {
-				completed = true;
-				n++;
+			if(!ticket.isCompleted()){
+				AStar aStar = new AStar(player, ticket, true);
+				aStar.run();
+				boolean completed = false;
+				if (aStar.getGoal() != null && aStar.getGoal().getCost() == 0) {
+					completed = true;
+					n++;
+				}
+				ticket.setCompleted(completed);
 			}
-			ticket.setCompleted(completed);
+			System.out.println(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());
 		}
 		player.setNumTicketComplete(n);
 	}
@@ -278,11 +281,12 @@ public class PathHandler {
 					own=true;	
 				}
 				
-				if((!own&&
-						p.getColor()==pathColor.GRAY 
+				if(!own
+						&& player.getPiece()>=p.getCost()
+						&& ((p.getColor()==pathColor.GRAY 
 						&& maxClaimableCards>=p.getCost())
 						||(p.getColor()!=pathColor.GRAY 
-						&& numRainbow+CardHandler.getCollectionAmount(collection, trainCard.valueOf(p.getColor().toString()))>=p.getCost())){
+						&& numRainbow+CardHandler.getCollectionAmount(collection, trainCard.valueOf(p.getColor().toString()))>=p.getCost()))){
 					unclaimedRoutes.add(p);
 				}
 			}

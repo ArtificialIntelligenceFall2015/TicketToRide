@@ -26,6 +26,8 @@ public class AStar {
 	private City endCity;
 
 	private Player player;
+	
+	private boolean detementPathCloseFlag=false;
 
 	/**
 	 * This method adds a new frontier to the list
@@ -40,6 +42,11 @@ public class AStar {
 		list.add(startCity);
 
 		frontiers.add(new Frontier(list, 0, getHeuristicCost(startCity)));
+	}
+	
+	public AStar(Player player, DestinationCard card, boolean detementPathCloseFlag){
+		this(player,card);
+		this.detementPathCloseFlag=detementPathCloseFlag;
 	}
 
 	/**
@@ -115,6 +122,9 @@ public class AStar {
 	}
 
 	private int getHeuristicCost(City c) {
+		if(detementPathCloseFlag)
+			return 0;
+		
 		int x = Math.abs(endCity.getX_val() - c.getX_val());
 		int y = Math.abs(endCity.getY_val() - c.getY_val());
 		return (int) Math.sqrt(x * x + y * y);
@@ -127,7 +137,7 @@ public class AStar {
 			if (CostStrategies.ownPath(player, p)) {
 				minCost = 0;
 			} else {
-				minCost = Math.min(minCost, CostStrategies.getCost(player, p));
+				minCost = Math.min(minCost, CostStrategies.getCost(player, p, detementPathCloseFlag));
 			}
 		}
 		return minCost;

@@ -182,10 +182,11 @@ public class CostStrategies {
 	 * 
 	 * @param player
 	 * @param p
+	 * @param detementPathCloseFlag 
 	 * @return
 	 */
-	public static int getCost(Player player, Path p) {
-		if (player instanceof PlayerAI) {
+	public static int getCost(Player player, Path p, boolean detementPathCloseFlag) {
+		if (!detementPathCloseFlag) {
 			return calAICost((PlayerAI) player, p);
 		} else {
 			return p.getCost();
