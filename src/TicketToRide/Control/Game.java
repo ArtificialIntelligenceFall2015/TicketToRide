@@ -94,6 +94,7 @@ public class Game {
 		}
 
 		if (currentPlayer.getPiece() < 3) {
+			TicketToRideGui.appendLog("has kicked off the final round! One more turn for each player!");
 			currentPlayer.setLastTurn(true);
 		}
 

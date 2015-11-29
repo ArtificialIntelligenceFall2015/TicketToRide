@@ -68,7 +68,8 @@ public class PlayerHandler {
 		player.setScore(player.getScore() + POINT[path.getCost()]); //update players score
 		path.setOwningPlayer(player); //mark route as owned by player in global path list
 		Deck.spendCards(cardsToSpend); //TODO: jun this is broken right now
-		TicketToRideGui.appendLog("claimed the route:" + path + " with the cards:" + cardsToSpend);
+		TicketToRideGui.appendLog("claimed the route:" + path + " with the cards:" + cardsToSpend
+				+ "for a total of " + path.getCost() + " points.");
 		Game.gui.repaintGraph();
 		return true;
 	}
@@ -83,7 +84,8 @@ public class PlayerHandler {
 		Deck.performIfDeckEmpty();
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
-		TicketToRideGui.appendLog("took a face down train card of color.");
+		//TicketToRideGui.appendLog("took a face down train card."); //human player mode
+		TicketToRideGui.appendLog("took a face down train card of color:" + card.getColor()); //TODO: add flag for observe mode
 		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}

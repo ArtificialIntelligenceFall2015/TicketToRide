@@ -754,7 +754,7 @@ public class TicketToRideGui extends JFrame {
 		boolean retVal = false;
 		
 		if (occurrenceOfTrainCardColor(Game.currentPlayer.getTrainCards(), trainCardColor) > 0) {
-			System.out.println("color > 0"); //debug
+			//System.out.println("color > 0"); //debug
 			
 			if ((routeToBuy.getColor().getRealColor().equals(trainCardColor.getRealColor())) || 
 				(routeToBuy.getColor().equals(Constants.pathColor.GRAY)))  {
