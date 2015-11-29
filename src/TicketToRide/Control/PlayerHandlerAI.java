@@ -66,6 +66,10 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
+	 * Decision making method
+	 * if has route can be claim, claim a route first
+	 * if all destination cards in hand are completed or incompletable or no train cards in desk can be draw, draw destination cards
+	 * else draw train card
 	 * 
 	 * @param player
 	 * @return
@@ -81,7 +85,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * perform action base on decision
 	 * @param player
 	 * @param d
 	 */
@@ -101,7 +105,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * check if all destination cards in hand are completed or incompletable or no train cards in desk can be draw
 	 * @param player
 	 * @return
 	 */
@@ -118,7 +122,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * check if there exist route can be claim base on path what AStar generated
 	 * @param player
 	 * @return
 	 */
@@ -170,7 +174,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * Draw Train Card action for AI player
 	 * @param player
 	 */
 	public static void drawTrainCardAI(PlayerAI player) {
@@ -196,7 +200,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * Claim a route action by AI player
 	 * @param player
 	 */
 	public static void claimARouteAI(PlayerAI player) {
@@ -226,7 +230,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * Draw Destination card action by AI player
 	 * @param player
 	 */
 	public static void drawDesTicketsAI(PlayerAI player, int minTokenNum) {
@@ -258,7 +262,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	}
 
 	/**
-	 * 
+	 * get train card in collection that is able to to claim the given path color
 	 * @param color
 	 * @param cardCollection
 	 * @return

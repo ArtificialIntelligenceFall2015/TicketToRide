@@ -69,5 +69,5 @@ public class Constants {
 
 	public static final int[] routeScore = { 0, 1, 2, 4, 7, 10, 15 };
 
-	public static final int TAKENCOST = 100;// TODO need to reset
+	public static final int TAKENCOST = 100;
 }

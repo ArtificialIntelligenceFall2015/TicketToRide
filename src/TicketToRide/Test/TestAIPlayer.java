@@ -1,3 +1,7 @@
+/**
+ * @author junxnhe
+ * This class is unit test for AI player
+ */
 package TicketToRide.Test;
 
 import static org.junit.Assert.assertTrue;

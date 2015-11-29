@@ -29,7 +29,9 @@ public class AStar {
 	private boolean detementPathCloseFlag=false;
 
 	/**
-	 * This method adds a new frontier to the list
+	 * Constructor
+	 * @param player
+	 * @param card
 	 */
 	public AStar(Player player, DestinationCard card) {
 		this.player = player;
@@ -43,6 +45,12 @@ public class AStar {
 		frontiers.add(new Frontier(list, 0, getHeuristicCost(startCity)));
 	}
 	
+	/**
+	 * This Constructor overload change AStar back to lowest cost search
+	 * @param player
+	 * @param card
+	 * @param detementPathCloseFlag
+	 */
 	public AStar(Player player, DestinationCard card, boolean detementPathCloseFlag){
 		this(player,card);
 		this.detementPathCloseFlag=detementPathCloseFlag;
@@ -120,6 +128,11 @@ public class AStar {
 		return goal;
 	}
 
+	/**
+	 * Use pixel as heuristic distance
+	 * @param c
+	 * @return
+	 */
 	private int getHeuristicCost(City c) {
 		if(detementPathCloseFlag)
 			return 0;
@@ -129,6 +142,13 @@ public class AStar {
 		return (int) Math.sqrt(x * x + y * y);
 	}
 
+	/**
+	 * calculate path real cost base on AI player personality
+	 * If player own path, return 0
+	 * @param city1
+	 * @param city2
+	 * @return
+	 */
 	public int calPathCost(City city1, City city2) {
 		List<Path> pathList = PathHandler.getPath(city1, city2);
 		int minCost = Integer.MAX_VALUE;

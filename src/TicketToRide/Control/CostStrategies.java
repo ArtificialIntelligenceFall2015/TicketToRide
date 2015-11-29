@@ -177,7 +177,8 @@ public class CostStrategies {
 	}
 
 	/**
-	 * 
+	 * if AStar algorithm return cost base on AI player personality
+	 * if Lowest cost first algorithm, return the cost of the route
 	 * @param player
 	 * @param p
 	 * @param detementPathCloseFlag 
@@ -192,7 +193,7 @@ public class CostStrategies {
 	}
 
 	/**
-	 * 
+	 * calculate cost of path base on AI player personality
 	 * @param player
 	 * @param p
 	 * @return
@@ -207,7 +208,8 @@ public class CostStrategies {
 	}
 
 	/**
-	 * 
+	 * Call different method by differnt strategies
+	 * PM and PL only can exist one in each AI player
 	 * @param player 
 	 * @param p 
 	 * @param s

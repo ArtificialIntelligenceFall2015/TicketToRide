@@ -63,6 +63,10 @@ public class Frontier implements Comparable<Frontier> {
 		return this.getLastCity().equals(arg0.getLastCity());
 	}
 
+	/**
+	 * get last city of the list
+	 * @return
+	 */
 	public City getLastCity() {
 		return list.get(list.size() - 1);
 	}

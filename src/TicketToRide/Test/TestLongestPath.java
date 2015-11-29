@@ -1,3 +1,7 @@
+/**
+ * @author junxnhe
+ * This class is unit test for Longest path search
+ */
 package TicketToRide.Test;
 
 import static org.junit.Assert.assertEquals;

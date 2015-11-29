@@ -131,13 +131,18 @@ public class Deck {
 	}
 	
 	/**
-	 * 
+	 * add all the train card that spend on claim a route into trainCardDiscardDeck
 	 * @param cardsToSpend
 	 */
 	public static void spendCards(List<TrainCard> cardsToSpend) {
 		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
 	}
 	
+	/**
+	 * if Deck is empty
+	 * shuffle trainCardDiscardDeck
+	 * put trainCardDiscardDeck card into Deck
+	 */
 	public static void performIfDeckEmpty(){
 		if(Deck.trainCardsDeck.isEmpty()){
 			Deck.shuffle(Deck.trainCardDiscardDeck);

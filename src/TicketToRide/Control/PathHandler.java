@@ -66,7 +66,8 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * get path by give two cities
+	 * return an list because of some of two cities have double route
 	 * @param c1
 	 * @param c2
 	 * @return
@@ -77,7 +78,9 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * add item to hash map in world cities path
+	 * key: two city combine name string
+	 * value: list of route, because of some of two cities have double route
 	 * @param c1
 	 * @param c2
 	 * @param path
@@ -94,6 +97,12 @@ public class PathHandler {
 		}
 	}
 
+	/**
+	 * create key by given two cities
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
 	private static String getKey(City c1, City c2) {
 		String key = "";
 		String c1Name = c1.getCityName();
@@ -107,7 +116,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * check if path can claim by given card
 	 * @param path
 	 * @param card
 	 * @return
@@ -117,7 +126,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * check if path can claim by given card
 	 * @param path
 	 * @param card
 	 * @return
@@ -127,7 +136,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * check if path can claim by given card
 	 * @param path
 	 * @param card
 	 * @return
@@ -137,7 +146,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * check if path can claim by given card
 	 * @param path
 	 * @param card
 	 * @return
@@ -150,7 +159,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * find all the cities which share a route with given city
 	 * @param city
 	 * @return
 	 */
@@ -166,7 +175,7 @@ public class PathHandler {
 	}
 	
 	/**
-	 * 
+	 * find players who have longest path
 	 * @return
 	 */
 	public static List<Player> getLongestPathPlayers(){
@@ -187,7 +196,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * find the longest path cost on given player
 	 * @param player
 	 * @return
 	 */
@@ -206,7 +215,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * method assist getLongestPath
 	 * @param player
 	 * @return
 	 */
@@ -220,7 +229,7 @@ public class PathHandler {
 	}
 
 	/**
-	 * 
+	 * longest path in DAG algorithm
 	 * @param player
 	 * @param city
 	 * @param visited
@@ -253,6 +262,11 @@ public class PathHandler {
 		return max;
 	}
 	
+	/**
+	 * Method assist human player
+	 * get cliamable routes for human player to select base on what cards in player's hand
+	 * @return
+	 */
 	public static List<Path> generateUnclaimedRoutes() {
 		List<Path> unclaimedRoutes = new ArrayList<Path>();
 		Player player=Game.currentPlayer;

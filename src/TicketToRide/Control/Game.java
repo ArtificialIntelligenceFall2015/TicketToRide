@@ -103,7 +103,7 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * get current rank of the given player
 	 * @param player
 	 * @return
 	 */
@@ -118,7 +118,7 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * Do all the calculation and output after game over
 	 */
 	private static void performGameEndedCalculation() {
 		gui.disableTurnChoiceButtons();
@@ -162,7 +162,12 @@ public class Game {
 	}
 
 	/**
-	 * 
+	 * This inner class, assist system to sort the players, and find out who is the winner
+	 * Winner base on who get the highest score
+	 * if there has two players have highest score
+	 * select the one has most complete destination ticket
+	 * if still the same
+	 * select the one who has longest path in the map
 	 * @author jhe
 	 *
 	 */
