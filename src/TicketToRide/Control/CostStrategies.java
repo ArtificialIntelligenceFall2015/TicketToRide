@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import TicketToRide.Model.City;
-import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.pathColor;
 import TicketToRide.Model.Constants.strategies;
 import TicketToRide.Model.Constants.trainCard;
@@ -203,7 +201,7 @@ public class CostStrategies {
 		int sum = 0;
 		strategies[] list = player.getStrategiesList();
 		for (int i = 0; i < list.length; i++) {
-			sum += getCostResult(player, p, list[i]) * (i + 1);
+			sum += getCostResult(player, p, list[i]) * (i + 1) * 20;
 		}
 		return sum;
 	}

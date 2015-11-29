@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.List;
 
-import TicketToRide.Control.Game;
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Path;

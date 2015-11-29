@@ -124,9 +124,9 @@ public class TicketToRideGui extends JFrame {
 		//1 human, 4 ai
 		p.add(new Player(playerColor.BLACK));
 		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.GREEN, strategies.CR, strategies.RC, strategies.PL, strategies.PP));
+		p.add(new PlayerAI(playerColor.RED, strategies.PM, strategies.CR, strategies.RR, strategies.RC));
+		p.add(new PlayerAI(playerColor.YELLOW, strategies.PL, strategies.PP, strategies.CR, strategies.RR));
 
 		//5 human, debug only
 //		p.add(new Player(playerColor.BLACK));
