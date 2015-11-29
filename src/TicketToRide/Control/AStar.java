@@ -12,7 +12,6 @@ import TicketToRide.Model.City;
 import TicketToRide.Model.DestinationCard;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
-import TicketToRide.Model.World;
 
 /**
  * uses the A* algorithm to compute the solution path

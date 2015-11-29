@@ -13,7 +13,6 @@ import TicketToRide.Model.Constants.playerColor;
 import TicketToRide.Model.Deck;
 import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
-import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.World;
 
 public class TestLongestPath {

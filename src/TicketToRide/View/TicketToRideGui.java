@@ -20,8 +20,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -30,7 +30,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -52,9 +51,6 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
-import TicketToRide.Model.World;
-import javax.swing.ImageIcon;
-import java.awt.Dimension;
 
 /**
  * @author Sean Fast
@@ -125,9 +121,9 @@ public class TicketToRideGui extends JFrame {
 		//1 human, 4 ai
 		p.add(new Player(playerColor.BLACK));
 		p.add(new PlayerAI(playerColor.BLUE, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.GREEN, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.RED, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
-		p.add(new PlayerAI(playerColor.YELLOW, strategies.PP, strategies.RR, strategies.RC, strategies.CR));
+		p.add(new PlayerAI(playerColor.GREEN, strategies.CR, strategies.RC, strategies.PL, strategies.PP));
+		p.add(new PlayerAI(playerColor.RED, strategies.PM, strategies.CR, strategies.RR, strategies.RC));
+		p.add(new PlayerAI(playerColor.YELLOW, strategies.PL, strategies.PP, strategies.CR, strategies.RR));
 
 		//5 human, debug only
 //		p.add(new Player(playerColor.BLACK));

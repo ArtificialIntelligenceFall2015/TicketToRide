@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import TicketToRide.Model.City;
 import TicketToRide.Model.Constants;
 import TicketToRide.Model.Constants.decision;
 import TicketToRide.Model.Constants.pathColor;
