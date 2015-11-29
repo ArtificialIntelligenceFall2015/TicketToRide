@@ -17,6 +17,7 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.TrainCard;
 import TicketToRide.Model.World;
+import TicketToRide.View.TicketToRideGui;
 
 /**
  * @author Jun He This class handler path functionality
@@ -58,7 +59,8 @@ public class PathHandler {
 				}
 				ticket.setCompleted(completed);
 			}
-			System.out.println(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());
+			System.out.println(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());//debug
+			TicketToRideGui.appendLogInfo(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());
 		}
 		player.setNumTicketComplete(n);
 	}

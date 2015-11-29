@@ -69,7 +69,7 @@ public class PlayerHandler {
 		path.setOwningPlayer(player); //mark route as owned by player in global path list
 		Deck.spendCards(cardsToSpend); //add spent cards to discard deck
 		TicketToRideGui.appendLog("claimed the route:" + path + " with the cards:" + cardsToSpend
-				+ "for a total of " + POINT[path.getCost()] + " points.");
+				+ " for a total of " + POINT[path.getCost()] + " points.");
 		Game.gui.repaintGraph();
 		return true;
 	}

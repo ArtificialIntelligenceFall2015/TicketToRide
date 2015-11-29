@@ -15,14 +15,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -31,7 +33,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -53,14 +54,6 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 import TicketToRide.Model.TrainCard;
-import TicketToRide.Model.World;
-
-import javax.swing.ImageIcon;
-
-import java.awt.Dimension;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 /**
  * @author Sean Fast
@@ -465,14 +458,20 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private void setFaceUpTrainCardColor(JLabel faceUpTrainCard, int index) {
+		//trainCard tc = Deck.trainFaceUpCards.get(index).getColor();//npe
 		trainCard tc = Deck.trainFaceUpCards.get(index).getColor();
 		
-		if (tc == trainCard.RAINBOW) {
-			faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
-		} else {
+		if (tc == trainCard.EMPTY) {
 			faceUpTrainCard.setIcon(null);
+			faceUpTrainCard.setBackground(tc.getRealColor());
+		} else {
+			if (tc == trainCard.RAINBOW) {
+				faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
+			} else {
+				faceUpTrainCard.setIcon(null);
+			}
+			faceUpTrainCard.setBackground(tc.getRealColor());
 		}
-		faceUpTrainCard.setBackground(tc.getRealColor());
 
 	}
 	
@@ -539,9 +538,14 @@ public class TicketToRideGui extends JFrame {
 			appendLog("Triple Face Up Rainbow card detected! Dealing five new face up cards.");
 			System.out.println("TRIPLE RAINBOW DETECTED!");//debug
 			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
-			Deck.drawFreshFaceUpTrainCards();
-			repaintFaceUpTrainCards();
-			updateTrainCardDeckProgressBar();
+			boolean deckIsEmpty = Deck.drawFreshFaceUpTrainCards();
+//			if (deckIsEmpty) {
+//				//TODO: not enough cards left in deck to fill 5 face up cards
+//			}
+//			else {
+				repaintFaceUpTrainCards();
+				updateTrainCardDeckProgressBar();
+//			}
 		}
 	}
 	
@@ -572,43 +576,48 @@ public class TicketToRideGui extends JFrame {
 		List<DestinationCard> initialDesCards = PlayerHandler.drawDesTickets(); 
 		List<DestinationCard> rejectedDesCards = new ArrayList<DestinationCard>();
 		
-		JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
-		JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
-		JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
+		if (initialDesCards.size() == 3) {
+			JCheckBox cbDestCardOpt0 = new JCheckBox(initialDesCards.get(0).toString());
+			JCheckBox cbDestCardOpt1 = new JCheckBox(initialDesCards.get(1).toString());
+			JCheckBox cbDestCardOpt2 = new JCheckBox(initialDesCards.get(2).toString());
 
-		String message = "Please choose your initial Destination Cards. You must pick a minimum of two cards.";
+			String message = "Please choose your initial Destination Cards. You must pick a minimum of two cards.";
 
-		Object[] params = { message, cbDestCardOpt0, cbDestCardOpt1, cbDestCardOpt2 };
-		
-		int selectionCount = 0;
+			Object[] params = { message, cbDestCardOpt0, cbDestCardOpt1, cbDestCardOpt2 };
+			
+			int selectionCount = 0;
 
-		do {
-			JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
-			
-			selectionCount = 0;
-			
-			if (cbDestCardOpt0.isSelected())
-				selectionCount++;
-			if (cbDestCardOpt1.isSelected()) 
-				selectionCount++;
-			if (cbDestCardOpt2.isSelected()) 
-				selectionCount++;
-			
-		} while (selectionCount < minDestCardNum);
-			
-		if (!cbDestCardOpt2.isSelected())
-			rejectedDesCards.add(initialDesCards.remove(2));
-		if (!cbDestCardOpt1.isSelected()) 
-			rejectedDesCards.add(initialDesCards.remove(1));
-		if (!cbDestCardOpt0.isSelected()) 
-			rejectedDesCards.add(initialDesCards.remove(0));
+			do {
+				JOptionPane.showMessageDialog(null, params, "Choose Destination Card(s)", JOptionPane.PLAIN_MESSAGE);
+				
+				selectionCount = 0;
+				
+				if (cbDestCardOpt0.isSelected())
+					selectionCount++;
+				if (cbDestCardOpt1.isSelected()) 
+					selectionCount++;
+				if (cbDestCardOpt2.isSelected()) 
+					selectionCount++;
+				
+			} while (selectionCount < minDestCardNum);
+				
+			if (!cbDestCardOpt2.isSelected())
+				rejectedDesCards.add(initialDesCards.remove(2));
+			if (!cbDestCardOpt1.isSelected()) 
+				rejectedDesCards.add(initialDesCards.remove(1));
+			if (!cbDestCardOpt0.isSelected()) 
+				rejectedDesCards.add(initialDesCards.remove(0));
 
-		PlayerHandler.returnDesCardToDeck(rejectedDesCards);
-		Game.currentPlayer.getDesCards().addAll(initialDesCards);
-		
-		displayCurrentPlayerDestinationCards();
-		
-		appendLog("took the following destination cards:\n" + initialDesCards);
+			PlayerHandler.returnDesCardToDeck(rejectedDesCards);
+			Game.currentPlayer.getDesCards().addAll(initialDesCards);
+			
+			displayCurrentPlayerDestinationCards();
+			
+			appendLog("took the following destination cards:\n" + initialDesCards);
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Destination Card Deck is empty.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		switchToNextPlayer();
 	}
@@ -638,12 +647,10 @@ public class TicketToRideGui extends JFrame {
 			//generate list of turned in cards
 			List<TrainCard> cardsToSpend = generateListOfTurnedInCards(tc, routeToClaim);
 			
-			if (cardsToSpend.size() > 0) {
+			if (cardsToSpend.size() > 0) 
 				PlayerHandler.claimARoute(Game.currentPlayer, routeToClaim, cardsToSpend);
-			}
-			else {
+			else 
 				System.out.println("you messed up bro");//debug
-			}
 		}
 		
 		retallyPlayerTrainCardHand(); //update hand of cards before switching
@@ -698,6 +705,7 @@ public class TicketToRideGui extends JFrame {
 			
 			//find path using index of string chosen in string array
 			routeToClaim = unclaimedPaths.get(unclaimedPathsStrings.indexOf(selectedRoute));
+
 		}
 						
 		return routeToClaim;
@@ -862,6 +870,10 @@ public class TicketToRideGui extends JFrame {
 		jtaLog.append(getCurrentTime() + " " + Game.currentPlayer.getColor() + " " + actionTaken + "\n");
 	}
 	
+	public static void appendLogInfo(String actionTaken) {
+		jtaLog.append(getCurrentTime() + " " + actionTaken + "\n");
+	}
+	
 	public static String getCurrentTime() {
 		Calendar calendar = Calendar.getInstance();
 		return calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
@@ -887,7 +899,7 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private boolean playerHasNoTrainCards() {
-		System.out.println("players train cards amount:" + Game.currentPlayer.getTrainCards().size());
+		System.out.println("players train cards amount:" + Game.currentPlayer.getTrainCards().size());//debug
 		if(Game.currentPlayer.getTrainCards().size() == 0)
 			return true;
 		else

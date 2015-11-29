@@ -123,7 +123,9 @@ public class Game {
 	private static void performGameEndedCalculation() {
 		gui.disableTurnChoiceButtons();
 		gui.popupMessage("Game Over!");
+		TicketToRideGui.appendLogInfo("Game Over!");
 		gui.popupMessage("Compute Destination Card Score.");
+		TicketToRideGui.appendLogInfo("Destination Card Results:");
 		for (Player player : players) {
 			PathHandler.determinePathClose(player);
 			PlayerHandler.calcDesCardPoint(player);
@@ -138,6 +140,7 @@ public class Game {
 			name+=player.getColor()+" ";
 		}
 		gui.popupMessage("Player(s) who have longest path: "+name);
+		TicketToRideGui.appendLogInfo("Player(s) with the longest path: " + name);
 		for (Player player : playersHaveLongestPath) {
 			player.setScore(player.getScore() + 10);
 		}
@@ -152,7 +155,8 @@ public class Game {
 			message = "Congratulations! You won!";
 		}
 		gui.popupMessage(message);
-		TicketToRideGui.appendLog("Writing all actions in game to log.txt...");
+		TicketToRideGui.appendLogInfo(message);
+		TicketToRideGui.appendLogInfo("Writing all actions in game to log.txt...");
 		TicketToRideGui.writeLogToFile();
 		gameover=true;
 	}

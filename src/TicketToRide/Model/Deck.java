@@ -39,7 +39,9 @@ public class Deck {
 				size = 14;
 			for (int i = 0; i < size; i++) {
 				TrainCard c = new TrainCard(tc);
-				trainCardsDeck.add(c);
+				if (tc != trainCard.EMPTY) {
+					trainCardsDeck.add(c);
+				}
 			}
 		}
 		
@@ -64,12 +66,13 @@ public class Deck {
 	 */
 	public static boolean drawFreshFaceUpTrainCards() {
 		boolean deckIsEmpty = false;
+		TrainCard emptyTrainCard = new TrainCard(trainCard.EMPTY);
 		
 		for (int i = 0; i < 5; i++) {
 			if (trainCardsDeck.size() > 0)
 				trainFaceUpCards.add(trainCardsDeck.remove(0));
 			else {
-				trainFaceUpCards.add(null);
+				trainFaceUpCards.add(emptyTrainCard);
 				deckIsEmpty = true;
 			}
 		}
@@ -142,7 +145,7 @@ public class Deck {
 			Deck.trainCardsDeck.addAll(Deck.trainCardDiscardDeck);
 			Deck.trainCardDiscardDeck.clear();
 			TicketToRideGui.updateTrainCardDeckProgressBar();
-			TicketToRideGui.appendLog(" The discard deck has been reshuffled into the face down deck.");
+			TicketToRideGui.appendLogInfo("The discard deck has been reshuffled into the face down deck.");
 		}
 	}
 }
