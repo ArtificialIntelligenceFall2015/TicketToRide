@@ -4,7 +4,10 @@
 package TicketToRide.Control;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import TicketToRide.Model.City;
 import TicketToRide.Model.Constants.pathColor;
@@ -249,10 +252,41 @@ public class PathHandler {
 		//JUN PUT THE CODE IN THIS METHOD - SEAN
 		
 		List<Path> unclaimedRoutes = new ArrayList<Path>();
+		Player player=Game.currentPlayer;
+		HashMap<trainCard, Integer> collection=CardHandler.trainCardCollection(player.getTrainCards());
 		
+		int maxClaimableCards=0;//non-rainbow claimable cards
+		int numRainbow=CardHandler.getCollectionAmount(collection, trainCard.RAINBOW);
+		
+		Iterator<Entry<trainCard, Integer>> iterator = collection.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<trainCard, Integer> pair = iterator.next();
+			if (pair.getKey()!=trainCard.RAINBOW && maxClaimableCards<pair.getValue()){
+				maxClaimableCards=pair.getValue();
+			}
+		}
+		
+		maxClaimableCards+=numRainbow;
+		
+		//collect claimable cards
 		for (Path p : World.map) {
 			if (p.getOwningPlayer() == null) {
-				unclaimedRoutes.add(p);
+				//Check double route and another one own by the current player
+				List<Path> pairRoute=PathHandler.getPath(p.getCity1(), p.getCity2());
+				boolean own=false;
+				if(pairRoute.size()>1 && 
+						(pairRoute.get(0).getOwningPlayer()==player 
+						|| pairRoute.get(1).getOwningPlayer()==player)){
+					own=true;	
+				}
+				
+				if((!own&&
+						p.getColor()==pathColor.GRAY 
+						&& maxClaimableCards>=p.getCost())
+						||(p.getColor()!=pathColor.GRAY 
+						&& numRainbow+CardHandler.getCollectionAmount(collection, trainCard.valueOf(p.getColor().toString()))>=p.getCost())){
+					unclaimedRoutes.add(p);
+				}
 			}
 		}
 		

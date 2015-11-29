@@ -102,7 +102,7 @@ public class CostStrategies {
 	 */
 	private static int routeVSCard(PlayerAI player, Path path) {
 		HashMap<trainCard, Integer> collection=player.getHandCollection();
-		int numRainbow=PlayerHandlerAI.getCollectionAmount(player, trainCard.RAINBOW);
+		int numRainbow=CardHandler.getCollectionAmount(player, trainCard.RAINBOW);
 		int numOther=0;
 		if(path.getColor()==pathColor.GRAY){
 			Iterator<Entry<trainCard, Integer>> it=collection.entrySet().iterator();
@@ -114,7 +114,7 @@ public class CostStrategies {
 			}
 		}else{
 			trainCard card=trainCard.valueOf(path.getColor().toString());
-			numOther=PlayerHandlerAI.getCollectionAmount(player, card);
+			numOther=CardHandler.getCollectionAmount(player, card);
 		}
 		
 		int total=numRainbow+numOther;
