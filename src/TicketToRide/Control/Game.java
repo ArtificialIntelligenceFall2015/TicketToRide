@@ -25,6 +25,7 @@ public class Game {
 	public static Player currentPlayer;
 	public static boolean firstTurn = true;
 	public static TicketToRideGui gui;
+	public static boolean gameover=false;
 
 	/**
 	 * 
@@ -150,7 +151,7 @@ public class Game {
 			message = "Congratulations! You won!";
 		}
 		gui.popupMessage(message);
-		System.exit(0);
+		gameover=true;
 	}
 
 	/**
