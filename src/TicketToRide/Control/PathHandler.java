@@ -252,8 +252,6 @@ public class PathHandler {
 	}
 	
 	public static List<Path> generateUnclaimedRoutes() {
-		//JUN PUT THE CODE IN THIS METHOD - SEAN
-		
 		List<Path> unclaimedRoutes = new ArrayList<Path>();
 		Player player=Game.currentPlayer;
 		HashMap<trainCard, Integer> collection=CardHandler.trainCardCollection(player.getTrainCards());

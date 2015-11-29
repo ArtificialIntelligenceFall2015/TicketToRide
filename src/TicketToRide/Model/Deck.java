@@ -133,8 +133,6 @@ public class Deck {
 	 */
 	public static void spendCards(List<TrainCard> cardsToSpend) {
 		Deck.trainCardDiscardDeck.addAll(cardsToSpend);
-		//System.out.println("discard deck just added:" + cardsToSpend);//debug
-		//System.out.println("discard deck:" + Deck.trainCardDiscardDeck);//debug
 	}
 	
 	public static void performIfDeckEmpty(){
