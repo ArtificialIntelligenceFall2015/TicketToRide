@@ -110,7 +110,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 	 * @return
 	 */
 	private static boolean mustDrawDesTickets(PlayerAI player) {
-		if(Deck.trainCardsDeck.isEmpty())
+		if(Deck.trainFaceUpCards.size() < 2)
 			return true;
 		
 		for (DestinationCard ticket : player.getDesCards()) {
@@ -152,7 +152,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 		
 		if(wantClaimPath==null){
 			for(Path path:World.map){
-				if(path.getOwningPlayer()==null && player.getPiece()>=path.getCost()){
+				if(path.getOwningPlayer()==null){
 					trainCard trainCardColor=claimAbleCards(path.getColor(), player.getHandCollection());
 					int tempOffSet = numRainbow - path.getCost();
 					if(trainCardColor!=null)
@@ -167,6 +167,16 @@ public class PlayerHandlerAI extends PlayerHandler {
 
 		if (offset >= 0) {
 			claimable = true;
+		}
+		
+		if(wantClaimPath==null){
+			for(Path path:World.map){
+				if(path.getOwningPlayer()==null){
+					wantClaimPath = path;
+					claimable = false;
+					break;
+				}
+			}
 		}
 
 		player.setWantClaimPath(wantClaimPath);
@@ -193,8 +203,10 @@ public class PlayerHandlerAI extends PlayerHandler {
 					i++;
 				}
 				drawTrainCard(player, index);
-			} else {
+			} else if(Deck.trainCardsDeck.size()>0) {
 				drawTrainCard(player);
+			} else{
+				drawTrainCard(player, 0);
 			}
 		}
 	}
@@ -258,7 +270,7 @@ public class PlayerHandlerAI extends PlayerHandler {
 				returnDesCardToDeck(list.get(i).ticket);
 			}
 		}
-		TicketToRideGui.appendLog("took the following destination cards:\n" + tokenCards);
+		TicketToRideGui.appendLog("took the following destination cards:\n\t" + tokenCards);
 	}
 
 	/**

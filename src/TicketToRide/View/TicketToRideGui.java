@@ -539,7 +539,7 @@ public class TicketToRideGui extends JFrame {
 	public void refreshIfTripleRainbow() {
 		while (checkForTripleRainbow()) {
 			appendLog("Triple Face Up Rainbow card detected! Dealing five new face up cards.");
-			System.out.println("TRIPLE RAINBOW DETECTED!");//debug
+			TicketToRideGui.appendLogInfo("TRIPLE RAINBOW DETECTED!");//debug
 			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
 			Deck.drawFreshFaceUpTrainCards();
 
@@ -612,7 +612,7 @@ public class TicketToRideGui extends JFrame {
 			
 			displayCurrentPlayerDestinationCards();
 			
-			appendLog("took the following destination cards:\n" + initialDesCards);
+			appendLog("took the following destination cards:\n\t" + initialDesCards);
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "Destination Card Deck is empty.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -779,9 +779,12 @@ public class TicketToRideGui extends JFrame {
 			btnPickDestCards.setEnabled(true);
 		}
 		else {
-			btnPickTrainCards.setEnabled(true);
-			btnClaimARoute.setEnabled(true);
-			btnPickDestCards.setEnabled(true);
+			if(Deck.trainFaceUpCards.size()>1)
+				btnPickTrainCards.setEnabled(true);
+			if(Game.currentPlayer.getTrainCards().size()>0)
+				btnClaimARoute.setEnabled(true);
+			if(Deck.desCardDeck.size()>0)
+				btnPickDestCards.setEnabled(true);
 		}
 	}
 	

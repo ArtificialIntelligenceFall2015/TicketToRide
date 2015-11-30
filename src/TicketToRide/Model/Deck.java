@@ -142,5 +142,9 @@ public class Deck {
 			TicketToRideGui.updateTrainCardDeckProgressBar();
 			TicketToRideGui.appendLogInfo("The discard deck has been reshuffled into the face down deck.");
 		}
+		
+		while(Deck.trainFaceUpCards.size()<5 && !Deck.trainCardsDeck.isEmpty()) {
+			Deck.trainFaceUpCards.add(Deck.trainCardsDeck.remove(0));
+		}
 	}
 }

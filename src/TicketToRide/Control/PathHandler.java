@@ -59,7 +59,7 @@ public class PathHandler {
 				}
 				ticket.setCompleted(completed);
 			}
-			System.out.println(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());//debug
+			//System.out.println(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());//debug
 			TicketToRideGui.appendLogInfo(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());
 		}
 		player.setNumTicketComplete(n);

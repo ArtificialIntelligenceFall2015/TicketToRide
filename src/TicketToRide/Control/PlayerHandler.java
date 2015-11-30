@@ -68,8 +68,8 @@ public class PlayerHandler {
 		player.setScore(player.getScore() + POINT[path.getCost()]); //update players score
 		path.setOwningPlayer(player); //mark route as owned by player in global path list
 		Deck.spendCards(cardsToSpend); //add spent cards to discard deck
-		TicketToRideGui.appendLog("claimed the route:" + path + " with the cards:" + cardsToSpend
-				+ " for a total of " + POINT[path.getCost()] + " points.");
+		TicketToRideGui.appendLog("claimed the route:\n\t" + path + "\n\tWith the cards:" + cardsToSpend
+				+ "\n\tFor a total of " + POINT[path.getCost()] + " points.");
 		Game.gui.repaintGraph();
 		return true;
 	}
@@ -85,7 +85,7 @@ public class PlayerHandler {
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
 		//TicketToRideGui.appendLog("took a face down train card."); //human player mode
-		TicketToRideGui.appendLog("took a face down train card of color:" + card.getColor()); //TODO: add flag for observe mode
+		TicketToRideGui.appendLog("took a face down train card of color: " + card.getColor()); //TODO: add flag for observe mode
 		return card;
 	}
 
@@ -110,7 +110,7 @@ public class PlayerHandler {
 		Game.gui.refreshIfTripleRainbow();
 
 		player.getTrainCards().add(card); //add taken card to players hand
-		TicketToRideGui.appendLog("took a face up train card of color:" + card.getColor());
+		TicketToRideGui.appendLog("took a face up train card of color: " + card.getColor());
 		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
