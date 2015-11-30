@@ -86,7 +86,6 @@ public class PlayerHandler {
 		player.getTrainCards().add(card);
 		//TicketToRideGui.appendLog("took a face down train card."); //human player mode
 		TicketToRideGui.appendLog("took a face down train card of color:" + card.getColor()); //TODO: add flag for observe mode
-		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
 
@@ -103,7 +102,11 @@ public class PlayerHandler {
 		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
 		TrainCard card = faceUpCards.get(index); // get face up card
 		
-		faceUpCards.set(index, faceDownCards.remove(0)); //replace taken face up card
+		if(!faceDownCards.isEmpty())
+			faceUpCards.set(index, faceDownCards.remove(0)); //replace taken face up card
+		else{
+			faceUpCards.remove(index);
+		}
 		Game.gui.refreshIfTripleRainbow();
 
 		player.getTrainCards().add(card); //add taken card to players hand

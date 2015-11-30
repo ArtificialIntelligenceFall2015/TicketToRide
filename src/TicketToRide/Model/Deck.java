@@ -38,9 +38,7 @@ public class Deck {
 				size = 14;
 			for (int i = 0; i < size; i++) {
 				TrainCard c = new TrainCard(tc);
-				if (tc != trainCard.EMPTY) {
-					trainCardsDeck.add(c);
-				}
+				trainCardsDeck.add(c);
 			}
 		}
 		
@@ -63,19 +61,12 @@ public class Deck {
 	/**
 	 * draw initial cards for 5 face up train cards
 	 */
-	public static boolean drawFreshFaceUpTrainCards() {
-		boolean deckIsEmpty = false;
-		TrainCard emptyTrainCard = new TrainCard(trainCard.EMPTY);
-		
+	public static void drawFreshFaceUpTrainCards() {	
 		for (int i = 0; i < 5; i++) {
+			performIfDeckEmpty();
 			if (trainCardsDeck.size() > 0)
 				trainFaceUpCards.add(trainCardsDeck.remove(0));
-			else {
-				trainFaceUpCards.add(emptyTrainCard);
-				deckIsEmpty = true;
-			}
 		}
-		return deckIsEmpty;
 	}
 
 	/**
@@ -97,7 +88,7 @@ public class Deck {
 		Random r = new Random();
 		int s = card.size();
 		for (int i = 0; i < s; i++) {
-			Collections.swap(card, r.nextInt(s), r.nextInt(s));
+			Collections.swap(card, i, r.nextInt(s));
 		}
 	}
 

@@ -28,7 +28,7 @@ public class Constants {
 
 	public static enum trainCard {
 		PINK(Color.PINK), WHITE(Color.WHITE), BLUE(Color.BLUE), YELLOW(Color.YELLOW), ORANGE(Color.ORANGE), BLACK(
-				Color.BLACK), RED(Color.RED), GREEN(Color.GREEN), RAINBOW(Color.GRAY), EMPTY(Color.DARK_GRAY);
+				Color.BLACK), RED(Color.RED), GREEN(Color.GREEN), RAINBOW(Color.GRAY);
 
 		private Color c;
 

@@ -70,6 +70,7 @@ public class TicketToRideGui extends JFrame {
 	private JLabel lblFaceUpTrainCard2;
 	private JLabel lblFaceUpTrainCard1;
 	private JLabel lblFaceUpTrainCard0;
+	private JLabel[] lblFaceUpTrainCard=new JLabel[5];
 	private JButton btnPickTrainCards;
 	private JButton btnClaimARoute;
 	private JButton btnPickDestCards;
@@ -337,6 +338,12 @@ public class TicketToRideGui extends JFrame {
 		setFaceUpTrainCardColor(lblFaceUpTrainCard0, 0);
 		lblFaceUpTrainCard0.setOpaque(true);
 		pnlDecks.add(lblFaceUpTrainCard0);
+		
+		lblFaceUpTrainCard[0]=lblFaceUpTrainCard0;
+		lblFaceUpTrainCard[1]=lblFaceUpTrainCard1;
+		lblFaceUpTrainCard[2]=lblFaceUpTrainCard2;
+		lblFaceUpTrainCard[3]=lblFaceUpTrainCard3;
+		lblFaceUpTrainCard[4]=lblFaceUpTrainCard4;
 
 		JPanel pnlTrainCardDeck = new JPanel();
 		pnlDecks.add(pnlTrainCardDeck);
@@ -449,30 +456,26 @@ public class TicketToRideGui extends JFrame {
 	}
 
 	public void repaintFaceUpTrainCards() {
-		setFaceUpTrainCardColor(lblFaceUpTrainCard4, 4);
-		setFaceUpTrainCardColor(lblFaceUpTrainCard3, 3);
-		setFaceUpTrainCardColor(lblFaceUpTrainCard2, 2);
-		setFaceUpTrainCardColor(lblFaceUpTrainCard1, 1);
-		setFaceUpTrainCardColor(lblFaceUpTrainCard0, 0);
-		
+		for(int i=0; i<lblFaceUpTrainCard.length; i++){
+			JLabel label=lblFaceUpTrainCard[i];
+			if(i<Deck.trainFaceUpCards.size()){
+				setFaceUpTrainCardColor(label, i);
+			}else{
+				label.setIcon(null);
+				label.setBackground(Color.LIGHT_GRAY);
+			}
+		}
 	}
 	
 	private void setFaceUpTrainCardColor(JLabel faceUpTrainCard, int index) {
 		//trainCard tc = Deck.trainFaceUpCards.get(index).getColor();//npe
 		trainCard tc = Deck.trainFaceUpCards.get(index).getColor();
-		
-		if (tc == trainCard.EMPTY) {
-			faceUpTrainCard.setIcon(null);
-			faceUpTrainCard.setBackground(tc.getRealColor());
-		} else {
 			if (tc == trainCard.RAINBOW) {
 				faceUpTrainCard.setIcon(new ImageIcon("rainbow.jpg"));
 			} else {
 				faceUpTrainCard.setIcon(null);
 			}
 			faceUpTrainCard.setBackground(tc.getRealColor());
-		}
-
 	}
 	
 	public void retallyPlayerTrainCardHand() {
@@ -527,7 +530,7 @@ public class TicketToRideGui extends JFrame {
 		// check for null card //TODO:
 		// display the new face up train card (if deck is nonempty)
 		//jp.setBackground(Deck.trainFaceUpCards.get(index).getColor().getRealColor());
-		setFaceUpTrainCardColor(jp, index);
+		enableTrainCardChoices();
 		retallyPlayerTrainCardHand();
 		refreshIfTripleRainbow();
 		return trainCardSelected;
@@ -538,14 +541,10 @@ public class TicketToRideGui extends JFrame {
 			appendLog("Triple Face Up Rainbow card detected! Dealing five new face up cards.");
 			System.out.println("TRIPLE RAINBOW DETECTED!");//debug
 			Deck.discardAllFaceUpTrainCards(Deck.trainFaceUpCards);
-			boolean deckIsEmpty = Deck.drawFreshFaceUpTrainCards();
-//			if (deckIsEmpty) {
-//				//TODO: not enough cards left in deck to fill 5 face up cards
-//			}
-//			else {
-				repaintFaceUpTrainCards();
-				updateTrainCardDeckProgressBar();
-//			}
+			Deck.drawFreshFaceUpTrainCards();
+
+			updateTrainCardDeckProgressBar();
+			repaintFaceUpTrainCards();
 		}
 	}
 	
@@ -793,12 +792,15 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	public void enableTrainCardChoices() {
-		lblFaceUpTrainCard4.setEnabled(true);
-		lblFaceUpTrainCard3.setEnabled(true);
-		lblFaceUpTrainCard2.setEnabled(true);
-		lblFaceUpTrainCard1.setEnabled(true);
-		lblFaceUpTrainCard0.setEnabled(true);
-		btnTrainCardDeck.setEnabled(true);
+		for(int i=0; i<lblFaceUpTrainCard.length; i++){
+			if(i<Deck.trainFaceUpCards.size())
+				lblFaceUpTrainCard[i].setEnabled(true);
+			else
+				lblFaceUpTrainCard[i].setEnabled(false);
+		}
+		
+		if(!Deck.trainCardsDeck.isEmpty())
+			btnTrainCardDeck.setEnabled(true);
 	}
 	
 	public void disableTrainCardChoices() {
