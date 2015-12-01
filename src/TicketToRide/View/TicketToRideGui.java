@@ -438,6 +438,10 @@ public class TicketToRideGui extends JFrame {
 		//display dynamically generated graph
 		gv = new GraphView();
 		pnlGraph.add(gv); 
+		
+		//All AI Players
+		//while(!Game.gameover)
+		//	switchToNextPlayer();
 	}
 
 	private boolean checkForTripleRainbow() {
@@ -697,10 +701,13 @@ public class TicketToRideGui extends JFrame {
 			//convert to array for display in dialog
 			Object[] possibleValues = unclaimedPathsStrings.toArray();
 			
-			Object selectedRoute = JOptionPane.showInputDialog(null,
+			Object selectedRoute=null;
+			do{
+				selectedRoute= JOptionPane.showInputDialog(null,
 				             "Choose a route to claim:", "Claim a Route",
 				             JOptionPane.INFORMATION_MESSAGE, null,
 				             possibleValues, possibleValues[0]);
+			}while(selectedRoute==null);
 			
 			//find path using index of string chosen in string array
 			routeToClaim = unclaimedPaths.get(unclaimedPathsStrings.indexOf(selectedRoute));
@@ -740,12 +747,13 @@ public class TicketToRideGui extends JFrame {
 		if (colorStrings.size() > 0) {
 			//convert to array for display in dialog
 			Object[] colorPay = colorStrings.toArray();
-
-			selectedColor = JOptionPane.showInputDialog(null,
+			do{
+				selectedColor = JOptionPane.showInputDialog(null,
 				             "Which color would you like to pay with? If below cost, rainbow will be added if available."
 				             + "", "Choose Payment Option",
 				             JOptionPane.INFORMATION_MESSAGE, null,
 				             colorPay, colorPay[0]);
+			}while(selectedColor==null);
 			
 			tc = trainCard.valueOf(selectedColor.toString());
 		}
@@ -857,7 +865,7 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	public void switchToNextPlayer() {
-		for(Player p:Game.players){
+		for(Player p:Game.players){ //comment this out to player all human player
 			Game.nextPlayer();
 //			try {
 //				Thread.sleep(2000);
@@ -867,7 +875,7 @@ public class TicketToRideGui extends JFrame {
 //			}
 			if(Game.gameover)
 				return;
-		}
+		} //comment this out to player all human player
 		enableTurnChoiceButtons();
 	}
 	
@@ -904,7 +912,7 @@ public class TicketToRideGui extends JFrame {
 	}
 	
 	private boolean playerHasNoTrainCards() {
-		System.out.println("players train cards amount:" + Game.currentPlayer.getTrainCards().size());//debug
+		//System.out.println("players train cards amount:" + Game.currentPlayer.getTrainCards().size());//debug
 		if(Game.currentPlayer.getTrainCards().size() == 0)
 			return true;
 		else

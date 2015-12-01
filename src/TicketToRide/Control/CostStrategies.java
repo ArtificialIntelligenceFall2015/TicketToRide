@@ -55,21 +55,6 @@ public class CostStrategies {
 	}
 
 	/**
-	 * how close are we to the end of the game? (every player’s inventory of
-	 * train pieces) how many train pieces do i have left? (is it possible to
-	 * complete the route with the shortage of trains i have left to place on
-	 * the board?)
-	 * 
-	 * @return
-	 */
-	private static int closeEndGame() {
-		int n = 45;
-		for (Player player : Game.players)
-			n = Math.min(n, player.getPiece());
-		return n / 9;
-	}
-
-	/**
 	 * Strategies PP
 	 * 
 	 * does this path connect 2 paths owned by another player/players? (can i
@@ -93,6 +78,7 @@ public class CostStrategies {
 	}
 
 	/**
+	 * If the number of the card more close to the number of cost of route, return lower integer
 	 * Strategies RC
 	 * 
 	 * @param path
@@ -143,6 +129,8 @@ public class CostStrategies {
 	
 
 	/**
+	 * Preferred larger cost path PL
+	 * Preferred medium cost path PM
 	 * Strategies PL, PM
 	 * 
 	 * @param p
@@ -158,7 +146,7 @@ public class CostStrategies {
 	}
 
 	/**
-	 * 
+	 * Get player list who owned paths connected to the given city
 	 * @param cityFromPath
 	 * @return
 	 */
