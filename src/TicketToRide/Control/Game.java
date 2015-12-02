@@ -18,14 +18,14 @@ import TicketToRide.View.TicketToRideGui;
 
 /**
  * @author Jun He
- *
+ * @author Sean Fast
  */
 public class Game {
 	public static List<Player> players;
 	public static Player currentPlayer;
 	public static boolean firstTurn = true;
 	public static TicketToRideGui gui;
-	public static boolean gameover=false;
+	public static boolean gameover = false;
 
 	/**
 	 * 
@@ -56,15 +56,17 @@ public class Game {
 		if (gameEnd()) {
 			performGameEndedCalculation();
 		} else {
-			String msg = "End of " + Game.currentPlayer.getColor() + "'s turn.\nNext Player's Turn...";
-			JOptionPane.showMessageDialog(null, msg, "Next Player's Turn", JOptionPane.INFORMATION_MESSAGE);
+			String msg = "End of " + Game.currentPlayer.getColor()
+					+ "'s turn.\nNext Player's Turn...";
+			JOptionPane.showMessageDialog(null, msg, "Next Player's Turn",
+					JOptionPane.INFORMATION_MESSAGE);
 			int turnIndex = players.indexOf(currentPlayer);
 			turnIndex++;
-			turnIndex=turnIndex % players.size();
+			turnIndex = turnIndex % players.size();
 			currentPlayer = players.get(turnIndex);
-			if(firstTurn&&turnIndex==0)
-				firstTurn=false;
-			
+			if (firstTurn && turnIndex == 0)
+				firstTurn = false;
+
 			gui.retallyPlayerTrainCardHand();
 			gui.displayCurrentPlayerDestinationCards();
 			gui.updateCurrentPlayerAvatar();
@@ -74,9 +76,9 @@ public class Game {
 			if (currentPlayer instanceof PlayerAI) {
 				PlayerAI ai = (PlayerAI) currentPlayer;
 				PlayerHandlerAI.populateAIFields(ai);
-				if(Game.firstTurn){
+				if (Game.firstTurn) {
 					PlayerHandlerAI.drawDesTicketsAI(ai, 2);
-				}else{
+				} else {
 					decision d = PlayerHandlerAI.decisionMaking(ai);
 					PlayerHandlerAI.performAction(ai, d);
 				}
@@ -95,7 +97,8 @@ public class Game {
 		}
 
 		if (currentPlayer.getPiece() < 3) {
-			TicketToRideGui.appendLog("has kicked off the final round! One more turn for each player!");
+			TicketToRideGui
+					.appendLog("has kicked off the final round! One more turn for each player!");
 			currentPlayer.setLastTurn(true);
 		}
 
@@ -104,6 +107,7 @@ public class Game {
 
 	/**
 	 * get current rank of the given player
+	 * 
 	 * @param player
 	 * @return
 	 */
@@ -133,18 +137,20 @@ public class Game {
 		gui.updateScoreboard();
 
 		gui.popupMessage("Compute Longest Path.");
-		List<Player> playersHaveLongestPath = PathHandler.getLongestPathPlayers();
+		List<Player> playersHaveLongestPath = PathHandler
+				.getLongestPathPlayers();
 
-		String name="";
-		for(Player player:playersHaveLongestPath){
-			name+=player.getColor()+" ";
+		String name = "";
+		for (Player player : playersHaveLongestPath) {
+			name += player.getColor() + " ";
 		}
-		gui.popupMessage("Player(s) who have longest path: "+name);
-		TicketToRideGui.appendLogInfo("Player(s) with the longest path: " + name);
+		gui.popupMessage("Player(s) who have longest path: " + name);
+		TicketToRideGui.appendLogInfo("Player(s) with the longest path: "
+				+ name);
 		for (Player player : playersHaveLongestPath) {
 			player.setScore(player.getScore() + 10);
 		}
-		
+
 		gui.updateScoreboard();
 
 		Player winner = getWinner();
@@ -156,18 +162,18 @@ public class Game {
 		}
 		gui.popupMessage(message);
 		TicketToRideGui.appendLogInfo(message);
-		TicketToRideGui.appendLogInfo("Writing all actions in game to log.txt...");
+		TicketToRideGui
+				.appendLogInfo("Writing all actions in game to log.txt...");
 		TicketToRideGui.writeLogToFile();
-		gameover=true;
+		gameover = true;
 	}
 
 	/**
-	 * This inner class, assist system to sort the players, and find out who is the winner
-	 * Winner base on who get the highest score
-	 * if there has two players have highest score
-	 * select the one has most complete destination ticket
-	 * if still the same
-	 * select the one who has longest path in the map
+	 * This inner class, assist system to sort the players, and find out who is
+	 * the winner Winner base on who get the highest score if there has two
+	 * players have highest score select the one has most complete destination
+	 * ticket if still the same select the one who has longest path in the map
+	 * 
 	 * @author jhe
 	 *
 	 */
@@ -180,7 +186,8 @@ public class Game {
 				int numCompleteDesCard2 = p2.getNumTicketComplete();
 
 				if (numCompleteDesCard1 == numCompleteDesCard2) {
-					return PathHandler.getLongestPath(p2) - PathHandler.getLongestPath(p1);
+					return PathHandler.getLongestPath(p2)
+							- PathHandler.getLongestPath(p1);
 
 				} else {
 					return numCompleteDesCard2 - numCompleteDesCard1;

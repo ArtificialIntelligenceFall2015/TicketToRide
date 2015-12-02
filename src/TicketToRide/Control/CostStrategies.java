@@ -18,7 +18,7 @@ import TicketToRide.Model.Player;
 import TicketToRide.Model.PlayerAI;
 
 /**
- * @author junxnhe
+ * @author jun he
  *
  */
 public class CostStrategies {
@@ -78,31 +78,33 @@ public class CostStrategies {
 	}
 
 	/**
-	 * If the number of the card more close to the number of cost of route, return lower integer
-	 * Strategies RC
+	 * If the number of the card more close to the number of cost of route,
+	 * return lower integer Strategies RC
 	 * 
 	 * @param path
 	 * @return
 	 */
 	private static int routeVSCard(PlayerAI player, Path path) {
-		HashMap<trainCard, Integer> collection=player.getHandCollection();
-		int numRainbow=CardHandler.getCollectionAmount(player, trainCard.RAINBOW);
-		int numOther=0;
-		if(path.getColor()==pathColor.GRAY){
-			Iterator<Entry<trainCard, Integer>> it=collection.entrySet().iterator();
-			while(it.hasNext()){
-				Entry<trainCard, Integer> pair= it.next();
-				if(pair.getKey()!=trainCard.RAINBOW){
-					numOther=Math.max(numOther, pair.getValue());
+		HashMap<trainCard, Integer> collection = player.getHandCollection();
+		int numRainbow = CardHandler.getCollectionAmount(player,
+				trainCard.RAINBOW);
+		int numOther = 0;
+		if (path.getColor() == pathColor.GRAY) {
+			Iterator<Entry<trainCard, Integer>> it = collection.entrySet()
+					.iterator();
+			while (it.hasNext()) {
+				Entry<trainCard, Integer> pair = it.next();
+				if (pair.getKey() != trainCard.RAINBOW) {
+					numOther = Math.max(numOther, pair.getValue());
 				}
 			}
-		}else{
-			trainCard card=trainCard.valueOf(path.getColor().toString());
-			numOther=CardHandler.getCollectionAmount(player, card);
+		} else {
+			trainCard card = trainCard.valueOf(path.getColor().toString());
+			numOther = CardHandler.getCollectionAmount(player, card);
 		}
-		
-		int total=numRainbow+numOther;
-		return path.getCost()/(total+1);
+
+		int total = numRainbow + numOther;
+		return path.getCost() / (total + 1);
 	}
 
 	/**
@@ -126,27 +128,26 @@ public class CostStrategies {
 		}
 		return n;
 	}
-	
 
 	/**
-	 * Preferred larger cost path PL
-	 * Preferred medium cost path PM
-	 * Strategies PL, PM
+	 * Preferred larger cost path PL Preferred medium cost path PM Strategies
+	 * PL, PM
 	 * 
 	 * @param p
 	 * @param b
 	 * @return
 	 */
 	private static int preferred(Path p, boolean flag) {
-		if(flag)
-			return 7-p.getCost();
-		
-		int[] weight={0,5,3,1,2,4,6};
+		if (flag)
+			return 7 - p.getCost();
+
+		int[] weight = { 0, 5, 3, 1, 2, 4, 6 };
 		return weight[p.getCost()];
 	}
 
 	/**
 	 * Get player list who owned paths connected to the given city
+	 * 
 	 * @param cityFromPath
 	 * @return
 	 */
@@ -165,14 +166,16 @@ public class CostStrategies {
 	}
 
 	/**
-	 * if AStar algorithm return cost base on AI player personality
-	 * if Lowest cost first algorithm, return the cost of the route
+	 * if AStar algorithm return cost base on AI player personality if Lowest
+	 * cost first algorithm, return the cost of the route
+	 * 
 	 * @param player
 	 * @param p
-	 * @param detementPathCloseFlag 
+	 * @param detementPathCloseFlag
 	 * @return
 	 */
-	public static int getCost(Player player, Path p, boolean detementPathCloseFlag) {
+	public static int getCost(Player player, Path p,
+			boolean detementPathCloseFlag) {
 		if (!detementPathCloseFlag) {
 			return calAICost((PlayerAI) player, p);
 		} else {
@@ -182,6 +185,7 @@ public class CostStrategies {
 
 	/**
 	 * calculate cost of path base on AI player personality
+	 * 
 	 * @param player
 	 * @param p
 	 * @return
@@ -196,33 +200,34 @@ public class CostStrategies {
 	}
 
 	/**
-	 * Call different method by differnt strategies
-	 * PM and PL only can exist one in each AI player
-	 * @param player 
-	 * @param p 
+	 * Call different method by differnt strategies PM and PL only can exist one
+	 * in each AI player
+	 * 
+	 * @param player
+	 * @param p
 	 * @param s
 	 * @return
 	 */
 	private static int getCostResult(PlayerAI player, Path p, strategies s) {
-		int n=0;
+		int n = 0;
 		switch (s) {
 		case CR:
-			n= combineRoute(player, p);
+			n = combineRoute(player, p);
 			break;
 		case RC:
-			n= routeVSCard(player, p);
+			n = routeVSCard(player, p);
 			break;
 		case PP:
-			n= pairPlayers(p);
+			n = pairPlayers(p);
 			break;
 		case RR:
-			n= routeVSRank(player, p);
+			n = routeVSRank(player, p);
 			break;
 		case PM:
-			n= preferred(p, false);
+			n = preferred(p, false);
 			break;
 		case PL:
-			n= preferred(p, true);
+			n = preferred(p, true);
 			break;
 		}
 		return n;

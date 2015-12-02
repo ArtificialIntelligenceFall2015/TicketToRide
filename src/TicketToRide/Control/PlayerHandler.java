@@ -15,10 +15,10 @@ import TicketToRide.Model.TrainCard;
 import TicketToRide.View.TicketToRideGui;
 
 /**
- * @author Jun He 
+ * @author Jun He
  * @author Sean Fast
  * 
- * This class's methods work as player's behave
+ *         This class's methods work as player's behave
  */
 public class PlayerHandler {
 
@@ -58,18 +58,27 @@ public class PlayerHandler {
 	 * @param cards
 	 * @return
 	 */
-	public static boolean claimARoute(Player player, Path path, List<TrainCard> cardsToSpend) {
-		player.setPiece(player.getPiece() - path.getCost()); //subtract pieces from inventory
-		
+	public static boolean claimARoute(Player player, Path path,
+			List<TrainCard> cardsToSpend) {
+		player.setPiece(player.getPiece() - path.getCost()); // subtract pieces
+																// from
+																// inventory
+
 		for (TrainCard tc : cardsToSpend)
-			player.getTrainCards().remove(tc); //remove each train card from players hand
-		
-		player.getOwnPath().add(path); //add route to players list of owned routes
-		player.setScore(player.getScore() + POINT[path.getCost()]); //update players score
-		path.setOwningPlayer(player); //mark route as owned by player in global path list
-		Deck.spendCards(cardsToSpend); //add spent cards to discard deck
-		TicketToRideGui.appendLog("claimed the route:\n\t" + path + "\n\tWith the cards:" + cardsToSpend
-				+ "\n\tFor a total of " + POINT[path.getCost()] + " points.");
+			player.getTrainCards().remove(tc); // remove each train card from
+												// players hand
+
+		player.getOwnPath().add(path); // add route to players list of owned
+										// routes
+		player.setScore(player.getScore() + POINT[path.getCost()]); // update
+																	// players
+																	// score
+		path.setOwningPlayer(player); // mark route as owned by player in global
+										// path list
+		Deck.spendCards(cardsToSpend); // add spent cards to discard deck
+		TicketToRideGui.appendLog("claimed the route:\n\t" + path
+				+ "\n\tWith the cards:" + cardsToSpend + "\n\tFor a total of "
+				+ POINT[path.getCost()] + " points.");
 		Game.gui.repaintGraph();
 		return true;
 	}
@@ -84,8 +93,10 @@ public class PlayerHandler {
 		Deck.performIfDeckEmpty();
 		TrainCard card = Deck.trainCardsDeck.remove(0);
 		player.getTrainCards().add(card);
-		//TicketToRideGui.appendLog("took a face down train card."); //human player mode
-		TicketToRideGui.appendLog("took a face down train card of color: " + card.getColor()); //TODO: add flag for observe mode
+		// TicketToRideGui.appendLog("took a face down train card."); //human
+		// player mode
+		TicketToRideGui.appendLog("took a face down train card of color: "
+				+ card.getColor()); // TODO: add flag for observe mode
 		return card;
 	}
 
@@ -101,20 +112,22 @@ public class PlayerHandler {
 		List<TrainCard> faceUpCards = Deck.trainFaceUpCards;
 		List<TrainCard> faceDownCards = Deck.trainCardsDeck;
 		TrainCard card = faceUpCards.get(index); // get face up card
-		
-		if(!faceDownCards.isEmpty())
-			faceUpCards.set(index, faceDownCards.remove(0)); //replace taken face up card
-		else{
+
+		if (!faceDownCards.isEmpty())
+			faceUpCards.set(index, faceDownCards.remove(0)); // replace taken
+																// face up card
+		else {
 			faceUpCards.remove(index);
 		}
 		Game.gui.refreshIfTripleRainbow();
 
-		player.getTrainCards().add(card); //add taken card to players hand
-		TicketToRideGui.appendLog("took a face up train card of color: " + card.getColor());
+		player.getTrainCards().add(card); // add taken card to players hand
+		TicketToRideGui.appendLog("took a face up train card of color: "
+				+ card.getColor());
 		Game.gui.repaintFaceUpTrainCards();
 		return card;
 	}
-	
+
 	/**
 	 * perform draw destination ticket behave
 	 * 
@@ -135,25 +148,26 @@ public class PlayerHandler {
 	public static void returnDesCardToDeck(List<DestinationCard> cards) {
 		Deck.desCardDeck.addAll(cards);
 	}
-	
 
 	/**
 	 * Return unwant destination card to deck
+	 * 
 	 * @param cards
 	 */
-	public static void returnDesCardToDeck(DestinationCard cards) { 
+	public static void returnDesCardToDeck(DestinationCard cards) {
 		Deck.desCardDeck.add(cards);
 	}
-	
+
 	/**
 	 * Convert destination card list to string form for display only
 	 */
-	public static List<String> convertDesCardListToString(List<DestinationCard> desCardList) {
+	public static List<String> convertDesCardListToString(
+			List<DestinationCard> desCardList) {
 		List<String> desCardStringList = new ArrayList<String>();
 		for (int i = 0; i < desCardList.size(); i++)
 			desCardStringList.add(desCardList.get(i).toString());
-		
+
 		return desCardStringList;
 	}
-	
+
 }

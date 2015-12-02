@@ -11,7 +11,7 @@ import TicketToRide.Control.PathHandler;
 
 /**
  * @author Jun He
- *
+ * @author Sean Fast
  */
 public class World {
 	public static List<Path> map;

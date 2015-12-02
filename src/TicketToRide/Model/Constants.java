@@ -13,7 +13,8 @@ import java.awt.Color;
  */
 public class Constants {
 	public static enum playerColor {
-		BLUE(Color.BLUE), RED(Color.RED), GREEN(Color.GREEN), YELLOW(Color.YELLOW), BLACK(Color.BLACK);
+		BLUE(Color.BLUE), RED(Color.RED), GREEN(Color.GREEN), YELLOW(
+				Color.YELLOW), BLACK(Color.BLACK);
 		private Color c;
 
 		playerColor(Color c) {
@@ -27,8 +28,9 @@ public class Constants {
 	};
 
 	public static enum trainCard {
-		PINK(Color.PINK), WHITE(Color.WHITE), BLUE(Color.BLUE), YELLOW(Color.YELLOW), ORANGE(Color.ORANGE), BLACK(
-				Color.BLACK), RED(Color.RED), GREEN(Color.GREEN), RAINBOW(Color.GRAY);
+		PINK(Color.PINK), WHITE(Color.WHITE), BLUE(Color.BLUE), YELLOW(
+				Color.YELLOW), ORANGE(Color.ORANGE), BLACK(Color.BLACK), RED(
+				Color.RED), GREEN(Color.GREEN), RAINBOW(Color.GRAY);
 
 		private Color c;
 
@@ -43,8 +45,9 @@ public class Constants {
 	};
 
 	public static enum pathColor {
-		PINK(Color.PINK), WHITE(Color.WHITE), BLUE(Color.BLUE), YELLOW(Color.YELLOW), ORANGE(Color.ORANGE), BLACK(
-				Color.BLACK), RED(Color.RED), GREEN(Color.GREEN), GRAY(Color.GRAY);
+		PINK(Color.PINK), WHITE(Color.WHITE), BLUE(Color.BLUE), YELLOW(
+				Color.YELLOW), ORANGE(Color.ORANGE), BLACK(Color.BLACK), RED(
+				Color.RED), GREEN(Color.GREEN), GRAY(Color.GRAY);
 
 		private Color c;
 

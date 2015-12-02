@@ -11,8 +11,8 @@ import TicketToRide.Model.Path;
 import TicketToRide.Model.World;
 
 /**
- * @author Sean Fast
- *
+ * @author Sean Fast This class creates the graph of cities and routes from the
+ *         nodes and edges stored in World object
  */
 public class GraphView extends javax.swing.JPanel {
 	protected void paintComponent(java.awt.Graphics g) {
@@ -41,20 +41,20 @@ public class GraphView extends javax.swing.JPanel {
 
 			g.setColor(pathColor.getRealColor());
 
-			//g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
-
 			Graphics2D g2D = (Graphics2D) g;
 			float[] dashingPattern1 = { 6f, 6f };
-			Stroke unclaimedRoute = new BasicStroke(3F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, dashingPattern1,
-					2.0f); 
+			Stroke unclaimedRoute = new BasicStroke(3F, BasicStroke.CAP_BUTT,
+					BasicStroke.JOIN_MITER, 1.0f, dashingPattern1, 2.0f);
 			Stroke claimedRoute = new BasicStroke(4F);
-			
+
 			if (edges.get(i).getOwningPlayer() == null) {
+				// draw dashed if route is unclaimed
 				g2D.setStroke(unclaimedRoute);
 				g.drawString(cost + "", (x1 + x2) / 2, (y1 + y2) / 2 - 6);
-			}
-			else {
-				g.setColor(edges.get(i).getOwningPlayer().getColor().getRealColor());
+			} else {
+				// draw solid if route is claimed
+				g.setColor(edges.get(i).getOwningPlayer().getColor()
+						.getRealColor());
 				g2D.setStroke(claimedRoute);
 			}
 

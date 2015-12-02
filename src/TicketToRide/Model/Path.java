@@ -134,12 +134,14 @@ public class Path {
 		return c1 && c2 && col;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return city1 + " -> " + city2 + " " + cost + " " + color; 
+		return city1 + " -> " + city2 + " " + cost + " " + color;
 	}
 
 }

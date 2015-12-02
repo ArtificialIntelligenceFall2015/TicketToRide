@@ -6,8 +6,8 @@
 package TicketToRide.Model;
 
 /**
- * @author Sean Fast
- *
+ * @author Sean Fast 
+ * This class defines the city object (nodes in graph)
  */
 public class City {
 	private String cityName;
@@ -40,8 +40,12 @@ public class City {
 		this.cityName = cityArray[i++];
 		// this.x_val = Integer.parseInt(cityArray[i++]);
 		// this.y_val = Integer.parseInt(cityArray[i++]);
-		this.x_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);// debug
-		this.y_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);// debug
+		this.x_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);// scale
+																		// graph
+																		// up
+		this.y_val = (int) (Integer.parseInt(cityArray[i++]) * 1.25);// scale
+																		// graph
+																		// up
 
 	}
 

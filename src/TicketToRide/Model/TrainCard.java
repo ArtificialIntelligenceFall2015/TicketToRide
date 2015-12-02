@@ -68,14 +68,6 @@ public class TrainCard implements Comparable<TrainCard> {
 			retVal = this.color.equals((trainCard) r);
 		}
 
-		//
-		// if (!(r.getClass() == TrainCard.class) || !(r.getClass() ==
-		// trainCard.class))
-		// retVal = false;
-		// else {
-		// TrainCard ro = (TrainCard) r;
-		// retVal = this.color.equals(ro.color);
-		// }
 		return retVal;
 	}
 }

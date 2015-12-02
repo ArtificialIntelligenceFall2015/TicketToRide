@@ -1,6 +1,6 @@
 package TicketToRide.Control;
+
 /**
- * Concepts of AI - Tinkham
  * Jun He
  * Sean Fast
  */
@@ -65,6 +65,7 @@ public class Frontier implements Comparable<Frontier> {
 
 	/**
 	 * get last city of the list
+	 * 
 	 * @return
 	 */
 	public City getLastCity() {

@@ -10,7 +10,7 @@ import TicketToRide.Model.Constants.playerColor;
 
 /**
  * @author Jun He
- *
+ * @author Sean Fast
  */
 public class Player {
 	private int score = 0;
@@ -20,7 +20,7 @@ public class Player {
 	private playerColor color;
 	private int piece = 45;
 	private boolean lastTurn;
-	private int numTicketComplete=0;
+	private int numTicketComplete = 0;
 
 	public Player(playerColor color) {
 		trainCards = new ArrayList<TrainCard>();
@@ -127,7 +127,8 @@ public class Player {
 	}
 
 	/**
-	 * @param lastTurn the lastTurn to set
+	 * @param lastTurn
+	 *            the lastTurn to set
 	 */
 	public void setLastTurn(boolean lastTurn) {
 		this.lastTurn = lastTurn;
@@ -141,18 +142,22 @@ public class Player {
 	}
 
 	/**
-	 * @param numTicketComplete the numTicketComplete to set
+	 * @param numTicketComplete
+	 *            the numTicketComplete to set
 	 */
 	public void setNumTicketComplete(int numTicketComplete) {
 		this.numTicketComplete = numTicketComplete;
 	}
 
 	public String toString() {
-		return this.color.name() + "\t" + this.score + "\t" + this.desCards + "\t" + this.trainCards + "\t" + piece;
+		return this.color.name() + "\t" + this.score + "\t" + this.desCards
+				+ "\t" + this.trainCards + "\t" + piece;
 	}
-	
+
 	public String printTotals() {
-		return this.color.name() + "\t" + this.score + "\t" + this.desCards.size() + "\t\t" + this.trainCards.size() + "\t\t" + piece;
+		return this.color.name() + "\t" + this.score + "\t"
+				+ this.desCards.size() + "\t\t" + this.trainCards.size()
+				+ "\t\t" + piece;
 	}
 
 }

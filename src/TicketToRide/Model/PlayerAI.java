@@ -10,7 +10,7 @@ import TicketToRide.Model.Constants.trainCard;
 
 /**
  * 
- * @author junxnhe
+ * @author Jun He
  *
  */
 
@@ -51,7 +51,8 @@ public class PlayerAI extends Player {
 	 * @param uncompleteableDesCard
 	 *            the uncompleteableDesCard to set
 	 */
-	public void setUncompleteableDesCard(List<DestinationCard> uncompleteableDesCard) {
+	public void setUncompleteableDesCard(
+			List<DestinationCard> uncompleteableDesCard) {
 		this.uncompleteableDesCard = uncompleteableDesCard;
 	}
 

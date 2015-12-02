@@ -20,7 +20,10 @@ import TicketToRide.Model.World;
 import TicketToRide.View.TicketToRideGui;
 
 /**
- * @author Jun He This class handler path functionality
+ * @author Jun He
+ * @author Sean Fast
+ * 
+ *         This class handles path functionality
  */
 public class PathHandler {
 	private static int size;
@@ -47,9 +50,9 @@ public class PathHandler {
 	 * @param paths
 	 */
 	public static void determinePathClose(Player player) {
-		int n=0;
+		int n = 0;
 		for (DestinationCard ticket : player.getDesCards()) {
-			if(!ticket.isCompleted()){
+			if (!ticket.isCompleted()) {
 				AStar aStar = new AStar(player, ticket, true);
 				aStar.run();
 				boolean completed = false;
@@ -59,15 +62,17 @@ public class PathHandler {
 				}
 				ticket.setCompleted(completed);
 			}
-			//System.out.println(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());//debug
-			TicketToRideGui.appendLogInfo(player.getColor()+": "+ticket.toString()+": "+ticket.getPoint()+": "+ticket.isCompleted());
+			TicketToRideGui.appendLogInfo(player.getColor() + ": "
+					+ ticket.toString() + ": " + ticket.getPoint() + ": "
+					+ ticket.isCompleted());
 		}
 		player.setNumTicketComplete(n);
 	}
 
 	/**
-	 * get path by give two cities
-	 * return an list because of some of two cities have double route
+	 * get path by give two cities return an list because of some of two cities
+	 * have double route
+	 * 
 	 * @param c1
 	 * @param c2
 	 * @return
@@ -78,9 +83,10 @@ public class PathHandler {
 	}
 
 	/**
-	 * add item to hash map in world cities path
-	 * key: two city combine name string
-	 * value: list of route, because of some of two cities have double route
+	 * add item to hash map in world cities path key: two city combine name
+	 * string value: list of route, because of some of two cities have double
+	 * route
+	 * 
 	 * @param c1
 	 * @param c2
 	 * @param path
@@ -99,6 +105,7 @@ public class PathHandler {
 
 	/**
 	 * create key by given two cities
+	 * 
 	 * @param c1
 	 * @param c2
 	 * @return
@@ -117,6 +124,7 @@ public class PathHandler {
 
 	/**
 	 * check if path can claim by given card
+	 * 
 	 * @param path
 	 * @param card
 	 * @return
@@ -127,6 +135,7 @@ public class PathHandler {
 
 	/**
 	 * check if path can claim by given card
+	 * 
 	 * @param path
 	 * @param card
 	 * @return
@@ -137,6 +146,7 @@ public class PathHandler {
 
 	/**
 	 * check if path can claim by given card
+	 * 
 	 * @param path
 	 * @param card
 	 * @return
@@ -147,6 +157,7 @@ public class PathHandler {
 
 	/**
 	 * check if path can claim by given card
+	 * 
 	 * @param path
 	 * @param card
 	 * @return
@@ -160,6 +171,7 @@ public class PathHandler {
 
 	/**
 	 * find all the cities which share a route with given city
+	 * 
 	 * @param city
 	 * @return
 	 */
@@ -173,22 +185,23 @@ public class PathHandler {
 		}
 		return connectCities;
 	}
-	
+
 	/**
 	 * find players who have longest path
+	 * 
 	 * @return
 	 */
-	public static List<Player> getLongestPathPlayers(){
-		List<Player> players=new ArrayList<Player>();
-		List<Integer> longestPathWeight=new ArrayList<Integer>();
-		int max=0;
-		for(Player p:Game.players){
-			int weight=getLongestPath(p);
+	public static List<Player> getLongestPathPlayers() {
+		List<Player> players = new ArrayList<Player>();
+		List<Integer> longestPathWeight = new ArrayList<Integer>();
+		int max = 0;
+		for (Player p : Game.players) {
+			int weight = getLongestPath(p);
 			longestPathWeight.add(weight);
-			max=Math.max(max, weight);
+			max = Math.max(max, weight);
 		}
-		for(int i=0; i<longestPathWeight.size(); i++){
-			if(longestPathWeight.get(i)==max){
+		for (int i = 0; i < longestPathWeight.size(); i++) {
+			if (longestPathWeight.get(i) == max) {
 				players.add(Game.players.get(i));
 			}
 		}
@@ -197,18 +210,20 @@ public class PathHandler {
 
 	/**
 	 * find the longest path cost on given player
+	 * 
 	 * @param player
 	 * @return
 	 */
 	public static int getLongestPath(Player player) {
-		int max=0;
-		boolean[] cityAssocPath=getCityAssocPath(player);
-		
-		for(int i=0; i<cityAssocPath.length; i++){
-			if(cityAssocPath[i]){
-				City city=World.cities.get(i);
-				int longestPathDAG=longestPathDAG(player,city, new ArrayList<Path>());
-				max=Math.max(max, longestPathDAG);
+		int max = 0;
+		boolean[] cityAssocPath = getCityAssocPath(player);
+
+		for (int i = 0; i < cityAssocPath.length; i++) {
+			if (cityAssocPath[i]) {
+				City city = World.cities.get(i);
+				int longestPathDAG = longestPathDAG(player, city,
+						new ArrayList<Path>());
+				max = Math.max(max, longestPathDAG);
 			}
 		}
 		return max;
@@ -216,99 +231,112 @@ public class PathHandler {
 
 	/**
 	 * method assist getLongestPath
+	 * 
 	 * @param player
 	 * @return
 	 */
 	private static boolean[] getCityAssocPath(Player player) {
-		boolean[] cityAssocPath=new boolean[World.cities.size()];
-		for(Path path:player.getOwnPath()){
-			cityAssocPath[World.cities.indexOf(path.getCity1())]=true;
-			cityAssocPath[World.cities.indexOf(path.getCity2())]=true;
+		boolean[] cityAssocPath = new boolean[World.cities.size()];
+		for (Path path : player.getOwnPath()) {
+			cityAssocPath[World.cities.indexOf(path.getCity1())] = true;
+			cityAssocPath[World.cities.indexOf(path.getCity2())] = true;
 		}
 		return cityAssocPath;
 	}
 
 	/**
 	 * longest path in DAG algorithm
+	 * 
 	 * @param player
 	 * @param city
 	 * @param visited
 	 * @return
 	 */
-	private static int longestPathDAG(Player player, City city, List<Path> visited) {
-		int max=0;
-		List<Path> adjPaths=new ArrayList<Path>();
-		int index=World.cities.indexOf(city);
-		for(int i=0; i<size; i++){
-			if(pathMatrix[index][i]){
-				List<Path> paths=getPath(World.cities.get(index), World.cities.get(i));
-				for(Path path:paths){
-					if(path.getOwningPlayer()==player){
+	private static int longestPathDAG(Player player, City city,
+			List<Path> visited) {
+		int max = 0;
+		List<Path> adjPaths = new ArrayList<Path>();
+		int index = World.cities.indexOf(city);
+		for (int i = 0; i < size; i++) {
+			if (pathMatrix[index][i]) {
+				List<Path> paths = getPath(World.cities.get(index),
+						World.cities.get(i));
+				for (Path path : paths) {
+					if (path.getOwningPlayer() == player) {
 						adjPaths.add(path);
 					}
 				}
 			}
 		}
-		
-		for(Path path: adjPaths){
-			if(!visited.contains(path)){
-				List<Path> newVisitedPath=new ArrayList<Path>();
+
+		for (Path path : adjPaths) {
+			if (!visited.contains(path)) {
+				List<Path> newVisitedPath = new ArrayList<Path>();
 				newVisitedPath.addAll(visited);
 				newVisitedPath.add(path);
-				City c=path.getCity1()==city?path.getCity2():path.getCity1();
-				max=Math.max(max, longestPathDAG(player,c,newVisitedPath)+path.getCost());
+				City c = path.getCity1() == city ? path.getCity2() : path
+						.getCity1();
+				max = Math.max(max, longestPathDAG(player, c, newVisitedPath)
+						+ path.getCost());
 			}
 		}
 		return max;
 	}
-	
+
 	/**
-	 * Method assist human player
-	 * get cliamable routes for human player to select base on what cards in player's hand
+	 * Method assist human player get cliamable routes for human player to
+	 * select base on what cards in player's hand
+	 * 
 	 * @return
 	 */
 	public static List<Path> generateUnclaimedRoutes() {
 		List<Path> unclaimedRoutes = new ArrayList<Path>();
-		Player player=Game.currentPlayer;
-		HashMap<trainCard, Integer> collection=CardHandler.trainCardCollection(player.getTrainCards());
-		
-		int maxClaimableCards=0;//non-rainbow claimable cards
-		int numRainbow=CardHandler.getCollectionAmount(collection, trainCard.RAINBOW);
-		
-		Iterator<Entry<trainCard, Integer>> iterator = collection.entrySet().iterator();
+		Player player = Game.currentPlayer;
+		HashMap<trainCard, Integer> collection = CardHandler
+				.trainCardCollection(player.getTrainCards());
+
+		int maxClaimableCards = 0;// non-rainbow claimable cards
+		int numRainbow = CardHandler.getCollectionAmount(collection,
+				trainCard.RAINBOW);
+
+		Iterator<Entry<trainCard, Integer>> iterator = collection.entrySet()
+				.iterator();
 		while (iterator.hasNext()) {
 			Entry<trainCard, Integer> pair = iterator.next();
-			if (pair.getKey()!=trainCard.RAINBOW && maxClaimableCards<pair.getValue()){
-				maxClaimableCards=pair.getValue();
+			if (pair.getKey() != trainCard.RAINBOW
+					&& maxClaimableCards < pair.getValue()) {
+				maxClaimableCards = pair.getValue();
 			}
 		}
-		
-		maxClaimableCards+=numRainbow;
-		
-		//collect claimable cards
+
+		maxClaimableCards += numRainbow;
+
+		// collect claimable cards
 		for (Path p : World.map) {
 			if (p.getOwningPlayer() == null) {
-				//Check double route and another one own by the current player
-				List<Path> pairRoute=PathHandler.getPath(p.getCity1(), p.getCity2());
-				boolean own=false;
-				if(pairRoute.size()>1 && 
-						(pairRoute.get(0).getOwningPlayer()==player 
-						|| pairRoute.get(1).getOwningPlayer()==player)){
-					own=true;	
+				// Check double route and another one own by the current player
+				List<Path> pairRoute = PathHandler.getPath(p.getCity1(),
+						p.getCity2());
+				boolean own = false;
+				if (pairRoute.size() > 1
+						&& (pairRoute.get(0).getOwningPlayer() == player || pairRoute
+								.get(1).getOwningPlayer() == player)) {
+					own = true;
 				}
-				
-				if(!own
-						&& player.getPiece()>=p.getCost()
-						&& ((p.getColor()==pathColor.GRAY 
-						&& maxClaimableCards>=p.getCost())
-						||(p.getColor()!=pathColor.GRAY 
-						&& numRainbow+CardHandler.getCollectionAmount(collection, trainCard.valueOf(p.getColor().toString()))>=p.getCost()))){
+
+				if (!own
+						&& player.getPiece() >= p.getCost()
+						&& ((p.getColor() == pathColor.GRAY && maxClaimableCards >= p
+								.getCost()) || (p.getColor() != pathColor.GRAY && numRainbow
+								+ CardHandler.getCollectionAmount(collection,
+										trainCard.valueOf(p.getColor()
+												.toString())) >= p.getCost()))) {
 					unclaimedRoutes.add(p);
 				}
 			}
 		}
-		
+
 		return unclaimedRoutes;
-		
+
 	}
 }
