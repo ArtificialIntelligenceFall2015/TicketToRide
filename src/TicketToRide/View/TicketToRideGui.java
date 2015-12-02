@@ -203,7 +203,7 @@ public class TicketToRideGui extends JFrame {
 		jlstCurrentPlayerDestCards.setVisibleRowCount(3);
 		jlstCurrentPlayerDestCards
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		destList = new DefaultListModel(); // SF
+		destList = new DefaultListModel(); 
 		jlstCurrentPlayerDestCards.setModel(destList);
 		scpCurrentPlayerDestCards.setViewportView(jlstCurrentPlayerDestCards);
 

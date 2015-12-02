@@ -96,7 +96,7 @@ public class PlayerHandler {
 		// TicketToRideGui.appendLog("took a face down train card."); //human
 		// player mode
 		TicketToRideGui.appendLog("took a face down train card of color: "
-				+ card.getColor()); // TODO: add flag for observe mode
+				+ card.getColor()); 
 		return card;
 	}
 
