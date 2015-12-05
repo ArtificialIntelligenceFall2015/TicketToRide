@@ -104,7 +104,6 @@ public class City {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		System.out.println("this code is on the master branch and even newer!");
 		return cityName;
 	}
 }
