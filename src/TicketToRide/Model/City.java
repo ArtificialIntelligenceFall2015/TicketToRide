@@ -104,7 +104,7 @@ public class City {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		System.out.println("this code is on temp branch but merged from master branch");
+		System.out.println("wow! much merge!"); //this code is on temp branch but merged from master branch
 		return cityName;
 	}
 }
